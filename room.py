@@ -24,7 +24,7 @@ class Room:
         
         if (objects):
             for o in objects.values():
-                full_desc += "There is " + o.name + " here\n"
+                full_desc += "There is " + o.name + " here.\n"
 
         if self.exits:
             full_desc += "Exits are " + ", ".join(self.exits.keys())

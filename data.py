@@ -33,6 +33,13 @@ object_data = {
         "states": [],
         "verbs": {},
         "moveable": False
+    },
+    "stuff": {
+        "name": "stuff. A lot of stuff",
+        "description": "just generic stuff, it seems. Have you seen 'Hoarders'?.",
+        "states": [],
+        "verbs": {},
+        "moveable": False
     }
 }
 
@@ -40,7 +47,7 @@ room_data = {
     "lounge": {
         "name": "The lounge",
         "objects": {
-            "default": { "iphone" }
+            "default": { "iphone", "stuff" }
         },
         "description": {
             "default": "You are in a dusty living room, full to the (peeling) ceiling with stuff."
