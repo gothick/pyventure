@@ -6,7 +6,7 @@ from object import Object
 
 rooms = {}
 
-# Build the universe
+# Build the universe.
 for room_id in room_data:
 
     rooms[room_id] = Room(room_id,
@@ -29,6 +29,16 @@ suppress_room_description = False
 inventory = Object.dictionary_from_id_list({"torch"})
 
 while True:
+
+    torch = current_room.objects.get("torch") or inventory.get("torch")
+    if torch and torch.current_state == "on":
+        if "lit" in current_room.states:
+            current_room.current_state = "lit"
+    
+    if not current_room.id in visited_rooms:
+        score += 10
+        visited_rooms.add(current_room.id)
+    
     if not suppress_room_description:
         print (current_room.full_description(WRAP_WIDTH))
 
@@ -71,8 +81,12 @@ while True:
     elif parser.verb == "take":
         suppress_room_description = True
         if current_room.has(parser.noun):
-            inventory[parser.noun] = current_room.take(parser.noun)
-            print("You have taken " + inventory[parser.noun].name)
+            taken = current_room.take(parser.noun)
+            if taken:
+                inventory[parser.noun] = taken
+                print("You have taken " + inventory[parser.noun].name)
+            else:
+                print("You don't seem to be able to do that.")
         else:
             print("There isn't one of those here.")
     elif parser.verb == "drop":
@@ -102,6 +116,9 @@ while True:
                 print("Nothing happens")    
         else:
             print("You're not carrying that.")
+    elif parser.verb == "score":
+        suppress_room_description = True
+        print("You have scored " + str(score) + " points.")
     elif parser.verb == "quit":
         print("Thank you for playing. Your score was " + str(score))
         break

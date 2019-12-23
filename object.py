@@ -1,13 +1,14 @@
 from data import object_data
 
 class Object:
-    def __init__(self, id, name, desc, states, verbs):
+    def __init__(self, id, name, desc, states, verbs, moveable):
         self.id = id
         self.name = name
         self.__description = desc
         self.states = states
         self.current_state = next(iter(self.states), None)
         self.verbs = verbs
+        self.moveable = moveable
     def __repr__(self):
         return self.name
 
@@ -34,7 +35,8 @@ class Object:
                 object_data[id]["name"],
                 object_data[id]["description"],
                 object_data[id]["states"],
-                object_data[id]["verbs"]
+                object_data[id]["verbs"],
+                object_data[id]["moveable"]
             );
         else:
             return None

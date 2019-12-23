@@ -35,8 +35,8 @@ class Parser:
             noun = command[space_pos + 1:].lower()
 
         # Special cases outside our normal grammar:
-        if noun == "" and verb in ["n", "s", "e", "w"]:
-            noun = {"n": "north", "s": "south", "e": "east", "w": "west"}.get(verb);
+        if noun == "" and verb in ["n", "s", "e", "w", "u", "d", "up", "down"]:
+            noun = {"n": "north", "s": "south", "e": "east", "w": "west", "u": "up", "d": "down", "up": "up", "down": "down"}.get(verb);
             verb = "go"
 
         if verb in normalised_verbs:

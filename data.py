@@ -7,7 +7,8 @@ object_data = {
             "on": "a plastic 1870s Ever Ready torch. It's switched on, and emits a surprising amount of light."
         },
         "states": [ "off", "on" ],
-        "verbs": { "turn on": "on", "turn off": "off" }
+        "verbs": { "turn on": "on", "turn off": "off" },
+        "moveable": True
     },
     "iphone": {
         "name": "an iPhone SE",
@@ -16,45 +17,96 @@ object_data = {
             "off": "an iPhone SE. The screen is dark. I think it's turned off."
         },
         "states": [ "on", "off" ],
-        "verbs": { "turn on": "on", "turn off": "off" }
+        "verbs": { "turn on": "on", "turn off": "off" },
+        "moveable": True
     },
     "remote": {
         "name": "a remote control",
         "description": "a remote control for a JVC Smart TV. It rattles a bit as you shake it.",
         "states": [],
-        "verbs": {}
+        "verbs": {},
+        "moveable": True
+    },
+    "books": {
+        "name": "pile upon dusty pile of books",
+        "description": "stacks of books. They don't look stable.",
+        "states": [],
+        "verbs": {},
+        "moveable": False
     }
 }
 
 room_data = {
     "lounge": {
         "name": "The lounge",
-        "objects": { "iphone" },
-        "description": "You are in a dusty living room, full to the (peeling) ceiling with stuff.",
+        "objects": {
+            "default": { "iphone" }
+        },
+        "description": {
+            "default": "You are in a dusty living room, full to the (peeling) ceiling with stuff."
+        },
         "exits": {
-            "north": "kitchen",
+            "north": "hall",
             "south": "street"
         },
-        "states": []
+        "states": ["default"]
+    },
+    "hall": {
+        "name": "The hall",
+        "objects": {
+            "default": set()
+        },
+        "description": {
+            "default": "You are in a tiny hallway between the lounge and the kitchen, at the bottom of a flight of stairs"
+        },
+        "exits": {
+            "north": "kitchen",
+            "south": "lounge",
+            "up": "stairs"
+        },
+        "states": ["default"]
+    },
+    "stairs": {
+        "name": "The stairs",
+        "objects": {
+            "default": { "books" }
+        },
+        "description": {
+            "default": "You get halfway up the narrow flight of stairs before the piles of books on either side become too constricting. Perhaps you should go back downstairs before you cause an avalanche."
+        },
+        "exits": {
+            "down": "hall"
+        },
+        "states": ["default"]
     },
     "kitchen": {
         "name": "The kitchen",
-        "objects": set(),
-        "description": "You are in a squalid kitchen. There may be work surfaces somewhere under the pile of mouldering plates and pans, but it's hard to tell.",
-        "exits": {
-            "south": "lounge",
-            "north": "bathroom"
+        "objects": {
+            "default": set()
         },
-        "states": []
+        "description": {
+            "default": "You are in a squalid kitchen. There may be work surfaces somewhere under the pile of mouldering plates and pans, but it's hard to tell."
+        },
+        "exits": {
+            "north": "bathroom",
+            "south": "hall"
+        },
+        "states": ["default"]
     },
     "street": {
         "name": "Ashgrove Road",
-        "objects": set(),
-        "description": "You are in a Victorian terraced street in Bristol. It is raining.",
+        "objects": {
+            "unlit": set(),
+            "lit": set()
+        },
+        "description": {
+            "unlit": "You are in a Victorian terraced street in Bristol. It is raining.",
+            "lit": "You are in a Victorian terraced street in Bristol. It is raining. The raindrops glint prettily in the cone of light cast by your torch."
+        },
         "exits": {
             "north": "lounge"
             },
-        "states": []
+        "states": ["unlit", "lit"]
     },
     "bathroom": {
         "name": "The bathroom", 
