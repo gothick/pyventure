@@ -13,7 +13,7 @@ rooms = {
     "lounge": {
         "name": "lounge",
         "objects": { "iphone" },
-        "description": "You are a dusty living room, full to the (peeling) ceiling with stuff.",
+        "description": "You are in a dusty living room, full to the (peeling) ceiling with stuff.",
         "exits": {
             "north": "kitchen",
             "south": "street"
