@@ -56,7 +56,6 @@ def is_in_room(object_id, room):
         return True
     return False
 
-
 def find_room(current_room, direction):
     new_room = None
     if direction in current_room["exits"]:
@@ -134,4 +133,3 @@ while True:
         break
     else:
         print("Sorry, I didn't understand.")
-
