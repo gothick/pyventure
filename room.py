@@ -40,7 +40,10 @@ class Room:
 
     def has(self, object_id):
         return object_id in self.objects[self.current_state]
-        
+
+    def get(self, object_id):
+        return self.objects[self.current_state].get(object_id)
+    
     def take(self, object_id):
         objects = self.objects[self.current_state]
         

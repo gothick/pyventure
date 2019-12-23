@@ -57,11 +57,11 @@ while True:
             print("You look around.")
         else:
             suppress_room_description = True
-            o = current_room.objects.get(parser.noun) or inventory.get(parser.noun)
+            o = current_room.get(parser.noun) or inventory.get(parser.noun)
             if o:
                 print(textwrap.fill("It is " + o.description, WRAP_WIDTH))
             else:
-                print("You don't see any " + parser.noun + " here")
+                print("You don't see that here")
                 
     elif parser.verb == "go":
         next_room_id = current_room.room_id_from_exit(parser.noun)
