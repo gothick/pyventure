@@ -19,7 +19,9 @@ normalised_verbs = {
 normalised_nouns = {
     "iphone": "iphone",
     "iphone se": "iphone",
-    "phone": "iphone"
+    "phone": "iphone",
+    "tv": "tv",
+    "television": "tv"
 }
 
 class Parser:

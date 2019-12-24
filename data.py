@@ -40,6 +40,13 @@ object_data = {
         "states": [],
         "verbs": {},
         "moveable": False
+    },
+    "tv": {
+        "name": "a television",
+        "description": "a modern-looking JVC smart TV. It's turned off.",
+        "states": [],
+        "verbs": {},
+        "moveable": False
     }
 }
 
@@ -47,7 +54,7 @@ room_data = {
     "lounge": {
         "name": "The lounge",
         "objects": {
-            "default": { "iphone", "stuff" }
+            "default": { "iphone", "tv", "stuff" }
         },
         "description": {
             "default": "You are in a dusty living room, full to the (peeling) ceiling with stuff."
