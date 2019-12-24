@@ -62,7 +62,7 @@ while True:
                 print(textwrap.fill("It is " + o.description, WRAP_WIDTH))
             else:
                 print("You don't see that here")
-                
+
     elif parser.verb == "go":
         next_room_id = current_room.room_id_from_exit(parser.noun)
         if next_room_id:
@@ -115,7 +115,20 @@ while True:
             else:
                 print("Nothing happens")
         else:
-            print("You're not carrying that.")
+            # The thing we're turning on or off wasn't in the inventory, but
+            # if it's an immovable object that's in the room with us, we still
+            # want to respond.
+            if current_room.has(parser.noun):
+                o = current_room.get(parser.noun)
+                if o.moveable:
+                    print("You'll need to pick that up first")
+                else:
+                    if o.id == "tv":
+                        print("You don't see how to do that. Is there a remote somewhere?")
+                    else:
+                        print("I don't know how to do that.")
+            else:
+                print("You don't see that here.")
     elif parser.verb == "score":
         suppress_room_description = True
         print("You have scored " + str(score) + " points.")
