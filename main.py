@@ -34,11 +34,11 @@ while True:
     if torch and torch.current_state == "on":
         if "lit" in current_room.states:
             current_room.current_state = "lit"
-    
+
     if not current_room.id in visited_rooms:
         score += 10
         visited_rooms.add(current_room.id)
-    
+
     if not suppress_room_description:
         print (current_room.full_description(WRAP_WIDTH))
 
@@ -69,7 +69,7 @@ while True:
             current_room = rooms[next_room_id]
         else:
             print("There are no exits that way.")
-            
+
     elif parser.verb == "inventory":
         suppress_room_description = True
         if inventory:
@@ -113,7 +113,7 @@ while True:
                         current_room.current_state = "unlit"
                         suppress_room_description = False
             else:
-                print("Nothing happens")    
+                print("Nothing happens")
         else:
             print("You're not carrying that.")
     elif parser.verb == "score":
