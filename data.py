@@ -4,7 +4,7 @@ object_data = {
         "description":
         {
             "off": "a plastic 1970s Ever Ready torch. It is switched off.",
-            "on": "a plastic 1870s Ever Ready torch. It's switched on, and emits a surprising amount of light."
+            "on": "a plastic 1970s Ever Ready torch. It's switched on, and emits a surprising amount of light."
         },
         "states": [ "off", "on" ],
         "verbs": { "turn on": "on", "turn off": "off" },
