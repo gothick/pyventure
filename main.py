@@ -17,7 +17,6 @@ for room_id in room_data:
                        room_data[room_id]["states"]
     )
 
-
 print("Welcome to Squalid Adventure.")
 
 WRAP_WIDTH = 80

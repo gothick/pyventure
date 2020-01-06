@@ -22,29 +22,37 @@ object_data = {
     },
     "remote": {
         "name": "a remote control",
-        "description": "a remote control for a JVC Smart TV. It rattles a bit as you shake it.",
-        "states": [],
+        "description": {
+            "default": "a remote control for a JVC Smart TV. It rattles a bit as you shake it."
+        },
+        "states": [ "default" ],
         "verbs": {},
         "moveable": True
     },
     "books": {
         "name": "pile upon dusty pile of books",
-        "description": "stacks of books. They don't look stable.",
-        "states": [],
+        "description": {
+            "default": "stacks of books. They don't look stable."
+        },
+        "states": [ "default"],
         "verbs": {},
         "moveable": False
     },
     "stuff": {
         "name": "stuff. A lot of stuff",
-        "description": "just generic stuff, it seems. Have you seen 'Hoarders'?.",
-        "states": [],
+        "description": {
+            "default": "just generic stuff, it seems. Have you seen 'Hoarders'?."
+        },
+        "states": ["default"],
         "verbs": {},
         "moveable": False
     },
     "tv": {
         "name": "a television",
-        "description": "a modern-looking JVC smart TV. It's turned off.",
-        "states": [],
+        "description": {
+            "default": "a modern-looking JVC smart TV. It's turned off."
+        },
+        "states": ["default"],
         "verbs": {},
         "moveable": False
     }
@@ -123,7 +131,7 @@ room_data = {
         "states": ["unlit", "lit"]
     },
     "bathroom": {
-        "name": "The bathroom", 
+        "name": "The bathroom",
         "objects": {
             "unlit": set(),
             "lit": { "remote" }

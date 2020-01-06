@@ -14,11 +14,8 @@ class Object:
 
     @property
     def description(self):
-        if self.current_state:
-            return self.__description[self.current_state]
-        else:
-            return self.__description
-
+        return self.__description[self.current_state]
+        
     def do_verb(self, verb):
         result = False
         if verb in self.verbs:
@@ -26,7 +23,7 @@ class Object:
                 self.current_state = self.verbs[verb]
                 result = True
         return result
-    
+
     @staticmethod
     def from_id(id):
         if id in object_data:
