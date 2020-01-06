@@ -15,7 +15,7 @@ class Object:
     @property
     def description(self):
         return self.__description[self.current_state]
-        
+
     def do_verb(self, verb):
         result = False
         if verb in self.verbs:
@@ -38,6 +38,7 @@ class Object:
         else:
             return None
 
+    @staticmethod
     def dictionary_from_id_list(ids):
         objects = {}
         for id in ids:
