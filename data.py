@@ -11,10 +11,10 @@ object_data = {
         "moveable": True
     },
     "iphone": {
-        "name": "an iPhone SE",
+        "name": "the latest iPhone",
         "description": {
-            "on": "an iPhone SE. It seems to be connected to the house WiFi.",
-            "off": "an iPhone SE. The screen is dark. I think it's turned off."
+            "on": "the latest iPhone. It is approximately size of a tea tray, and seems to be connected to the house WiFi.",
+            "off": "the latest iPhone. The screen is dark. I think it's turned off."
         },
         "states": [ "on", "off" ],
         "verbs": { "turn on": "on", "turn off": "off" },
@@ -50,22 +50,36 @@ object_data = {
     "tv": {
         "name": "a television",
         "description": {
-            "default": "a modern-looking JVC smart TV. It's turned off."
+            "off": "a modern-looking Samsung smart TV. It's turned off.",
+            "on": "a modern-looking Samsung smart TV. It seems to be showing an episode of Portlandia."
+        },
+        "states": {"off", "on"},
+        "verbs": { "turn on": "on", "turn off": "off"},
+        "moveable": False
+    },
+    "pennyfarthing": {
+        "name": "a penny-farthing bicycle",
+        "description": {
+            "default": "a beautifully-restored Victorian penny-farthing with a leather saddle."
         },
         "states": ["default"],
         "verbs": {},
-        "moveable": False
+        "moveable": True
     }
 }
 
 room_data = {
-    "lounge": {
-        "name": "The lounge",
+    "livingroom": {
+        "name": "The Living Room",
         "objects": {
-            "default": { "iphone", "tv", "stuff" }
+            "default": { "iphone", "tv", "pennyfarthing" }
         },
         "description": {
-            "default": "You are in a dusty living room, full to the (peeling) ceiling with stuff."
+            "default":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
+                        "some post-ironic art prints and a 56\" plasma television. A table made from old "
+                        "pallets sits surrounded by milk crates on the stripped pine floorboards. Light "
+                        "streams in through the picture window from the tidy Southville street outside. "
+                        "By the front door rests a penny-farthing bicycle."
         },
         "exits": {
             "north": "hall",
@@ -79,11 +93,11 @@ room_data = {
             "default": set()
         },
         "description": {
-            "default": "You are in a tiny hallway between the lounge and the kitchen, at the bottom of a flight of stairs"
+            "default": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs"
         },
         "exits": {
             "north": "kitchen",
-            "south": "lounge",
+            "south": "livingroom",
             "up": "stairs"
         },
         "states": ["default"]
@@ -116,19 +130,18 @@ room_data = {
         "states": ["default"]
     },
     "street": {
-        "name": "Ashgrove Road",
+        "name": "The street",
         "objects": {
-            "unlit": set(),
-            "lit": set()
+            "default": set()
         },
         "description": {
-            "unlit": "You are in a Victorian terraced street in Bristol. It is raining.",
-            "lit": "You are in a Victorian terraced street in Bristol. It is raining. The raindrops glint prettily in the cone of light cast by your torch."
+            "default": "You are in a Victorian terrace in Southville. To the north lies a furniture reclamation yard. From the south "
+                     "you hear a distant bass throb from the vinyl stall at the Tobacco Factory market."
         },
         "exits": {
-            "north": "lounge"
+            "north": "livingroom"
             },
-        "states": ["unlit", "lit"]
+        "states": ["default"]
     },
     "bathroom": {
         "name": "The bathroom",

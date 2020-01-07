@@ -17,11 +17,11 @@ for room_id in room_data:
                        room_data[room_id]["states"]
     )
 
-print("Welcome to Squalid Adventure.")
+print("Welcome to the Bristol Hipster Adventure.\n")
 
 WRAP_WIDTH = 80
 
-current_room = rooms["lounge"]
+current_room = rooms["livingroom"]
 score = 0
 visited_rooms = set()
 suppress_room_description = False
