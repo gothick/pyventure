@@ -52,7 +52,7 @@ while True:
         continue
 
     if parser.verb == "examine":
-        if parser.noun == "":
+        if not parser.noun:
             print("You look around.")
         else:
             suppress_room_description = True
