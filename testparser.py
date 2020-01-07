@@ -22,3 +22,6 @@ class TestParserMethods(unittest.TestCase):
         parser = Parser("i")
         self.assertEqual(parser.verb, "inventory")
         self.assertEqual(parser.noun, None)
+
+if __name__ == "__main__":
+    unittest.main()
