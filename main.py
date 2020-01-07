@@ -80,7 +80,7 @@ while True:
                 print("You don't see that here")
 
     elif parser.verb == "go":
-        (can_go, objection) = current_room.can_go(parser.noun, player.inventory)
+        (can_go, objection) = current_room.can_go(parser.noun, player)
         if can_go:
             next_room_id = current_room.room_id_from_exit(parser.noun)
             current_room = rooms[next_room_id]

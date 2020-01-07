@@ -67,13 +67,13 @@ class Room:
     def add_object(self, object):
         self.objects[self.current_state][object.id] = object
 
-    def can_go(self, exit, player_inventory):
+    def can_go(self, exit, player):
         if exit in self.exits:
             rules = self.exits[exit].get("rules")
             if rules:
                 for rule in rules:
                     if rule["type"] == "not_if_carrying":
-                        if rule["object"] in player_inventory:
+                        if player.is_carrying(rule["object"]):
                             return (False, rule["objection"])
                         else:
                             return (True, None)
