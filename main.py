@@ -156,4 +156,13 @@ while True:
     elif parser.verb == "quit":
         print(f"Thank you for playing. Your final score was {player.score} points.")
         break
+    elif parser.verb == "xyzzy":
+        # Deep magic
+        print()
+        print("##### Magical Debugging Start #####")
+        print(current_room)
+        print(player)
+        print("#####  Magical Debugging End  #####")
+        print()
+        suppress_room_description = True
 

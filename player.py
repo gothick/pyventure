@@ -26,7 +26,11 @@ class Player:
         return None
 
     def __repr__(self):
-        return f"A Player object with health {self.health}, caffeine_level {self.caffeine_level} and score {self.score}"
+        message = f"A Player object with health {self.health}, caffeine_level {self.caffeine_level} and score {self.score}\n"
+        message += "Carrying:\n"
+        for object in self.inventory:
+            message += f" {object}\n"
+        return message
         
     @property
     def is_dead(self):

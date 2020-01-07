@@ -40,8 +40,14 @@ class Room:
     def __repr__(self):
         debug = self.name + "\n"
         debug += "With exits: \n"
-        for k,v in self.exits.items():
-            debug += k + ": " + v + "\n"
+        if len(self.exits):
+            for id, details in self.exits.items():
+                debug += f" {id}\n"
+        debug += f"in state {self.current_state}\n"
+        if len(self.objects[self.current_state]) > 0:
+            debug += "with objects: \n"
+            for object in self.objects[self.current_state].values():
+                debug += f" {object.name}\n"
         return debug
 
     def has(self, object_id):
