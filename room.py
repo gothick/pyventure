@@ -18,6 +18,12 @@ class Room:
 
         d = self.description[self.current_state]
 
+        if "extras" in self.description:
+            for extra in self.description["extras"]:
+                if extra["type"] == "if_in_room":
+                    if self.has(extra["object"]):
+                        d = d + extra["text"]
+
         full_desc += textwrap.fill(d, wrap_width) + "\n\n"
 
         objects = self.objects[self.current_state]

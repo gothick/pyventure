@@ -17,7 +17,7 @@ for room_id in room_data:
                        room_data[room_id]["states"]
     )
 
-print("Welcome to the Bristol Hipster Adventure.\n")
+print("\nWelcome to the Bristol Hipster Adventure.\n")
 
 WRAP_WIDTH = 80
 

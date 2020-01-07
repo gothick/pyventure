@@ -78,8 +78,14 @@ room_data = {
             "default":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
                         "pallets sits surrounded by milk crates on the stripped pine floorboards. Light "
-                        "streams in through the picture window from the tidy Southville street outside. "
-                        "By the front door rests a penny-farthing bicycle."
+                        "streams in through the picture window from the tidy Southville street outside.",
+            "extras": [
+                {
+                    "type": "if_in_room",
+                    "object": "pennyfarthing",
+                    "text": " By the front door rests a penny-farthing bicycle."
+                }
+            ]
         },
         "exits": {
             "north": "hall",
@@ -93,7 +99,7 @@ room_data = {
             "default": set()
         },
         "description": {
-            "default": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs"
+            "default": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
         },
         "exits": {
             "north": "kitchen",
