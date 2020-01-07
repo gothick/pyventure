@@ -3,6 +3,7 @@ from data import room_data
 from parser import Parser
 from room import Room
 from object import Object
+from player import Player
 
 rooms = {}
 
@@ -22,24 +23,40 @@ print("\nWelcome to the Bristol Hipster Adventure.\n")
 WRAP_WIDTH = 80
 
 current_room = rooms["livingroom"]
-score = 0
 visited_rooms = set()
 suppress_room_description = False
-inventory = Object.dictionary_from_id_list({"torch"})
+
+player = Player(
+    object_ids = {"torch"},
+    score = 0,
+    health = 100, # percent
+    caffeine_level = 50 # milligrams
+)
 
 while True:
 
-    torch = current_room.objects.get("torch") or inventory.get("torch")
+    torch = current_room.objects.get("torch") or player.inventory.get("torch")
     if torch and torch.current_state == "on":
         if "lit" in current_room.states:
             current_room.current_state = "lit"
 
     if not current_room.id in visited_rooms:
-        score += 10
+        player.award_points(10)
         visited_rooms.add(current_room.id)
 
     if not suppress_room_description:
         print (current_room.full_description(WRAP_WIDTH))
+
+    # Pre-round player events:
+    player_messages = player.tick()
+    for message in player_messages:
+        print(textwrap.fill(message, WRAP_WIDTH))
+
+    # print(player)
+
+    if player.is_dead:
+        print(f"You have died. Your final score was {player.score} points.")
+        break
 
     suppress_room_description = False
 
@@ -56,14 +73,14 @@ while True:
             print("You look around.")
         else:
             suppress_room_description = True
-            o = current_room.get(parser.noun) or inventory.get(parser.noun)
+            o = current_room.get(parser.noun) or player.inventory.get(parser.noun)
             if o:
                 print(textwrap.fill("It is " + o.description, WRAP_WIDTH))
             else:
                 print("You don't see that here")
 
     elif parser.verb == "go":
-        (can_go, objection) = current_room.can_go(parser.noun, inventory)
+        (can_go, objection) = current_room.can_go(parser.noun, player.inventory)
         if can_go:
             next_room_id = current_room.room_id_from_exit(parser.noun)
             current_room = rooms[next_room_id]
@@ -73,9 +90,9 @@ while True:
 
     elif parser.verb == "inventory":
         suppress_room_description = True
-        if inventory:
+        if player.is_carrying_anything:
             print("You are carrying: ")
-            for object in inventory.values():
+            for object in player.inventory.values():
                 print("  " + object.name)
         else:
             print("You aren't carrying anything")
@@ -84,16 +101,16 @@ while True:
         if current_room.has(parser.noun):
             taken = current_room.take(parser.noun)
             if taken:
-                inventory[parser.noun] = taken
-                print("You have taken " + inventory[parser.noun].name)
+                player.give(taken)
+                print("You have taken " + taken.name)
             else:
                 print("You don't seem to be able to do that.")
         else:
             print("There isn't one of those here.")
     elif parser.verb == "drop":
         suppress_room_description = True
-        if parser.noun in inventory:
-            object = inventory.pop(parser.noun)
+        if player.is_carrying(parser.noun):
+            object = player.take(parser.noun)
             print("You drop " + object.name)
             current_room.add_object(object)
         else:
@@ -132,7 +149,11 @@ while True:
                 print("You don't see that here.")
     elif parser.verb == "score":
         suppress_room_description = True
-        print("You have scored " + str(score) + " points.")
+        print(f"You have scored {player.score} points.")
+    elif parser.verb == "health":
+        suppress_room_description = True
+        print(f"Current health: {player.health}%")
     elif parser.verb == "quit":
-        print("Thank you for playing. Your score was " + str(score))
+        print(f"Thank you for playing. Your final score was {player.score} points.")
         break
+

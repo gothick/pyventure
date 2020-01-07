@@ -17,6 +17,7 @@ normalised_verbs = {
     "i": "inventory",
     "drop": "drop",
     "quit": "quit",
+    "health": "health"
 }
 
 # Special case abbreviations. We'll turn these into GO commands
