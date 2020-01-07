@@ -63,11 +63,13 @@ while True:
                 print("You don't see that here")
 
     elif parser.verb == "go":
-        next_room_id = current_room.room_id_from_exit(parser.noun)
-        if next_room_id:
+        (can_go, objection) = current_room.can_go(parser.noun, inventory)
+        if can_go:
+            next_room_id = current_room.room_id_from_exit(parser.noun)
             current_room = rooms[next_room_id]
         else:
-            print("There are no exits that way.")
+            suppress_room_description = True
+            print(objection)
 
     elif parser.verb == "inventory":
         suppress_room_description = True

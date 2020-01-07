@@ -61,8 +61,26 @@ class Room:
     def add_object(self, object):
         self.objects[self.current_state][object.id] = object
 
+    def can_go(self, exit, player_inventory):
+        if exit in self.exits:
+            rules = self.exits[exit].get("rules")
+            if rules:
+                for rule in rules:
+                    if rule["type"] == "not_if_carrying":
+                        if rule["object"] in player_inventory:
+                            return (False, rule["objection"])
+                        else:
+                            return (True, None)
+                    else:
+                        raise Exception(f"Unknown rule type {rule['type']}")
+            else:
+                return (True, None)
+
+        # Default
+        return (False, "You can't go that way.")
+
     def room_id_from_exit(self, exit):
         if exit in self.exits:
-            return self.exits[exit]
+            return self.exits[exit]["destination"]
         else:
             return None

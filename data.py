@@ -20,6 +20,16 @@ object_data = {
         "verbs": { "turn on": "on", "turn off": "off" },
         "moveable": True
     },
+    "plusfours": {
+        "name": "a pair of tweed plus fours",
+        "description": {
+            "default": "a pair of tweed plus fours that you claim to have bought from Camden Market, but actually bought on Amazon."
+        },
+        "states": [ "default" ],
+        "verbs": {},
+        "moveable": True,
+        "wearable": True
+    },
     "remote": {
         "name": "a remote control",
         "description": {
@@ -88,8 +98,17 @@ room_data = {
             ]
         },
         "exits": {
-            "north": "hall",
-            "south": "street"
+            "north": {
+                "destination": "hall",
+                "rules": [
+                    {
+                        "type": "not_if_carrying",
+                        "object": "pennyfarthing",
+                        "objection": "The penny-farthing won't fit through there."
+                    }
+                ]
+            },
+            "south": { "destination": "street" }
         },
         "states": ["default"]
     },
@@ -102,9 +121,9 @@ room_data = {
             "default": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
         },
         "exits": {
-            "north": "kitchen",
-            "south": "livingroom",
-            "up": "stairs"
+            "north": {"destination": "kitchen"} ,
+            "south": {"destination": "livingroom"},
+            "up": {"destination": "stairs"}
         },
         "states": ["default"]
     },
@@ -117,7 +136,7 @@ room_data = {
             "default": "You get halfway up the narrow flight of stairs before the piles of books on either side become too constricting. Perhaps you should go back downstairs before you cause an avalanche."
         },
         "exits": {
-            "down": "hall"
+            "down": {"destination": "hall"}
         },
         "states": ["default"]
     },
@@ -130,8 +149,8 @@ room_data = {
             "default": "You are in a squalid kitchen. There may be work surfaces somewhere under the pile of mouldering plates and pans, but it's hard to tell."
         },
         "exits": {
-            "north": "bathroom",
-            "south": "hall"
+            "north": {"destination": "bathroom"},
+            "south": {"destination": "hall"}
         },
         "states": ["default"]
     },
@@ -145,7 +164,7 @@ room_data = {
                      "you hear a distant bass throb from the vinyl stall at the Tobacco Factory market."
         },
         "exits": {
-            "north": "livingroom"
+            "north": {"destination": "livingroom"}
             },
         "states": ["default"]
     },
@@ -160,7 +179,7 @@ room_data = {
             "lit": "The torch lights up the bathroom surprisingly well."
         },
         "exits": {
-            "south": "kitchen"
+            "south": {"destination": "kitchen"}
         },
         "states": ["unlit", "lit"]
     }
