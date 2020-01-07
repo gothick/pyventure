@@ -1,7 +1,7 @@
 from data import object_data
 
 class Object:
-    def __init__(self, id, name, desc, states, verbs, moveable):
+    def __init__(self, id, name, desc, states, verbs, moveable, wearable):
         self.id = id
         self.name = name
         self.__description = desc
@@ -9,6 +9,7 @@ class Object:
         self.current_state = next(iter(self.states), None)
         self.verbs = verbs
         self.moveable = moveable
+        self.wearable = wearable
     def __repr__(self):
         return self.name
 
@@ -33,8 +34,9 @@ class Object:
                 object_data[id]["description"],
                 object_data[id]["states"],
                 object_data[id]["verbs"],
-                object_data[id]["moveable"]
-            );
+                object_data[id]["moveable"],
+                object_data[id]["wearable"]
+            )
         else:
             return None
 

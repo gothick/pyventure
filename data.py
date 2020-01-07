@@ -1,4 +1,14 @@
 object_data = {
+    "shirt": {
+        "name": "a natty Paisley print shirt",
+        "description": {
+            "default": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": True,
+        "wearable": True
+    },
     "torch": {
         "name": "an Ever Ready torch",
         "description":
@@ -8,6 +18,7 @@ object_data = {
         },
         "states": [ "off", "on" ],
         "verbs": { "turn on": "on", "turn off": "off" },
+        "wearable": False,
         "moveable": True
     },
     "iphone": {
@@ -18,6 +29,7 @@ object_data = {
         },
         "states": [ "on", "off" ],
         "verbs": { "turn on": "on", "turn off": "off" },
+        "wearable": False,
         "moveable": True
     },
     "plusfours": {
@@ -37,6 +49,7 @@ object_data = {
         },
         "states": [ "default" ],
         "verbs": {},
+        "wearable": False,
         "moveable": True
     },
     "books": {
@@ -46,6 +59,7 @@ object_data = {
         },
         "states": [ "default"],
         "verbs": {},
+        "wearable": False,
         "moveable": False
     },
     "stuff": {
@@ -55,6 +69,7 @@ object_data = {
         },
         "states": ["default"],
         "verbs": {},
+        "wearable": False,
         "moveable": False
     },
     "tv": {
@@ -65,6 +80,7 @@ object_data = {
         },
         "states": {"off", "on"},
         "verbs": { "turn on": "on", "turn off": "off"},
+        "wearable": False,
         "moveable": False
     },
     "pennyfarthing": {
@@ -74,6 +90,7 @@ object_data = {
         },
         "states": ["default"],
         "verbs": {},
+        "wearable": False,
         "moveable": True
     }
 }

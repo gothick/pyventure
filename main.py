@@ -27,11 +27,14 @@ visited_rooms = set()
 suppress_room_description = False
 
 player = Player(
-    object_ids = {"torch"},
+    inventory = Object.dictionary_from_id_list({"torch"}),
+    wearing = Object.dictionary_from_id_list({"shirt"}),
     score = 0,
     health = 100, # percent
     caffeine_level = 50 # milligrams
 )
+
+debugging = False 
 
 while True:
 
@@ -63,6 +66,9 @@ while True:
     command = input("Command: ")
     parser = Parser(command)
 
+    if debugging:
+        print(parser)
+
     if not parser.valid:
         suppress_room_description = True
         print("Sorry, I don't understand '" + command + "'")
@@ -73,7 +79,7 @@ while True:
             print("You look around.")
         else:
             suppress_room_description = True
-            o = current_room.get(parser.noun) or player.inventory.get(parser.noun)
+            o = current_room.get(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
             if o:
                 print(textwrap.fill("It is " + o.description, WRAP_WIDTH))
             else:
@@ -92,21 +98,29 @@ while True:
         suppress_room_description = True
         if player.is_carrying_anything:
             print("You are carrying: ")
-            for object in player.inventory.values():
-                print("  " + object.name)
+            if len(player.inventory) > 0:
+                for object in player.inventory.values():
+                    print(f"  {object.name}")
+            if len(player.wearing) > 0:
+                for object in player.wearing.values():
+                    print(f"  {object.name} (worn)")
+
         else:
             print("You aren't carrying anything")
     elif parser.verb == "take":
         suppress_room_description = True
-        if current_room.has(parser.noun):
-            taken = current_room.take(parser.noun)
-            if taken:
-                player.give(taken)
-                print("You have taken " + taken.name)
-            else:
-                print("You don't seem to be able to do that.")
+        if player.is_carrying(parser.noun):
+            print("You already have that.")
         else:
-            print("There isn't one of those here.")
+            if current_room.has(parser.noun):
+                taken = current_room.take(parser.noun)
+                if taken:
+                    player.give(taken)
+                    print("You have taken " + taken.name)
+                else:
+                    print("You don't seem to be able to do that.")
+            else:
+                print("There isn't one of those here.")
     elif parser.verb == "drop":
         suppress_room_description = True
         if player.is_carrying(parser.noun):
@@ -115,6 +129,14 @@ while True:
             current_room.add_object(object)
         else:
             print("You're not carrying one of those.")
+    elif parser.verb == "wear":
+        suppress_room_description = True
+        message = player.wear(parser.noun)
+        print(textwrap.fill(message,  WRAP_WIDTH))
+    elif parser.verb == "unwear":
+        suppress_room_description = True
+        message = player.unwear(parser.noun)
+        print(textwrap.fill(message,  WRAP_WIDTH))
     elif parser.verb in [ "turn on", "turn off" ]:
         suppress_room_description = True
         if parser.noun in inventory:
@@ -158,6 +180,12 @@ while True:
         break
     elif parser.verb == "xyzzy":
         # Deep magic
+        if debugging:
+            print("Toggling debugging OFF")
+            debugging = False
+        else:
+            print("Toggling debugging ON")
+            debugging = True
         print()
         print("##### Magical Debugging Start #####")
         print(current_room)

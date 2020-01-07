@@ -18,7 +18,11 @@ normalised_verbs = {
     "drop": "drop",
     "quit": "quit",
     "health": "health",
-    "xyzzy": "xyzzy"
+    "xyzzy": "xyzzy",
+    "wear": "wear",
+    "put on": "wear",
+    "take off": "unwear",
+    "remove": "unwear"
 }
 
 # Special case abbreviations. We'll turn these into GO commands
@@ -48,7 +52,10 @@ normalised_nouns = {
     "penny farthing": "pennyfarthing",
     "penny-farthing": "pennyfarthing",
     "bicycle": "pennyfarthing",
-    "bike": "pennyfarthing"
+    "bike": "pennyfarthing",
+    "shirt": "shirt",
+    "natty shirt": "shirt",
+    "paisley shirt": "shirt"
 }
 
 class Parser:
@@ -96,9 +103,17 @@ class Parser:
         if verb:
             self.__verb = verb
             self.valid = True
+        else:
+            self.__verb = None
 
         self.__noun = noun
-
+    
+    def __repr__(self):
+        debug = "Parser object with: \n"
+        debug += f"Verb: {self.__verb}\n"
+        debug += f"Noun: {self.__noun}\n"
+        debug += f"Valid: {self.valid}\n"
+        return debug
 
     @property
     def verb(self):
