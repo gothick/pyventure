@@ -136,7 +136,7 @@ room_data = {
         "description": {
             "default":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
-                        "pallets sits surrounded by milk crates on the stripped pine floorboards. Light "
+                        "pallets sits surrounded by red milk crates on the stripped pine floorboards. Light "
                         "streams in through the picture window from the tidy Southville street outside.",
             "extras": [
                 {
