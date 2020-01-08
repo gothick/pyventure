@@ -2,7 +2,7 @@ object_data = {
     "fridge": {
         "name": "a looming Smeg fridge",
         "description": {
-            "default": "a hulking giant of a fridge. You open the door and admire the white, serene food-less interior."
+            "default": "a hulking silver giant of a fridge. You open the door and admire the white, serene food-less interior."
         },
         "states": ["default"],
         "verbs": {},
@@ -200,7 +200,6 @@ room_data = {
                         " a lingering hint of avocado toast in the air."
         },
         "exits": {
-            "north": {"destination": "bathroom"},
             "south": {"destination": "hall"}
         },
         "states": ["default"]
