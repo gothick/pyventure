@@ -48,6 +48,7 @@ while True:
         visited_rooms.add(current_room.id)
 
     if not suppress_room_description:
+        print()
         print (current_room.full_description(WRAP_WIDTH))
 
     # Pre-round player events:
@@ -89,6 +90,10 @@ while True:
         (can_go, objection) = current_room.can_go(parser.noun, player)
         if can_go:
             next_room_id = current_room.room_id_from_exit(parser.noun)
+            transition = current_room.transition_from_exit(parser.noun)
+            if transition:
+                print()
+                print(textwrap.fill(transition, WRAP_WIDTH))
             current_room = rooms[next_room_id]
         else:
             suppress_room_description = True

@@ -185,7 +185,11 @@ room_data = {
         "exits": {
             "north": {"destination": "bathroom"} ,
             "south": {"destination": "bedroom"},
-            "down": {"destination": "hall"}
+            "down": {
+                "destination": "hall",
+                "transition": "You tread carefully up a vertiginous flight of stairs. You would "
+                              "be gripping a handrail, but your architect told you they were passé."
+            }
         },
         "states": ["default"]
     },
@@ -201,7 +205,9 @@ room_data = {
             "north": {"destination": "kitchen"} ,
             "south": {"destination": "livingroom"},
             "up": {
-                "destination": "landing"
+                "destination": "landing",
+                "transition": "You tread carefully down a vertiginous flight of stairs. You would "
+                              "be gripping a handrail, but your architect told you they were passé."
             }
         },
         "states": ["default"]

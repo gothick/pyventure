@@ -90,3 +90,9 @@ class Room:
             return self.exits[exit]["destination"]
         else:
             return None
+
+    def transition_from_exit(self, exit):
+        if exit in self.exits:
+            return self.exits[exit].get("transition")
+        else:
+            return None
