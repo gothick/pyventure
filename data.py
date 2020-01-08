@@ -161,6 +161,34 @@ room_data = {
         },
         "states": ["default"]
     },
+    "bedroom": {
+        "name": "The bedroom",
+        "objects": {
+            "default": set()
+        },
+        "description": {
+            "default": "This will be a bedroom, once I've designed it."
+        },
+        "exits": {
+            "north": {"destination": "landing"} 
+        },
+        "states": ["default"]
+    },
+    "landing": {
+        "name": "The upstairs landing",
+        "objects": {
+            "default": set()
+        },
+        "description": {
+            "default": "You are in a tiny landing at the top of a narrow flight of stairs."
+        },
+        "exits": {
+            "north": {"destination": "bathroom"} ,
+            "south": {"destination": "bedroom"},
+            "down": {"destination": "hall"}
+        },
+        "states": ["default"]
+    },
     "hall": {
         "name": "The hall",
         "objects": {
@@ -172,20 +200,9 @@ room_data = {
         "exits": {
             "north": {"destination": "kitchen"} ,
             "south": {"destination": "livingroom"},
-            "up": {"destination": "stairs"}
-        },
-        "states": ["default"]
-    },
-    "stairs": {
-        "name": "The stairs",
-        "objects": {
-            "default": { "books" }
-        },
-        "description": {
-            "default": "You get halfway up the narrow flight of stairs before the piles of books on either side become too constricting. Perhaps you should go back downstairs before you cause an avalanche."
-        },
-        "exits": {
-            "down": {"destination": "hall"}
+            "up": {
+                "destination": "landing"
+            }
         },
         "states": ["default"]
     },
@@ -229,7 +246,7 @@ room_data = {
             "lit": "The torch lights up the bathroom surprisingly well."
         },
         "exits": {
-            "south": {"destination": "kitchen"}
+            "south": {"destination": "landing"}
         },
         "states": ["unlit", "lit"]
     }
