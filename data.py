@@ -1,4 +1,36 @@
 object_data = {
+    "fridge": {
+        "name": "a looming Smeg fridge",
+        "description": {
+            "default": "a hulking giant of a fridge. You open the door and admire the white, serene food-less interior."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": False,
+        "wearable": False
+    },
+    "espressomachine": {
+        "name": "a complicated espresso machine",
+        "description": {
+            "default": "a designer Italian espresso machine. It looks like what would happen if an Alessi lemon "
+                        "juicer and a plumbing supplies store had a baby."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": False,
+        "wearable": False
+    },
+    "menus": {
+        "name": "some takeaway menus",
+        "description": {
+            "default": "a collection of menus from, variously, a vegan slaw shack, a cronut salon and a "
+                        "rainbow grilled cheese caravan."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": True,
+        "wearable": False
+    },
     "shirt": {
         "name": "a natty Paisley print shirt",
         "description": {
@@ -160,10 +192,12 @@ room_data = {
     "kitchen": {
         "name": "The kitchen",
         "objects": {
-            "default": set()
+            "default": { "fridge", "espressomachine", "menus" }
         },
         "description": {
-            "default": "You are in a squalid kitchen. There may be work surfaces somewhere under the pile of mouldering plates and pans, but it's hard to tell."
+            "default": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
+                        "and a complicated-looking espresso machine. There is no actual food to be seen, though there is "
+                        " a lingering hint of avocado toast in the air."
         },
         "exits": {
             "north": {"destination": "bathroom"},

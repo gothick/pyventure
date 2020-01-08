@@ -55,7 +55,17 @@ normalised_nouns = {
     "bike": "pennyfarthing",
     "shirt": "shirt",
     "natty shirt": "shirt",
-    "paisley shirt": "shirt"
+    "paisley shirt": "shirt",
+    "fridge": "fridge",
+    "smeg": "fridge",
+    "smeg fridge": "fridge",
+    "menus": "menus",
+    "takeaway menus": "menus",
+    "espresso machine": "espressomachine",
+    "machine": "espressomachine",
+    "espresso": "espressomachine",
+    "coffee machine": "espressomachine",
+    "coffee maker": "espressomachine"
 }
 
 class Parser:
