@@ -75,7 +75,10 @@ normalised_nouns = {
     "sink": "sink",
     "bath": "bath",
     "gargoyle clawfoot bath": "bath",
-    "clawfoot bath": "bath"
+    "clawfoot bath": "bath",
+    "beard oil": "beardoil",
+    "oil": "beardoil",
+    "can": "beardoil"
 }
 
 class Parser:
