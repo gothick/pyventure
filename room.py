@@ -72,7 +72,7 @@ class Room:
             if rules:
                 for rule in rules:
                     if rule["type"] == "not_if_carrying":
-                        if player.is_carrying(rule["object"]):
+                        if player.has(rule["object"]):
                             return (False, rule["objection"])
                         else:
                             return (True, None)

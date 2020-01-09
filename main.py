@@ -119,7 +119,7 @@ while True:
             print("You aren't carrying anything")
     elif parser.verb == "take":
         suppress_room_description = True
-        if player.is_carrying(parser.noun):
+        if player.has(parser.noun):
             print("You already have that.")
         else:
             if current_room.has(parser.noun):
@@ -133,7 +133,7 @@ while True:
                 print("There isn't one of those here.")
     elif parser.verb == "drop":
         suppress_room_description = True
-        if player.is_carrying(parser.noun):
+        if player.has(parser.noun):
             object = player.take(parser.noun)
             print("You drop " + object.name)
             current_room.add_object(object)
