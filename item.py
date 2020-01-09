@@ -39,8 +39,8 @@ class StatefulItem(Item):
                 result = True
         return result
 
+# Very simple Item factory for above items.
 class ItemFactory:
-
     @staticmethod
     def create(id, data):
         type = data["type"]
@@ -49,6 +49,8 @@ class ItemFactory:
 
         assert 0, "Bad item creation: " + type    
 
-    choice = { "Item":  Item,
-               "StatefulItem":  StatefulItem                
-             }
+    choice = { 
+        "Item":  Item,
+        "StatefulItem":  StatefulItem                
+    }
+    
