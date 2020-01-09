@@ -9,6 +9,7 @@ normalised_verbs = {
     "go": "go",
     "examine": "examine",
     "look": "examine",
+    "look at": "examine",
     "l": "examine",
     "describe": "examine",
     "take": "take",
