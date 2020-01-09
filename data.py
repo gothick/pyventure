@@ -1,5 +1,12 @@
 # New-style item data
 item_data = {
+    "bag": {
+        "type": "ContainerItem",
+        "name": "a Bag of Holding",
+        "description": "a bag that appears to be able to contain anything you throw into it, despite its diminutive size.",
+        "traits": { "moveable" },
+        "inventory": { "plusfours", "beardoil", "menus", "iphone" }
+    },
     "shirt": {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
@@ -110,7 +117,7 @@ room_data = {
     "livingroom": {
         "name": "The Living Room",
         "objects": {
-            "default": { "iphone", "tv", "pennyfarthing" }
+            "default": { "iphone", "tv", "pennyfarthing", "bag" }
         },
         "description": {
             "default":  "You are in the living room of a well-kept terraced house. Adorning the walls are "

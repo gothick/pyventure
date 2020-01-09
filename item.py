@@ -1,5 +1,28 @@
+# Very simple Item factory.
+class ItemFactory:
+    # Create a factory given a dictionary of item data:
+    def __init__(self, data):
+        self.data = data
+
+    def create_from_id(self, id):
+        if id not in self.data:
+            raise Exception(f"Could not find item with id '{id}' in item data")
+        item_data = self.data[id]
+        type = item_data.get("type") or "Item" # Default to the simplest item type
+        cls = globals()[type]
+        if not cls:
+            raise Exception(f"Unknown item ")
+        return cls(id, item_data, self)
+
+    def create_from_id_list(self, ids):
+        objects = {}
+        for id in ids:
+            objects[id] =  self.create_from_id(id)
+        return objects
+
+# The actual Item classes
 class Item:
-    def __init__(self, id, data):
+    def __init__(self, id, data, item_factory):
         self.id = id
         self.name = data["name"]
         self._description = data["description"]
@@ -17,8 +40,8 @@ def __repr__(self):
     return f"{self.name}: {self.description}"
 
 class StatefulItem(Item):
-    def __init__(self, id, data):
-        super().__init__(id, data)
+    def __init__(self, id, data, item_factory):
+        super().__init__(id, data, item_factory)
         self.states = data["states"]
         # Default to the first state in our available states
         self.state = next(iter(self.states), None)
@@ -39,28 +62,17 @@ class StatefulItem(Item):
                 result = True
         return result
 
-# Very simple Item factory for above items.
-class ItemFactory:
-    # Create a factory given a dictionary of item data:
-    def __init__(self, data):
-        self.data = data
+class ContainerItem(Item):
+    def __init__(self, id, data, item_factory):
+        super().__init__(id, data, item_factory)
+        self.inventory = item_factory.create_from_id_list(data["inventory"])
 
-    def create_from_id(self, id):
-        if id not in self.data:
-            raise Exception(f"Could not find item with id '{id}' in item data")
-        item_data = self.data[id]
-        type = item_data.get("type") or "Item" # Default to the simplest item type
-        if type not in ItemFactory.choice:
-            raise Exception(f"Unknown item ")
-        return ItemFactory.choice[type](id, item_data)
-
-    choice = { 
-        "Item":  Item,
-        "StatefulItem":  StatefulItem                
-    }
-
-    def create_from_id_list(self, ids):
-        objects = {}
-        for id in ids:
-            objects[id] =  self.create_from_id(id)
-        return objects
+    @property
+    def description(self):
+        d = self._description
+        if len(self.inventory) == 1:
+            d += " It contains " + next(iter(self.inventory.values)).name + "."
+        elif len(self.inventory) > 1:
+            names = list(i.name for i in self.inventory.values())
+            d += " It contains " + "{} and {}".format(", ".join(names[:-1]),  names[-1]) + "."
+        return d

@@ -78,7 +78,9 @@ normalised_nouns = {
     "clawfoot bath": "bath",
     "beard oil": "beardoil",
     "oil": "beardoil",
-    "can": "beardoil"
+    "can": "beardoil",
+    "bag": "bag",
+    "bag of holding": "bag"
 }
 
 class Parser:
