@@ -1,3 +1,26 @@
+# New-style item data
+item_data = {
+    "shirt": {
+        "type": "Item",
+        "name": "a natty Paisley print shirt",
+        "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
+        "verbs": {},
+        "traits": { "moveable", "wearable" } 
+    },
+    "torch": {
+        "type": "StatefulItem",
+        "name": "an Ever Ready torch",
+        "description":
+        {
+            "off": "a plastic 1970s Ever Ready torch. It is switched off.",
+            "on": "a plastic 1970s Ever Ready torch. It's switched on, and emits a surprising amount of light."
+        },
+        "states": [ "off", "on" ],
+        "verbs": { "turn on": "on", "turn off": "off" },
+        "traits": { "moveable" }
+    },
+}
+
 object_data = {
     "bath": {
         "name": "a gargoyle clawfoot bath",

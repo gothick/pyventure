@@ -41,16 +41,26 @@ class StatefulItem(Item):
 
 # Very simple Item factory for above items.
 class ItemFactory:
-    @staticmethod
-    def create(id, data):
-        type = data["type"]
-        if type in ItemFactory.choice:
-            return ItemFactory.choice[type](id, data)
+    # Create a factory given a dictionary of item data:
+    def __init__(self, data):
+        self.data = data
 
-        assert 0, "Bad item creation: " + type    
+    def create_from_id(self, id):
+        if id not in self.data:
+            raise Exception(f"Could not find item with id '{id}' in item data")
+        item_data = self.data[id]
+        type = item_data["type"]
+        if type not in ItemFactory.choice:
+            raise Exception(f"Unknown item ")
+        return ItemFactory.choice[type](id, item_data)
 
     choice = { 
         "Item":  Item,
         "StatefulItem":  StatefulItem                
     }
-    
+
+    def create_from_id_list(self, ids):
+        objects = {}
+        for id in ids:
+            objects[id] =  self.create_from_id(id)
+        return objects

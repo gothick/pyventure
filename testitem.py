@@ -24,24 +24,24 @@ item_data = {
 }
 
 class TestParserMethods(unittest.TestCase):
+    def setUp(self):
+        self.factory = ItemFactory(item_data)
+
     def test_basic_item(self):
-        shirt_data = item_data["shirt"]
-        item = Item("shirt", shirt_data)
+        item = self.factory.create_from_id("shirt")
         self.assertEqual(item.name, "a natty Paisley print shirt")
         self.assertEqual(item.description, "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.")
         self.assertTrue(item.has_trait("moveable"))
         self.assertTrue(item.has_trait("wearable"))
 
     def test_basic_stateful_item(self):
-        torch_data = item_data["torch"]
-        item = StatefulItem("torch", torch_data)
+        item = self.factory.create_from_id("torch")
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
         self.assertFalse(item.has_trait("wearable"))
         
     def test_stateful_item_states(self):
-        torch_data = item_data["torch"]
-        item = StatefulItem("torch", torch_data)
+        item = self.factory.create_from_id("torch")
         self.assertTrue(item.can_verb("turn on"))
         self.assertFalse(item.can_verb("whistle"))
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
@@ -53,8 +53,7 @@ class TestParserMethods(unittest.TestCase):
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
 
     def test_factory(self):
-        torch_data = item_data["torch"]
-        item = ItemFactory.create("torch", torch_data)
+        item = self.factory.create_from_id("torch")
         self.assertIsInstance(item, StatefulItem)
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
