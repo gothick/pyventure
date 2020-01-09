@@ -36,7 +36,6 @@ class Room:
             full_desc += "Exits are " + ", ".join(self.exits.keys())
         return full_desc
 
-
     def __repr__(self):
         debug = self.name + "\n"
         debug += "With exits: \n"

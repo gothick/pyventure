@@ -1,7 +1,7 @@
 from data import object_data
 
 class Object:
-    def __init__(self, id, name, desc, states, verbs, moveable, wearable):
+    def __init__(self, id, name, desc, states, verbs, moveable, wearable, objects = None):
         self.id = id
         self.name = name
         self.__description = desc
@@ -10,6 +10,7 @@ class Object:
         self.verbs = verbs
         self.moveable = moveable
         self.wearable = wearable
+        self.objects = objects
     def __repr__(self):
         return self.name
 

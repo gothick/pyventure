@@ -142,6 +142,18 @@ while True:
         suppress_room_description = True
         message = player.unwear(parser.noun)
         print(textwrap.fill(message,  WRAP_WIDTH))
+    elif parser.verb in [ "open", "close"]:
+        suppress_room_description = True
+        o = current_room.get(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
+        if o:
+            if o.do_verb(parser.verb):
+                print("You " + parser.verb + " " + o.name)
+                print(textwrap.fill("You now see " + o.description,  WRAP_WIDTH))
+            else:
+                print("Nothing happens.")
+        else:
+            print("You don't see that here")
+
     elif parser.verb in [ "turn on", "turn off" ]:
         suppress_room_description = True
         if parser.noun in inventory:

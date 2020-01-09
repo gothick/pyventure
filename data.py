@@ -1,4 +1,51 @@
 object_data = {
+    "bath": {
+        "name": "a gargoyle clawfoot bath",
+        "description": {
+            "default": "a bath that's far too big for the room, in terms of both size and personality."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": False,
+        "wearable": False
+    },
+    "sink": {
+        "name": "a sink",
+        "description": {
+            "default": "a sink reclaimed from a Victorian pub, with taps to match. You pull on the "
+                        "India Pale Ale tap and are rewarded with a stream of hot water."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": False,
+        "wearable": False
+    },
+    "moustacheoil": {
+        "name": "a can of beard oil",
+        "description": {
+            "default": "a can of patchouli and ylang-ylang beard oil."
+        },
+        "states": ["default"],
+        "verbs": {},
+        "moveable": False,
+        "wearable": False
+    },
+    "bathroomcabinet": {
+        "name": "a bathroom cabinet",
+        "objects": {
+            "closed": set(),
+            "open": {"moustacheoil"}
+        },
+        "description": {
+            "closed": "a distressed oak bathroom cabinet. Let's face it, you'd be distressed if you had to stare "
+                      "at that bath all day long. The cabinet is closed.",
+            "open": "a distressed oak bathroom cabinet, standing open."
+        },
+        "states": [ "closed", "open" ],
+        "verbs": { "open": "open", "close": "closed"},
+        "moveable": False,
+        "wearable": False
+    },
     "fridge": {
         "name": "a looming Smeg fridge",
         "description": {
@@ -244,16 +291,16 @@ room_data = {
     "bathroom": {
         "name": "The bathroom",
         "objects": {
-            "unlit": set(),
-            "lit": { "remote" }
+            "default": { "bath", "sink", "bathroomcabinet" }
         },
         "description": {
-            "unlit": "You are in a dark bathroom. You pull the light cord, and are rewarded with a disappointing 'clunk', and no additional light.",
-            "lit": "The torch lights up the bathroom surprisingly well."
+            "default": "You are in a bathroom only just large enough for you, the dominating freestanding bath "
+                       "with gargoyle feet and a small white basin which seems to have beer pumps instead of taps. "
+                       "Above the basin is a distressed oak bathroom cabinet."
         },
         "exits": {
             "south": {"destination": "landing"}
         },
-        "states": ["unlit", "lit"]
+        "states": ["default"]
     }
 }

@@ -23,7 +23,9 @@ normalised_verbs = {
     "wear": "wear",
     "put on": "wear",
     "take off": "unwear",
-    "remove": "unwear"
+    "remove": "unwear",
+    "open": "open",
+    "close": "close"
 }
 
 # Special case abbreviations. We'll turn these into GO commands
@@ -66,7 +68,13 @@ normalised_nouns = {
     "machine": "espressomachine",
     "espresso": "espressomachine",
     "coffee machine": "espressomachine",
-    "coffee maker": "espressomachine"
+    "coffee maker": "espressomachine",
+    "bathroom cabinet": "bathroomcabinet",
+    "cabinet": "bathroomcabinet",
+    "sink": "sink",
+    "bath": "bath",
+    "gargoyle clawfoot bath": "bath",
+    "clawfoot bath": "bath"
 }
 
 class Parser:
