@@ -1,22 +1,19 @@
 import textwrap
-from data import room_data
+import data
 from parser import Parser
 from room import Room
-from object import Object
 from player import Player
+from item import ItemFactory
+
+# All our items are stamped out from this data-driven
+# item factory.
+item_factory = ItemFactory(data.item_data)
 
 rooms = {}
 
 # Build the universe.
-for room_id in room_data:
-
-    rooms[room_id] = Room(room_id,
-                       room_data[room_id]["name"],
-                       room_data[room_id]["description"],
-                       room_data[room_id]["objects"],
-                       room_data[room_id]["exits"],
-                       room_data[room_id]["states"]
-    )
+for id, data in data.room_data.items():
+    rooms[id] = Room(id, item_factory, data)
 
 print("\nWelcome to the Bristol Hipster Adventure.\n")
 
@@ -27,8 +24,8 @@ visited_rooms = set()
 suppress_room_description = False
 
 player = Player(
-    inventory = Object.dictionary_from_id_list({"torch"}),
-    wearing = Object.dictionary_from_id_list({"shirt"}),
+    inventory = {},
+    wearing = item_factory.create_from_id_list(["shirt"]),
     score = 0,
     health = 100, # percent
     caffeine_level = 50 # milligrams
@@ -38,7 +35,7 @@ debugging = False
 
 while True:
 
-    torch = current_room.objects.get("torch") or player.inventory.get("torch")
+    torch = current_room.get_item_reference("torch") or player.get_item_reference("torch")
     if torch and torch.current_state == "on":
         if "lit" in current_room.states:
             current_room.current_state = "lit"
@@ -80,7 +77,7 @@ while True:
             print("You look around.")
         else:
             suppress_room_description = True
-            o = current_room.get(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
+            o = current_room.get_item_reference(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
             if o:
                 print(textwrap.fill("It is " + o.description, WRAP_WIDTH))
             else:
@@ -103,7 +100,7 @@ while True:
         suppress_room_description = True
         if player.is_carrying_anything:
             print("You are carrying: ")
-            if len(player.inventory) > 0:
+            if player.inventory:
                 for object in player.inventory.values():
                     print(f"  {object.name}")
             if len(player.wearing) > 0:
@@ -114,7 +111,7 @@ while True:
             print("You aren't carrying anything")
     elif parser.verb == "take":
         suppress_room_description = True
-        if player.is_carrying(parser.noun):
+        if player.has(parser.noun):
             print("You already have that.")
         else:
             if current_room.has(parser.noun):
@@ -128,10 +125,10 @@ while True:
                 print("There isn't one of those here.")
     elif parser.verb == "drop":
         suppress_room_description = True
-        if player.is_carrying(parser.noun):
-            object = player.take(parser.noun)
-            print("You drop " + object.name)
-            current_room.add_object(object)
+        if player.has(parser.noun):
+            item = player.take(parser.noun)
+            print("You drop " + item.name)
+            current_room.give(item)
         else:
             print("You're not carrying one of those.")
     elif parser.verb == "wear":
@@ -144,11 +141,11 @@ while True:
         print(textwrap.fill(message,  WRAP_WIDTH))
     elif parser.verb in [ "open", "close"]:
         suppress_room_description = True
-        o = current_room.get(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
-        if o:
-            if o.do_verb(parser.verb):
-                print("You " + parser.verb + " " + o.name)
-                print(textwrap.fill("You now see " + o.description,  WRAP_WIDTH))
+        item = current_room.get_item_reference(parser.noun) or player.get_item_reference(parser.noun) 
+        if item:
+            if item.do_verb(parser.verb):
+                print("You " + parser.verb + " " + item.name)
+                print(textwrap.fill("You now see " + item.description,  WRAP_WIDTH))
             else:
                 print("Nothing happens.")
         else:
@@ -156,11 +153,11 @@ while True:
 
     elif parser.verb in [ "turn on", "turn off" ]:
         suppress_room_description = True
-        if parser.noun in inventory:
-            o = inventory[parser.noun]
-            if o.do_verb(parser.verb):
-                print("You " + parser.verb + " " + o.name)
-                print(textwrap.fill("You are now holding " + o.description,  WRAP_WIDTH))
+        if player.has(parser.noun):
+            item = player.get_item_reference(parser.noun)
+            if item.do_verb(parser.verb):
+                print("You " + parser.verb + " " + item.name)
+                print(textwrap.fill("You are now holding " + item.description,  WRAP_WIDTH))
                 if parser.verb == "turn on" and parser.noun == "torch":
                     if "lit" in current_room.states and current_room.current_state != "lit":
                         current_room.current_state = "lit"
@@ -176,11 +173,11 @@ while True:
             # if it's an immovable object that's in the room with us, we still
             # want to respond.
             if current_room.has(parser.noun):
-                o = current_room.get(parser.noun)
-                if o.moveable:
+                item = current_room.get_item_reference(parser.noun)
+                if item.has_trait("moveable"):
                     print("You'll need to pick that up first")
                 else:
-                    if o.id == "tv":
+                    if item.id == "tv":
                         print("You don't see how to do that. Is there a remote somewhere?")
                     else:
                         print("I don't know how to do that.")

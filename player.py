@@ -1,56 +1,16 @@
-from object import Object
+from traits import ClothesHorse
+from room import Room
 
-class Player:
+
+class Player(ClothesHorse):
     def __init__(self, inventory, wearing, score, health, caffeine_level):
+        super().__init__(inventory, wearing)
         self.score = score
         self.health = health
         self.caffeine_level = caffeine_level # milligrams
-        # Dictionary of object IDs to actual objects
-        self.inventory = inventory
-        self.wearing = wearing
-    
-    def give(self, object):
-        self.inventory[object.id] = object
     
     def award_points(self, points):
         self.score += points
-
-    @property
-    def is_carrying_anything(self):
-        return len(self.inventory) > 0 or len(self.wearing) > 0
-    
-    def is_carrying(self, object_id):
-        return object_id in self.inventory or object_id in self.wearing
-
-    def is_wearing(self, object_id):
-        return object_id in self.wearing
-
-    def take(self, object_id):
-        if object_id in self.inventory:
-            return self.inventory.pop(object_id)
-        elif object_id in self.wearing:
-            return self.wearing.pop(object_id)
-        return None
-
-    def wear(self, object_id):
-        if object_id in self.wearing:
-            return "You're already wearing that."
-        if object_id in self.inventory:
-            if self.inventory[object_id].wearable == True:
-                object = self.inventory.pop(object_id)
-                self.wearing[object_id] = object
-                return "You are now wearing " + object.name
-            else: 
-                return "You can't wear that."
-        return "You're not carrying that."
-
-    def unwear(self, object_id):
-        if not object_id in self.wearing:
-            return "You're not wearing that."
-        else:
-            object = self.wearing.pop(object_id)
-            self.inventory[object_id] = object
-            return "You take off " + object.name
 
     def __repr__(self):
         message = f"A Player object with health {self.health}, caffeine_level {self.caffeine_level} and score {self.score}\n"
@@ -61,7 +21,13 @@ class Player:
         for object in self.wearing:
             message += f" {object}\n"
         return message
-        
+    
+    @property 
+    def can_touch(self, item_id, current_room: Room):
+        if current_room.has(item_id) or self.has(item_id):
+            return True
+        return False
+
     @property
     def is_dead(self):
         if self.health <= 0:
