@@ -1,5 +1,3 @@
-from object import Object
-
 class Player:
     def __init__(self, inventory, wearing, score, health, caffeine_level):
         self.score = score

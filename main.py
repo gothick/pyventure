@@ -1,21 +1,26 @@
 import textwrap
-from data import room_data
+import data
 from parser import Parser
 from room import Room
-from object import Object
 from player import Player
+from item import ItemFactory
+
+# All our items are stamped out from this data-driven
+# item factory.
+item_factory = ItemFactory(data.item_data)
 
 rooms = {}
 
 # Build the universe.
-for room_id in room_data:
+for id, data in data.room_data.items():
 
-    rooms[room_id] = Room(room_id,
-                       room_data[room_id]["name"],
-                       room_data[room_id]["description"],
-                       room_data[room_id]["objects"],
-                       room_data[room_id]["exits"],
-                       room_data[room_id]["states"]
+    rooms[id] = Room(id,
+                        item_factory,
+                       data["name"],
+                       data["description"],
+                       data["objects"],
+                       data["exits"],
+                       data["states"]
     )
 
 print("\nWelcome to the Bristol Hipster Adventure.\n")
@@ -27,8 +32,8 @@ visited_rooms = set()
 suppress_room_description = False
 
 player = Player(
-    inventory = Object.dictionary_from_id_list({"torch"}),
-    wearing = Object.dictionary_from_id_list({"shirt"}),
+    inventory = {},
+    wearing = item_factory.create_from_id_list(["shirt"]),
     score = 0,
     health = 100, # percent
     caffeine_level = 50 # milligrams

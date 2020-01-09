@@ -4,7 +4,7 @@ class Item:
         self.name = data["name"]
         self._description = data["description"]
         # Simple attributes like "is moveable?" etc.
-        self.traits = data["traits"]
+        self.traits = data.get("traits") or set()
 
     @property
     def description(self):
@@ -49,7 +49,7 @@ class ItemFactory:
         if id not in self.data:
             raise Exception(f"Could not find item with id '{id}' in item data")
         item_data = self.data[id]
-        type = item_data["type"]
+        type = item_data.get("type") or "Item" # Default to the simplest item type
         if type not in ItemFactory.choice:
             raise Exception(f"Unknown item ")
         return ItemFactory.choice[type](id, item_data)

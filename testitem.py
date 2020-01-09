@@ -6,9 +6,12 @@ item_data = {
         "type": "Item",
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
-        "verbs": {},
         "traits": { "moveable", "wearable" } 
     },
+    "basic": {
+        "name": "a very basic item",
+        "description": "an item with no traits at all."
+    },    
     "torch": {
         "type": "StatefulItem",
         "name": "an Ever Ready torch",
@@ -26,6 +29,11 @@ item_data = {
 class TestParserMethods(unittest.TestCase):
     def setUp(self):
         self.factory = ItemFactory(item_data)
+
+    def test_traitless_item(self):
+        item = self.factory.create_from_id("basic")
+        self.assertEqual(item.name, "a very basic item")
+        self.assertIsInstance(item, Item)
 
     def test_basic_item(self):
         item = self.factory.create_from_id("shirt")

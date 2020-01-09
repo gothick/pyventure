@@ -1,15 +1,15 @@
 import textwrap
-from object import Object
+from item import ItemFactory
 
 class Room:
-    def __init__(self, id, name, description, objects, exits, states):
+    def __init__(self, id, item_factory: ItemFactory, name, description, objects, exits, states):
         self.id = id
         self.name = name
         self.description = description
         self.states = states
         self.objects = {}
         for state, inventory in objects.items():
-            self.objects[state] = Object.dictionary_from_id_list(inventory)
+            self.objects[state] = item_factory.create_from_id_list(inventory)
         self.exits = exits
         self.current_state = next(iter(self.states), None)
 
@@ -58,7 +58,7 @@ class Room:
     def take(self, object_id):
         objects = self.objects[self.current_state]
 
-        if objects[object_id].moveable:
+        if objects[object_id].has_trait("moveable"):
             return objects.pop(object_id)
         else:
             return None
