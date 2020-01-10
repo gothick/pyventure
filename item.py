@@ -11,7 +11,7 @@ class ItemFactory:
         type = item_data.get("type") or "Item" # Default to the simplest item type
         cls = globals()[type]
         if not cls:
-            raise Exception(f"Unknown item ")
+            raise Exception(f"Unknown item type: {type}")
         return cls(id, item_data, self)
 
     def create_from_id_list(self, ids):
