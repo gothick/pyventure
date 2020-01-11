@@ -40,7 +40,7 @@ class Item:
     # contain things can override this. Implementing it here
     # means that we can recurse through a hierarchy of objects
     # looking for things and this will terminate the search.
-    def has(self):
+    def has(self, _):
         return False
 
 def __repr__(self):

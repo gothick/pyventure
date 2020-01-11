@@ -1,11 +1,13 @@
 import textwrap
 from item import ItemFactory
-class Room:
+from traits import Container
+
+class Room(Container):
     def __init__(self, id, item_factory: ItemFactory, data):
+        super().__init__(item_factory.create_from_id_list(data.get("inventory") or set()))
         self.id = id
         self.name = data["name"]
         self.description = data["description"]
-        self.inventory = item_factory.create_from_id_list(data.get("inventory") or set())
         self.exits = data["exits"]
 
     def full_description(self, wrap_width):
@@ -28,30 +30,12 @@ class Room:
         return full_desc
 
     def __repr__(self):
-        debug = self.name + "\n"
+        debug = f"Room: {self.name}\n"
         debug += "With exits: \n"
         for id, details in self.exits.items():
             debug += f" {id}\n"
-        if self.inventory:
-            debug += "with inventory: \n"
-            for item in self.inventory.values():
-                debug += f" {item.name}\n"
+        debug += super().__repr__() 
         return debug
-
-    def has(self, item_id):
-        return item_id in self.inventory
-
-    def get_item_reference(self, item_id):
-        return self.inventory.get(item_id)
-
-    def take(self, item_id):
-        if self.inventory[item_id].has_trait("moveable"):
-            return self.inventory.pop(item_id)
-        else:
-            return None
-
-    def add_item(self, item):
-        self.inventory[item.id] = item
 
     def can_go(self, exit, player):
         if exit in self.exits:

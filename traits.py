@@ -14,17 +14,23 @@ class Container:
                 return True
         return False
     
+    def take(self, item_id):
+        if item_id in self.inventory:
+            if self.inventory[item_id].has_trait("moveable"):
+                return self.inventory.pop(item_id)
+        return None
+
     # Basically "take" only we pass our client a 
     # reference to the item that they should only
     # use temporariliy. We still hold the item.
     def get_item_reference(self, item_id):
         return self.inventory.get(item_id)
-
-    def take(self, item_id):
-        if item_id in self.inventory:
-            return self.inventory.pop(item_id)
-        return None
-
+    
+    def __repr__(self):
+        if self.inventory:
+            return "Container with items: " + ", ".join(self.inventory)
+        return "(Empty Container)"
+    
 class ClothesHorse(Container):
     def __init__(self, inventory, wearing):
         super().__init__(inventory)
@@ -70,3 +76,11 @@ class ClothesHorse(Container):
             item = self.wearing.pop(item_id)
             self.give(item)
             return (True, "You take off " + item.name + ".")
+
+    def __repr__(self):
+        debug = super().__repr__() + "\n"
+        if self.wearing:
+            debug += "Clothes horse wearing: " + ", ".join(self.wearing)
+        else:
+            debug += "(Wearning nothing)"
+        return debug

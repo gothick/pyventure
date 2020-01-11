@@ -100,7 +100,7 @@ while True:
         suppress_room_description = True
         if player.is_carrying_anything:
             print("You are carrying: ")
-            if len(player.inventory) > 0:
+            if player.inventory:
                 for object in player.inventory.values():
                     print(f"  {object.name}")
             if len(player.wearing) > 0:
@@ -128,7 +128,7 @@ while True:
         if player.has(parser.noun):
             item = player.take(parser.noun)
             print("You drop " + item.name)
-            current_room.add_item(item)
+            current_room.give(item)
         else:
             print("You're not carrying one of those.")
     elif parser.verb == "wear":
