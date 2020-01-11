@@ -1,4 +1,6 @@
 from traits import ClothesHorse
+from room import Room
+
 
 class Player(ClothesHorse):
     def __init__(self, inventory, wearing, score, health, caffeine_level):
@@ -19,7 +21,13 @@ class Player(ClothesHorse):
         for object in self.wearing:
             message += f" {object}\n"
         return message
-        
+    
+    @property 
+    def can_touch(self, item_id, current_room: Room):
+        if current_room.has(item_id) or self.has(item_id):
+            return True
+        return False
+
     @property
     def is_dead(self):
         if self.health <= 0:

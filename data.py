@@ -116,11 +116,9 @@ item_data = {
 room_data = {
     "livingroom": {
         "name": "The Living Room",
-        "objects": {
-            "default": { "iphone", "tv", "pennyfarthing", "bag" }
-        },
+        "inventory": { "iphone", "tv", "pennyfarthing", "bag" },
         "description": {
-            "default":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
+            "basic":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
                         "pallets sits surrounded by red milk crates on the stripped pine floorboards. Light "
                         "streams in through the picture window from the tidy Southville street outside.",
@@ -138,35 +136,27 @@ room_data = {
                 "rules": [
                     {
                         "type": "not_if_carrying",
-                        "object": "pennyfarthing",
+                        "item": "pennyfarthing",
                         "objection": "The penny-farthing won't fit through there."
                     }
                 ]
             },
             "south": { "destination": "street" }
-        },
-        "states": ["default"]
+        }
     },
     "bedroom": {
         "name": "The bedroom",
-        "objects": {
-            "default": set()
-        },
         "description": {
-            "default": "This will be a bedroom, once I've designed it."
+            "basic": "This will be a bedroom, once I've designed it."
         },
         "exits": {
             "north": {"destination": "landing"} 
-        },
-        "states": ["default"]
+        }
     },
     "landing": {
         "name": "The upstairs landing",
-        "objects": {
-            "default": set()
-        },
         "description": {
-            "default": "You are in a tiny landing at the top of a narrow flight of stairs."
+            "basic": "You are in a tiny landing at the top of a narrow flight of stairs."
         },
         "exits": {
             "north": {"destination": "bathroom"} ,
@@ -176,16 +166,12 @@ room_data = {
                 "transition": "You tread carefully up a vertiginous flight of stairs. You would "
                               "be gripping a handrail, but your architect told you they were passé."
             }
-        },
-        "states": ["default"]
+        }
     },
     "hall": {
         "name": "The hall",
-        "objects": {
-            "default": set()
-        },
         "description": {
-            "default": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
+            "basic": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
         },
         "exits": {
             "north": {"destination": "kitchen"} ,
@@ -195,51 +181,40 @@ room_data = {
                 "transition": "You tread carefully down a vertiginous flight of stairs. You would "
                               "be gripping a handrail, but your architect told you they were passé."
             }
-        },
-        "states": ["default"]
+        }
     },
     "kitchen": {
         "name": "The kitchen",
-        "objects": {
-            "default": { "fridge", "espressomachine", "menus" }
-        },
+        "inventory": { "fridge", "espressomachine", "menus" },
         "description": {
-            "default": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
+            "basic": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
                         "and a complicated-looking espresso machine. There is no actual food to be seen, though there is "
                         " a lingering hint of avocado toast in the air."
         },
         "exits": {
             "south": {"destination": "hall"}
-        },
-        "states": ["default"]
+        }
     },
     "street": {
         "name": "The street",
-        "objects": {
-            "default": set()
-        },
         "description": {
-            "default": "You are in a Victorian terrace in Southville. To the north lies a furniture reclamation yard. From the south "
+            "basic": "You are in a Victorian terrace in Southville. To the north lies a furniture reclamation yard. From the south "
                      "you hear a distant bass throb from the vinyl stall at the Tobacco Factory market."
         },
         "exits": {
             "north": {"destination": "livingroom"}
-            },
-        "states": ["default"]
+        }
     },
     "bathroom": {
         "name": "The bathroom",
-        "objects": {
-            "default": { "bath", "sink", "bathroomcabinet" }
-        },
+        "inventory": { "bath", "sink", "bathroomcabinet" },
         "description": {
-            "default": "You are in a bathroom only just large enough for you, the dominating freestanding bath "
+            "basic": "You are in a bathroom only just large enough for you, the dominating freestanding bath "
                        "with gargoyle feet and a small white basin which seems to have beer pumps instead of taps. "
                        "Above the basin is a distressed oak bathroom cabinet."
         },
         "exits": {
             "south": {"destination": "landing"}
-        },
-        "states": ["default"]
+        }
     }
 }

@@ -8,9 +8,18 @@ class Container:
     def is_carrying_anything(self):
         return len(self.inventory) > 0
     
-    def has(self, item_id):
-        return item_id in self.inventory
+    def has(self, find_item_id):
+        for (item_id, item) in self.inventory.items():
+            if item_id == find_item_id or item.has(find_item_id):
+                return True
+        return False
     
+    # Basically "take" only we pass our client a 
+    # reference to the item that they should only
+    # use temporariliy. We still hold the item.
+    def get_item_reference(self, item_id):
+        return self.inventory.get(item_id)
+
     def take(self, item_id):
         if item_id in self.inventory:
             return self.inventory.pop(item_id)
@@ -30,6 +39,12 @@ class ClothesHorse(Container):
     def is_wearing(self, item_id):
         return item_id in self.wearing
     
+    # Basically "take" only we pass our client a 
+    # reference to the item that they should only
+    # use temporariliy. We still hold the item.
+    def get_item_reference(self, item_id):
+        return super().get_item_reference(item_id) or self.wearing.get(item_id)
+
     def take(self, item_id):
         if item_id in self.wearing:
             return self.wearing.pop(item_id)

@@ -1,36 +1,27 @@
 import textwrap
 from item import ItemFactory
-
 class Room:
-    def __init__(self, id, item_factory: ItemFactory, name, description, objects, exits, states):
+    def __init__(self, id, item_factory: ItemFactory, data):
         self.id = id
-        self.name = name
-        self.description = description
-        self.states = states
-        self.objects = {}
-        for state, inventory in objects.items():
-            self.objects[state] = item_factory.create_from_id_list(inventory)
-        self.exits = exits
-        self.current_state = next(iter(self.states), None)
+        self.name = data["name"]
+        self.description = data["description"]
+        self.inventory = item_factory.create_from_id_list(data.get("inventory") or set())
+        self.exits = data["exits"]
 
     def full_description(self, wrap_width):
         full_desc = self.name + "\n\n"
 
-        d = self.description[self.current_state]
+        d = self.description["basic"]
 
-        if "extras" in self.description:
-            for extra in self.description["extras"]:
-                if extra["type"] == "if_in_room":
-                    if self.has(extra["object"]):
-                        d = d + extra["text"]
+        for extra in self.description.get("extras") or {}:
+            if extra["type"] == "if_in_room":
+                if self.has(extra["object"]):
+                    d = d + extra["text"]
 
         full_desc += textwrap.fill(d, wrap_width) + "\n\n"
 
-        objects = self.objects[self.current_state]
-
-        if (objects):
-            for o in objects.values():
-                full_desc += "There is " + o.name + " here.\n"
+        for item in self.inventory.values():
+                full_desc += "There is " + item.name + " here.\n"
 
         if self.exits:
             full_desc += "Exits are " + ", ".join(self.exits.keys())
@@ -39,32 +30,28 @@ class Room:
     def __repr__(self):
         debug = self.name + "\n"
         debug += "With exits: \n"
-        if len(self.exits):
-            for id, details in self.exits.items():
-                debug += f" {id}\n"
-        debug += f"in state {self.current_state}\n"
-        if len(self.objects[self.current_state]) > 0:
-            debug += "with objects: \n"
-            for object in self.objects[self.current_state].values():
-                debug += f" {object.name}\n"
+        for id, details in self.exits.items():
+            debug += f" {id}\n"
+        if self.inventory:
+            debug += "with inventory: \n"
+            for item in self.inventory.values():
+                debug += f" {item.name}\n"
         return debug
 
-    def has(self, object_id):
-        return object_id in self.objects[self.current_state]
+    def has(self, item_id):
+        return item_id in self.inventory
 
-    def get(self, object_id):
-        return self.objects[self.current_state].get(object_id)
+    def get_item_reference(self, item_id):
+        return self.inventory.get(item_id)
 
-    def take(self, object_id):
-        objects = self.objects[self.current_state]
-
-        if objects[object_id].has_trait("moveable"):
-            return objects.pop(object_id)
+    def take(self, item_id):
+        if self.inventory[item_id].has_trait("moveable"):
+            return self.inventory.pop(item_id)
         else:
             return None
 
-    def add_object(self, object):
-        self.objects[self.current_state][object.id] = object
+    def add_item(self, item):
+        self.inventory[item.id] = item
 
     def can_go(self, exit, player):
         if exit in self.exits:
@@ -72,7 +59,7 @@ class Room:
             if rules:
                 for rule in rules:
                     if rule["type"] == "not_if_carrying":
-                        if player.has(rule["object"]):
+                        if player.has(rule["item"]):
                             return (False, rule["objection"])
                         else:
                             return (True, None)

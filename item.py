@@ -36,12 +36,20 @@ class Item:
     def has_trait(self, trait):
         return trait in self.traits
 
+    # A basic item cannot contain anything. Subclasses that 
+    # contain things can override this. Implementing it here
+    # means that we can recurse through a hierarchy of objects
+    # looking for things and this will terminate the search.
+    def has(self):
+        return False
+
 def __repr__(self):
     return f"{self.name}: {self.description}"
 
 class StatefulItem(Item):
     def __init__(self, id, data, item_factory):
         super().__init__(id, data, item_factory)
+        assert(data["states"])
         self.states = data["states"]
         # Default to the first state in our available states
         self.state = next(iter(self.states), None)
@@ -76,3 +84,9 @@ class ContainerItem(Item):
             names = list(i.name for i in self.inventory.values())
             d += " It contains " + "{} and {}".format(", ".join(names[:-1]),  names[-1]) + "."
         return d
+
+    def has(self, find_item_id):
+        for (item_id, item) in self.inventory.items():
+            if item_id == find_item_id or item.has(find_item_id):
+                return True
+        return False
