@@ -1,5 +1,6 @@
 class Container:
-    def __init__(self, inventory):
+    def __init__(self, inventory, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.inventory = inventory
 
     def give(self, item):

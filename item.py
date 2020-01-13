@@ -1,3 +1,5 @@
+from traits import Container
+
 # Very simple Item factory.
 class ItemFactory:
     # Create a factory given a dictionary of item data:
@@ -22,7 +24,8 @@ class ItemFactory:
 
 # The actual Item classes
 class Item:
-    def __init__(self, id, data, item_factory):
+    def __init__(self, id, data, item_factory, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.id = id
         self.name = data["name"]
         self._description = data["description"]
@@ -70,23 +73,14 @@ class StatefulItem(Item):
                 result = True
         return result
 
-class ContainerItem(Item):
-    def __init__(self, id, data, item_factory):
-        super().__init__(id, data, item_factory)
-        self.inventory = item_factory.create_from_id_list(data["inventory"])
+class ContainerItem(Container, Item):
+    def __init__(self, id, data, item_factory, *args, **kwargs):
+        inventory = item_factory.create_from_id_list(data["inventory"])
+        super().__init__(inventory, id, data, item_factory)
 
     @property
     def description(self):
-        d = self._description
-        if len(self.inventory) == 1:
-            d += " It contains " + next(iter(self.inventory.values)).name + "."
-        elif len(self.inventory) > 1:
-            names = list(i.name for i in self.inventory.values())
-            d += " It contains " + "{} and {}".format(", ".join(names[:-1]),  names[-1]) + "."
-        return d
-
-    def has(self, find_item_id):
-        for (item_id, item) in self.inventory.items():
-            if item_id == find_item_id or item.has(find_item_id):
-                return True
-        return False
+        desc = super().description
+        if self.inventory:
+            desc += "It currently holds " + ", ".join(item.name for item in self.inventory.values()) + "."
+        return desc
