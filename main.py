@@ -141,11 +141,11 @@ while True:
         print(textwrap.fill(message,  WRAP_WIDTH))
     elif parser.verb in [ "open", "close"]:
         suppress_room_description = True
-        o = current_room.get_item_reference(parser.noun) or player.get_item_reference(parser.noun) 
-        if o:
-            if o.do_verb(parser.verb):
-                print("You " + parser.verb + " " + o.name)
-                print(textwrap.fill("You now see " + o.description,  WRAP_WIDTH))
+        item = current_room.get_item_reference(parser.noun) or player.get_item_reference(parser.noun) 
+        if item:
+            if item.do_verb(parser.verb):
+                print("You " + parser.verb + " " + item.name)
+                print(textwrap.fill("You now see " + item.description,  WRAP_WIDTH))
             else:
                 print("Nothing happens.")
         else:
@@ -153,11 +153,11 @@ while True:
 
     elif parser.verb in [ "turn on", "turn off" ]:
         suppress_room_description = True
-        if parser.noun in inventory:
-            o = inventory[parser.noun]
-            if o.do_verb(parser.verb):
-                print("You " + parser.verb + " " + o.name)
-                print(textwrap.fill("You are now holding " + o.description,  WRAP_WIDTH))
+        if player.has(parser.noun):
+            item = player.get_item_reference(parser.noun)
+            if item.do_verb(parser.verb):
+                print("You " + parser.verb + " " + item.name)
+                print(textwrap.fill("You are now holding " + item.description,  WRAP_WIDTH))
                 if parser.verb == "turn on" and parser.noun == "torch":
                     if "lit" in current_room.states and current_room.current_state != "lit":
                         current_room.current_state = "lit"
@@ -173,11 +173,11 @@ while True:
             # if it's an immovable object that's in the room with us, we still
             # want to respond.
             if current_room.has(parser.noun):
-                o = current_room.get_item_reference(parser.noun)
-                if o.moveable:
+                item = current_room.get_item_reference(parser.noun)
+                if item.has_trait("moveable"):
                     print("You'll need to pick that up first")
                 else:
-                    if o.id == "tv":
+                    if item.id == "tv":
                         print("You don't see how to do that. Is there a remote somewhere?")
                     else:
                         print("I don't know how to do that.")
