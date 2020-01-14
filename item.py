@@ -1,4 +1,4 @@
-from traits import Container
+from traits import Container, IContainer
 
 # Very simple Item factory.
 class ItemFactory:
@@ -12,10 +12,9 @@ class ItemFactory:
         item_data = self.data[id]
         type = item_data.get("type") or "Item" # Default to the simplest item type
         cls = globals()[type]
-        if not cls:
-            raise Exception(f"Unknown item type: {type}")
-        return cls(id, item_data, self)
+        return cls(id, item_data, self)        
 
+    # Create a dictionary of Items from an ID list
     def create_from_id_list(self, ids):
         objects = {}
         for id in ids:
@@ -39,12 +38,6 @@ class Item:
     def has_trait(self, trait):
         return trait in self.traits
 
-    # A basic item cannot contain anything. Subclasses that 
-    # contain things can override this. Implementing it here
-    # means that we can recurse through a hierarchy of objects
-    # looking for things and this will terminate the search.
-    def has(self, _):
-        return False
 
 def __repr__(self):
     return f"{self.name}: {self.description}"
@@ -83,4 +76,39 @@ class ContainerItem(Container, Item):
         desc = super().description
         if self.inventory:
             desc += " It currently holds " + ", ".join(item.name for item in self.inventory.values()) + "."
+        return desc
+
+class StatefulContainerItem(StatefulItem, IContainer):
+    def __init__(self, id, data, item_factory, *args, **kwargs):
+        super().__init__(id, data, item_factory)
+        self.inventories = {}
+        for state in self.states:
+            inventory = item_factory.create_from_id_list(data["inventory"][state])
+            self.inventories[state] = Container(inventory)
+    
+    # Container overrides
+    # TODO We should probably use an interface/abstract base class to ensure
+    # this conforms to Container.
+    def give(self, item):
+        return self.inventories[self.state].give(item)
+    
+    def is_carrying_anything(self):
+        return self.inventories[self.state].is_carrying_anything()
+    
+    def has(self, item_id):
+        return self.inventories[self.state].has(item_id)
+
+    def take(self, item_id):
+        return self.inventories[self.state].take(item_id)
+
+    def get_item_reference(self, item_id):
+        return self.inventories[self.state].get_item_reference(item_id)
+
+    # Item overrides
+    @property
+    def description(self):
+        desc = super().description
+        if self.inventories[self.state].is_carrying_anything():
+            container = self.inventories[self.state]
+            desc += " It currently holds " + ", ".join(item.name for item in container.inventory.values()) + "."
         return desc

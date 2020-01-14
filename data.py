@@ -25,7 +25,7 @@ item_data = {
         "traits": "moveable"
     },
     "bathroomcabinet": {
-        "type": "StatefulItem",
+        "type": "StatefulContainerItem",
         "name": "a bathroom cabinet",
         "description": {
             "closed": "a distressed oak bathroom cabinet. Let's face it, you'd be distressed if you had to stare "
@@ -39,6 +39,10 @@ item_data = {
         "verbs": { 
             "open": "open", 
             "close": "closed"
+        },
+        "inventory": {
+            "open": ["beardoil"],
+            "closed": []
         }
     },
     "fridge": {

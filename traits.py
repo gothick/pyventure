@@ -1,4 +1,27 @@
-class Container:
+from abc import ABC, abstractmethod
+
+class IContainer(ABC):
+    @abstractmethod
+    def give(self, item):
+        pass
+
+    @abstractmethod
+    def is_carrying_anything(self, item):
+        pass
+    
+    @abstractmethod
+    def has(self, item_id):
+        pass
+
+    @abstractmethod
+    def take(self, item_id):
+        pass
+
+    @abstractmethod
+    def get_item_reference(self, item_id):
+        pass
+
+class Container(IContainer):
     def __init__(self, inventory, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.inventory = inventory
@@ -9,23 +32,33 @@ class Container:
     def is_carrying_anything(self):
         return len(self.inventory) > 0
     
-    def has(self, find_item_id):
-        for (item_id, item) in self.inventory.items():
-            if item_id == find_item_id or item.has(find_item_id):
-                return True
+    def has(self, item_id):
+        if item_id in self.inventory:
+            return True
+        for item in self.inventory.values():
+            if isinstance(item, IContainer):
+                return item.has(item_id)
         return False
     
     def take(self, item_id):
         if item_id in self.inventory:
-            if self.inventory[item_id].has_trait("moveable"):
-                return self.inventory.pop(item_id)
+            return self.inventory.pop(item_id)
+        for item in self.inventory.values():
+            if isinstance(item, IContainer):
+                return item.take(item_id)
         return None
 
     # Basically "take" only we pass our client a 
     # reference to the item that they should only
     # use temporariliy. We still hold the item.
     def get_item_reference(self, item_id):
-        return self.inventory.get(item_id)
+        if item_id in self.inventory:
+            return self.inventory[item_id]
+        for item in self.inventory.values():
+            if isinstance(item, IContainer):
+                return item.get_item_reference(item_id)
+        return None
+
     
     def __repr__(self):
         if self.inventory:
