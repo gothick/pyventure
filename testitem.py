@@ -24,6 +24,12 @@ item_data = {
         "verbs": { "turn on": "on", "turn off": "off" },
         "traits": { "moveable" }
     },
+    "bag": {
+        "type": "ContainerItem",
+        "name": "Bag of Holding",
+        "description": "a bag that can hold many wonders.",
+        "inventory": { "shirt", "torch" }
+    }
 }
 
 class TestParserMethods(unittest.TestCase):
@@ -60,12 +66,18 @@ class TestParserMethods(unittest.TestCase):
         item.do_verb("turn off")
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
 
+    def test_container_item(self):
+        item = self.factory.create_from_id("bag")
+        self.assertTrue(item.has("shirt"))
+        self.assertTrue(item.has("torch"))
+
     def test_factory(self):
         item = self.factory.create_from_id("torch")
         self.assertIsInstance(item, StatefulItem)
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
         self.assertFalse(item.has_trait("wearable"))
+
 
 if __name__ == "__main__":
     unittest.main()
