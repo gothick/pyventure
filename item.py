@@ -82,5 +82,5 @@ class ContainerItem(Container, Item):
     def description(self):
         desc = super().description
         if self.inventory:
-            desc += "It currently holds " + ", ".join(item.name for item in self.inventory.values()) + "."
+            desc += " It currently holds " + ", ".join(item.name for item in self.inventory.values()) + "."
         return desc
