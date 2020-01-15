@@ -25,7 +25,7 @@ suppress_room_description = False
 
 player = Player(
     inventory = {},
-    wearing = item_factory.create_from_id_list(["shirt"]),
+    wearing = item_factory.create_from_id_list(["shirt", "boxershorts"]),
     score = 0,
     health = 100, # percent
     caffeine_level = 50 # milligrams

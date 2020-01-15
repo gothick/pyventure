@@ -1,5 +1,10 @@
 # New-style item data
 item_data = {
+    "boxershorts": {
+        "name": "a pair of silk polka-dot boxer shorts",
+        "description": "a fetching pair of green silk boxer shorts with red polka-dots",
+        "traits": { "wearable" }
+    },
     "shirt": {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
