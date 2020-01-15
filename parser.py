@@ -60,6 +60,9 @@ normalised_nouns = {
     "shirt": "shirt",
     "natty shirt": "shirt",
     "paisley shirt": "shirt",
+    "plus fours": "plusfours",
+    "plus-fours": "plusfours",
+    "tweed plus fours": "plusfours",
     "fridge": "fridge",
     "smeg": "fridge",
     "smeg fridge": "fridge",
@@ -83,7 +86,12 @@ normalised_nouns = {
     "bag of holding": "bag",
     "boxer shorts": "boxershorts",
     "boxers": "boxershorts",
-    "shorts": "boxershorts"
+    "shorts": "boxershorts",
+    "wardrobe": "wardrobe",
+    # TODO: The doodah is just used for testing. Take it out sometime.
+    "doodah": "doodah",
+    "trunk": "trunk",
+    "wooden trunk": "trunk"
 }
 
 class Parser:

@@ -5,6 +5,11 @@ item_data = {
         "description": "a fetching pair of green silk boxer shorts with red polka-dots",
         "traits": { "wearable" }
     },
+    "doodah": {
+        "name": "a doodah",
+        "description": "a doodah. You know, a bit like a thingummy, only heavier.",
+        "traits": { "moveable" }
+    },
     "shirt": {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
@@ -28,7 +33,7 @@ item_data = {
         "name": "a can of beard oil",
         "description": "a can of patchouli and ylang-ylang beard oil.",
         "traits": "moveable"
-    },
+    },    
     "bathroomcabinet": {
         "type": "StatefulContainerItem",
         "name": "a bathroom cabinet",
@@ -47,6 +52,49 @@ item_data = {
         },
         "inventory": {
             "open": ["beardoil"],
+            "closed": []
+        }
+    },
+    "wardrobe": {
+        "type": "StatefulContainerItem",
+        "name": "a wardobe",
+        "description": {
+            "closed": "a vintage wardrobe with a distorting fairground mirror fixed to the front. "
+                        "It makes your hangover look worse.",
+            "open": "a vintage wardrobe. The door stands open."
+        },
+        "states": [
+            "closed",
+            "open" 
+        ],
+        "verbs": { 
+            "open": "open", 
+            "close": "closed"
+        },
+        "inventory": {
+            "open": ["plusfours"],
+            "closed": []
+        }
+    },
+    "trunk": {
+        "type": "StatefulContainerItem",
+        "name": "a large wooden trunk",
+        "description": {
+            "closed": "a large wooden trunk, which from a distance appears to be upcycled "
+                        "Victoriana, but on closer inspection looks quite cheap and probably "
+                        "came from Argos.",
+            "open": "a large wooden trunk. The lid stands open."
+        },
+        "states": [
+            "closed",
+            "open" 
+        ],
+        "verbs": { 
+            "open": "open", 
+            "close": "closed"
+        },
+        "inventory": {
+            "open": ["doodah"],
             "closed": []
         }
     },
@@ -148,11 +196,12 @@ room_data = {
     },
     "bedroom": {
         "name": "The bedroom",
+        "inventory": { "wardrobe", "trunk" },
         "description": {
             "basic": "You are in a cool bedroom. The single bed hangs like a child's swing from "
                     "ropes that drop from the ceiling. One wall has a cuboid bookcase with no books, "
                     "but instead a varied selection of terraria containing alien-looking succulents "
-                    "and cacti. On the far side of the room stand a wardrobe and a chest of drawers.",
+                    "and cacti. On the far side of the room stand a wardrobe and a large wooden trunk.",
             "extras": [
                 {
                     "type": "random",
