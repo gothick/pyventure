@@ -115,20 +115,27 @@ while True:
             print("You already have that.")
         else:
             if current_room.has(parser.noun):
-                taken = current_room.take(parser.noun)
+                (taken, message) = current_room.take(parser.noun)
                 if taken:
                     player.give(taken)
                     print("You have taken " + taken.name)
                 else:
-                    print("You don't seem to be able to do that.")
+                    print(message)
             else:
                 print("There isn't one of those here.")
     elif parser.verb == "drop":
         suppress_room_description = True
-        if player.has(parser.noun):
-            item = player.take(parser.noun)
-            print("You drop " + item.name)
-            current_room.give(item)
+        item = player.get_item_reference(parser.noun)
+        if item:
+            if item.has_trait("moveable"):
+                (item, message) = player.take(parser.noun)
+                if item:
+                    print("You drop " + item.name)
+                    current_room.give(item)
+                else:
+                    print(message)
+            else:
+                print ("You don't seem to be able to do that.")
         else:
             print("You're not carrying one of those.")
     elif parser.verb == "wear":

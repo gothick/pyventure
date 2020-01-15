@@ -42,11 +42,14 @@ class Container(IContainer):
     
     def take(self, item_id):
         if item_id in self.inventory:
-            return self.inventory.pop(item_id)
+            if self.inventory[item_id].has_trait("moveable"):
+                return (self.inventory.pop(item_id), None)
+            else:
+                return (None, "You don't seem to be able to do that.")
         for item in self.inventory.values():
             if isinstance(item, IContainer):
                 return item.take(item_id)
-        return None
+        return (None, "You aren't carrying that.")
 
     # Basically "take" only we pass our client a 
     # reference to the item that they should only
@@ -87,7 +90,10 @@ class ClothesHorse(Container):
 
     def take(self, item_id):
         if item_id in self.wearing:
-            return self.wearing.pop(item_id)
+            if self.wearing[item_id].has_trait("moveable"):
+                return (self.wearing.pop(item_id), None)
+            else:
+                return (None, "You don't want to take that off.")
         return super().take(item_id)
     
     def wear(self, item_id):
@@ -95,9 +101,12 @@ class ClothesHorse(Container):
             return (False, "You're already wearing that.")
         if item_id in self.inventory:
             if self.inventory[item_id].has_trait("wearable"):
-                item = self.take(item_id)
-                self.wearing[item_id] = item
-                return (True, "You are now wearing " + item.name + ".")
+                (item, message) = self.take(item_id)
+                if item:
+                    self.wearing[item_id] = item
+                    return (True, f"You are now wearing {item.name}.")
+                else:
+                    return (False, message)
             else:
                 return (False, "You can't wear that.")
         else:
