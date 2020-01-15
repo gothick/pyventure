@@ -128,7 +128,7 @@ room_data = {
                 {
                     "type": "if_in_room",
                     "object": "pennyfarthing",
-                    "text": " By the front door rests a penny-farthing bicycle."
+                    "text": "By the front door rests a penny-farthing bicycle."
                 }
             ]
         },
@@ -149,7 +149,21 @@ room_data = {
     "bedroom": {
         "name": "The bedroom",
         "description": {
-            "basic": "This will be a bedroom, once I've designed it."
+            "basic": "You are in a cool bedroom. The single bed hangs like a child's swing from "
+                    "ropes that drop from the ceiling. One wall has a cuboid bookcase with no books, "
+                    "but instead a varied selection of terraria containing alien-looking succulents "
+                    "and cacti. On the far side of the room stand a wardrobe and a chest of drawers.",
+            "extras": [
+                {
+                    "type": "random",
+                    "texts": [ 
+                        "A framed picture on the wall depicts a bespectacled giraffe smoking a pipe.",
+                        "A framed picture on the wall depicts a fox with a handlebar moustache.",
+                        "A framed picture on the wall depicts a flamingo wearing a top hat."
+                    ]
+
+                }
+            ]
         },
         "exits": {
             "north": {"destination": "landing"} 

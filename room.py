@@ -1,6 +1,8 @@
 import textwrap
+import random
 from item import ItemFactory
 from traits import Container
+
 
 class Room(Container):
     def __init__(self, id, item_factory: ItemFactory, data):
@@ -18,7 +20,9 @@ class Room(Container):
         for extra in self.description.get("extras") or {}:
             if extra["type"] == "if_in_room":
                 if self.has(extra["object"]):
-                    d = d + extra["text"]
+                    d = d + " " + extra["text"]
+            if extra["type"] == "random":
+                d = d + " " + random.choice(extra["texts"])
 
         full_desc += textwrap.fill(d, wrap_width) + "\n\n"
 
