@@ -80,7 +80,10 @@ normalised_nouns = {
     "oil": "beardoil",
     "can": "beardoil",
     "bag": "bag",
-    "bag of holding": "bag"
+    "bag of holding": "bag",
+    "boxer shorts": "boxershorts",
+    "boxers": "boxershorts",
+    "shorts": "boxershorts"
 }
 
 class Parser:
