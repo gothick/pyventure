@@ -133,11 +133,11 @@ while True:
             print("You're not carrying one of those.")
     elif parser.verb == "wear":
         suppress_room_description = True
-        message = player.wear(parser.noun)
+        (result, message) = player.wear(parser.noun)
         print(textwrap.fill(message,  WRAP_WIDTH))
     elif parser.verb == "unwear":
         suppress_room_description = True
-        message = player.unwear(parser.noun)
+        (result, message) = player.unwear(parser.noun)
         print(textwrap.fill(message,  WRAP_WIDTH))
     elif parser.verb in [ "open", "close"]:
         suppress_room_description = True

@@ -91,7 +91,7 @@ class ClothesHorse(Container):
         return super().take(item_id)
     
     def wear(self, item_id):
-        if self.wearing(item_id):
+        if self.is_wearing(item_id):
             return (False, "You're already wearing that.")
         if item_id in self.inventory:
             if self.inventory[item_id].has_trait("wearable"):
@@ -107,9 +107,13 @@ class ClothesHorse(Container):
         if not item_id in self.wearing:
             return (False, "You're not wearing that.")
         else:
-            item = self.wearing.pop(item_id)
-            self.give(item)
-            return (True, "You take off " + item.name + ".")
+            if self.wearing[item_id].has_trait("moveable"):
+                item = self.wearing.pop(item_id)
+                # It goes back into our general inventory
+                self.give(item)
+                return (True, "You take off " + item.name + ".")
+            else:
+                return(False, "That doesn't seem appropriate.")
 
     def __repr__(self):
         debug = super().__repr__() + "\n"
