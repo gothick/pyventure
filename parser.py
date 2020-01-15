@@ -88,8 +88,6 @@ normalised_nouns = {
 
 class Parser:
     def tokenise(self, command):
-        verb = None
-        noun = None
         words = command.lower().split(None, 2)
         if len(words) == 1:
             # If it's a direction instruction abbreviate we'll turn it
