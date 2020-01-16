@@ -270,7 +270,7 @@ room_data = {
             SOUTH: {"destination": "bedroom"},
             DOWN: {
                 "destination": "hall",
-                "transition": "You tread carefully up a vertiginous flight of stairs. You would "
+                "transition": "You tread carefully down a vertiginous flight of stairs. You would "
                               "be gripping a handrail, but your architect told you they were passé."
             }
         }
@@ -285,7 +285,7 @@ room_data = {
             Noun.SOUTH: {"destination": "livingroom"},
             Noun.UP: {
                 "destination": "landing",
-                "transition": "You tread carefully down a vertiginous flight of stairs. You would "
+                "transition": "You tread carefully up a vertiginous flight of stairs. You would "
                               "be gripping a handrail, but your architect told you they were passé."
             }
         }
