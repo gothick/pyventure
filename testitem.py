@@ -80,7 +80,7 @@ item_data = {
     }
 }
 
-class TestParserMethods(unittest.TestCase):
+class TestItemMethods(unittest.TestCase):
     def setUp(self):
         self.factory = ItemFactory(item_data)
 
