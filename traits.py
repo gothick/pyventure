@@ -134,5 +134,5 @@ class ClothesHorse(Container):
         if self.wearing:
             debug += "Clothes horse wearing: " + ", ".join(self.wearing)
         else:
-            debug += "(Wearning nothing)"
+            debug += "(Wearing nothing)"
         return debug
