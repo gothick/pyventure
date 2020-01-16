@@ -1,5 +1,10 @@
 from abc import ABC, abstractmethod
 
+# I know interfaces aren't terribly Pythony, but I'm experimenting with
+# having containers (as in things in the game that can hold stuff, not
+# the Container pattern!) implemented by a mixin here and also by 
+# composition in StatefulContanerItem, and it helps to know that the
+# interfaces are consistent, so they both conform to IContainer.
 class IContainer(ABC):
     @abstractmethod
     def give(self, item):
