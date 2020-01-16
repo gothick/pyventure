@@ -208,7 +208,7 @@ item_data = {
 room_data = {
     "livingroom": {
         "name": "The Living Room",
-        "inventory": { Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING },
+        "inventory": [ Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING ],
         "description": {
             "basic":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
@@ -238,7 +238,7 @@ room_data = {
     },
     "bedroom": {
         "name": "The bedroom",
-        "inventory": { Noun.WARDROBE, Noun.TRUNK },
+        "inventory": [ Noun.WARDROBE, Noun.TRUNK ],
         "description": {
             "basic": "You are in a cool bedroom. The single bed hangs like a child's swing from "
                     "ropes that drop from the ceiling. One wall has a cuboid bookcase with no books, "
@@ -292,7 +292,7 @@ room_data = {
     },
     "kitchen": {
         "name": "The kitchen",
-        "inventory": { Noun.FRIDGE, Noun.ESPRESSO_MACHINE, Noun.MENUS },
+        "inventory": [ Noun.FRIDGE, Noun.ESPRESSO_MACHINE, Noun.MENUS ],
         "description": {
             "basic": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
                         "and a complicated-looking espresso machine. There is no actual food to be seen, though there is "
@@ -314,7 +314,7 @@ room_data = {
     },
     "bathroom": {
         "name": "The bathroom",
-        "inventory": { Noun.BATH, Noun.SINK, Noun.BATHROOM_CABINET },
+        "inventory": [ Noun.BATH, Noun.SINK, Noun.BATHROOM_CABINET ],
         "description": {
             "basic": "You are in a bathroom only just large enough for you, the dominating freestanding bath "
                        "with gargoyle feet and a small white basin which seems to have beer pumps instead of taps. "
