@@ -75,7 +75,7 @@ class Container(IContainer):
     
     def __repr__(self):
         if self.inventory:
-            return "Container with items: " + ", ".join(self.inventory)
+            return "Container with items: " + ", ".join(item.name for item in self.inventory)
         return "(Empty Container)"
     
 class ClothesHorse(Container):

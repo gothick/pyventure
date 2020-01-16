@@ -82,7 +82,7 @@ while True:
     parser.parse(command)
 
     if debugging:
-        o.print(parser)
+        o.print(parser.__repr__())
 
     if not parser.valid:
         suppress_room_description = True
@@ -213,8 +213,8 @@ while True:
             debugging = True
         o.print()
         o.print("##### Magical Debugging Start #####")
-        o.print(current_room)
-        o.print(player)
+        o.print(current_room.__repr__())
+        o.print(player.__repr__())
         o.print("#####  Magical Debugging End  #####")
         o.print()
         suppress_room_description = True
