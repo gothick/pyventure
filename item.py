@@ -86,11 +86,11 @@ class StatefulContainerItem(StatefulItem, IContainer):
             inventory = item_factory.create_from_id_list(data["inventory"][state])
             self.inventories[state] = Container(inventory)
     
-    # IContainer implementation (we could have inherited from Container to get 
-    # an IContainer implementation, but the fact that our inventory changes 
-    # depending on what state we're in makes that complicated.
-    # Here I'm composing multiple Container instances (one per state) to do the
-    # work instead.
+    # IContainer implementation 
+    # We could have inherited from Container to get an IContainer implementation, 
+    # but the fact that our inventory changes depending on what state we're in 
+    # makes that complicated. Here I'm composing multiple Container instances 
+    # (one per state) to do the work instead.
     def give(self, item):
         return self.inventories[self.state].give(item)
     
