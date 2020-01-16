@@ -131,7 +131,7 @@ item_data = {
         "name": "a looming Smeg fridge",
         "description": {
             "closed": "a hulking silver giant of a fridge. It seems to be quietly humming a in a smug tone.",
-            "open": "a hulking silver giant of a fridge. The door stands open to reveal the white, serene, food-less interior"
+            "open": "a hulking silver giant of a fridge. The door stands open to reveal the white, serene, food-less interior. It hums quietly."
         },
         "states": [
             "closed",
