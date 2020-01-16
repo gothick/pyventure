@@ -42,7 +42,8 @@ class Container(IContainer):
             return True
         for item in self.inventory.values():
             if isinstance(item, IContainer):
-                return item.has(item_id)
+                if item.has(item_id):
+                    return True
         return False
     
     def take(self, item_id):
@@ -53,7 +54,9 @@ class Container(IContainer):
                 return (None, "You don't seem to be able to do that.")
         for item in self.inventory.values():
             if isinstance(item, IContainer):
-                return item.take(item_id)
+                (found_item, message) = item.take(item_id)
+                if found_item:
+                    return (found_item, message)
         return (None, "You aren't carrying that.")
 
     # Basically "take" only we pass our client a 
@@ -64,7 +67,9 @@ class Container(IContainer):
             return self.inventory[item_id]
         for item in self.inventory.values():
             if isinstance(item, IContainer):
-                return item.get_item_reference(item_id)
+                found_item = item.get_item_reference(item_id)
+                if found_item:
+                    return found_item
         return None
 
     
