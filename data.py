@@ -76,7 +76,7 @@ item_data = {
         "name": "a wardobe",
         "description": {
             "closed": "a vintage wardrobe with a distorting fairground mirror fixed to the front. "
-                        "It makes your hangover look worse.",
+                        "It makes your hangover look worse. The door is closed.",
             "open": "a vintage wardrobe. The door stands open."
         },
         "states": [
