@@ -12,6 +12,11 @@ class Outputter:
     def __init__(self, wrap_width = 80):
         self.wrapper = TextWrapper(width = wrap_width)
     def print(self, text = ""):
+        # "If replace_whitespace is false, newlines may appear in the middle of a
+        #  line and cause strange output. For this reason, text should be split 
+        #  into paragraphs (using str.splitlines() or similar) which are wrapped
+        #  separately." -- https://docs.python.org/3/library/textwrap.html
+        # "Sigh" -- me
         for line in text.splitlines():
             print(self.wrapper.fill(line))
 
