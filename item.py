@@ -6,20 +6,19 @@ class ItemFactory:
     def __init__(self, data):
         self.data = data
 
-    def create_from_id(self, id):
-        if id not in self.data:
-            raise Exception(f"Could not find item with id '{id}' in item data")
-        item_data = self.data[id]
+    def create_from_noun(self, noun):
+        if noun not in self.data:
+            raise Exception(f"Could not find item with id '{noun}' in item data")
+        item_data = self.data[noun]
         type = item_data.get("type") or "Item" # Default to the simplest item type
         cls = globals()[type]
-        return cls(id, item_data, self)        
+        return cls(noun, item_data, self)        
 
-    # Create a dictionary of Items from an ID list
-    def create_from_id_list(self, ids):
-        objects = {}
-        for id in ids:
-            objects[id] =  self.create_from_id(id)
-        return objects
+    def create_dictionary_from_nouns(self, nouns):
+        items = {}
+        for noun in nouns:
+            items[noun] =  self.create_from_noun(noun)
+        return items
 
 # The actual Item classes
 class Item:
@@ -59,16 +58,18 @@ class StatefulItem(Item):
         return verb in self.verbs 
 
     def do_verb(self, verb):
-        result = False
+        result = (False, "You can't do that.")
         if verb in self.verbs:
-            if self.state != self.verbs[verb]:
-                self.state = self.verbs[verb]
-                result = True
+            if self.state != self.verbs[verb]["new_state"]:
+                self.state = self.verbs[verb]["new_state"]
+                result = (True, self.verbs[verb]["message"])
+            else:
+                result = (False, "Nothing happens.")
         return result
 
 class ContainerItem(Container, Item):
     def __init__(self, id, data, item_factory, *args, **kwargs):
-        inventory = item_factory.create_from_id_list(data["inventory"])
+        inventory = item_factory.create_dictionary_from_nouns(data["inventory"])
         super().__init__(inventory, id, data, item_factory)
 
     @property
@@ -83,7 +84,7 @@ class StatefulContainerItem(StatefulItem, IContainer):
         super().__init__(id, data, item_factory)
         self.inventories = {}
         for state in self.states:
-            inventory = item_factory.create_from_id_list(data["inventory"][state])
+            inventory = item_factory.create_dictionary_from_nouns(data["inventory"][state])
             self.inventories[state] = Container(inventory)
     
     # IContainer implementation 

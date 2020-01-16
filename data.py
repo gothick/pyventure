@@ -1,40 +1,50 @@
+from words import Noun, Verb
+
+# Makes the below a bit more semantic
+NORTH = Noun.NORTH
+EAST  = Noun.EAST
+SOUTH = Noun.SOUTH
+WEST  = Noun.WEST
+UP    = Noun.UP
+DOWN  = Noun.DOWN
+
 # New-style item data
 item_data = {
-    "boxershorts": {
+    Noun.BOXER_SHORTS: {
         "name": "a pair of silk polka-dot boxer shorts",
         "description": "a fetching pair of green silk boxer shorts with red polka-dots",
         "traits": { "wearable" }
     },
-    "doodah": {
+    Noun.DOODAH: {
         "name": "a doodah",
         "description": "a doodah. You know, a bit like a thingummy, only heavier.",
         "traits": { "moveable" }
     },
-    "shirt": {
+    Noun.SHIRT: {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
         "traits": { "moveable", "wearable" } 
     },
-    "plusfours": {
+    Noun.PLUS_FOURS: {
         "name": "a pair of tweed plus fours",
         "description": "a pair of tweed plus fours that you claim to have bought from Camden Market, but actually bought on Amazon.",
         "traits": { "moveable", "wearable" }
     },
-    "bath": {
+    Noun.BATH: {
         "name": "a gargoyle clawfoot bath",
         "description": "a bath that's far too big for the room, in terms of both size and personality."
     },
-    "sink": {
+    Noun.SINK: {
         "name": "a sink",
         "description": "a sink reclaimed from a Victorian pub, with taps to match. You pull on the "
                         "India Pale Ale tap and are rewarded with a stream of hot water."
     },
-    "beardoil": {
+    Noun.BEARD_OIL: {
         "name": "a can of beard oil",
         "description": "a can of patchouli and ylang-ylang beard oil.",
         "traits": "moveable"
     },    
-    "bathroomcabinet": {
+    Noun.BATHROOM_CABINET: {
         "type": "StatefulContainerItem",
         "name": "a bathroom cabinet",
         "description": {
@@ -46,16 +56,22 @@ item_data = {
             "closed",
             "open" 
         ],
-        "verbs": { 
-            "open": "open", 
-            "close": "closed"
+        "verbs": {
+            Verb.OPEN: {
+                "new_state": "open",
+                "message": "You open the bathroom cabinet door."
+            },
+            Verb.CLOSE: {
+                "new_state": "closed",
+                "message": "The cabinet door whips shut on self-closing hinges and nearly takes your finger off in the process."
+            }
         },
         "inventory": {
-            "open": ["beardoil"],
+            "open": [ Noun.BEARD_OIL ],
             "closed": []
         }
     },
-    "wardrobe": {
+    Noun.WARDROBE: {
         "type": "StatefulContainerItem",
         "name": "a wardobe",
         "description": {
@@ -67,16 +83,22 @@ item_data = {
             "closed",
             "open" 
         ],
-        "verbs": { 
-            "open": "open", 
-            "close": "closed"
+        "verbs": {
+            Verb.OPEN: {
+                "new_state": "open",
+                "message": "You open the wardrobe. The hinges creak a bit."
+            },
+            Verb.CLOSE: {
+                "new_state": "closed",
+                "message": "You close the wardrobe door and scare yourself a bit when your distorted reflection reappears."
+            }
         },
         "inventory": {
-            "open": ["plusfours"],
+            "open": [ Noun.PLUS_FOURS ],
             "closed": []
         }
     },
-    "trunk": {
+    Noun.TRUNK: {
         "type": "StatefulContainerItem",
         "name": "a large wooden trunk",
         "description": {
@@ -89,16 +111,22 @@ item_data = {
             "closed",
             "open" 
         ],
-        "verbs": { 
-            "open": "open", 
-            "close": "closed"
+        "verbs": {
+            Verb.OPEN: {
+                "new_state": "open",
+                "message": "You open the trunk."
+            },
+            Verb.CLOSE: {
+                "new_state": "closed",
+                "message": "You close the trunk."
+            }
         },
         "inventory": {
-            "open": ["doodah"],
+            "open": [Noun.DOODAH],
             "closed": []
         }
     },
-    "fridge": {
+    Noun.FRIDGE: {
         "type": "StatefulItem",
         "name": "a looming Smeg fridge",
         "description": {
@@ -110,22 +138,28 @@ item_data = {
             "open"
         ],
         "verbs": {
-            "open": "open",
-            "close": "closed"
+            Verb.OPEN: {
+                "new_state": "open",
+                "message": "You open the fridge to reveal... a gleaming, white, spacious, elegant and completely empty interior."
+            },
+            Verb.CLOSE: {
+                "new_state": "closed",
+                "message": "The fridge door swings shut with an expensive-sounding swoosh."
+            }
         }
     },
-    "espressomachine": {
+    Noun.ESPRESSO_MACHINE: {
         "name": "a complicated espresso machine",
         "description": "a designer Italian espresso machine. It looks like what would happen if an Alessi lemon "
                         "juicer and a plumbing supplies store had a baby. Sadly there is no coffee here."
     },
-    "menus": {
+    Noun.MENUS: {
         "name": "some takeaway menus",
         "description": "a collection of menus from, variously, a vegan slaw shack, a cronut salon and a "
                         "rainbow grilled cheese caravan.",
         "traits": "moveable"
     },
-    "iphone": {
+    Noun.PHONE: {
         "type": "StatefulItem",
         "name": "the latest iPhone",
         "description": {
@@ -133,16 +167,24 @@ item_data = {
             "off": "the latest iPhone. The screen is dark. I think it's turned off."
         },
         "states": [
-            "on", 
-            "off" 
+            "off", 
+            "on" 
         ],
-        "verbs": { 
-            "turn on": "on", 
-            "turn off": "off" 
+        "verbs": {
+            Verb.TURN_ON: {
+                "new_state": "on",
+                "message": "After half a minute, the Apple logo is replaced with a lock screen. It shows a picture of "
+                            "you and your loved one, which is to say, a cortado served at exactly 54°C in a small "
+                            "laboratory beaker."
+            },
+            Verb.TURN_OFF: {
+                "new_state": "off",
+                "message": "The Apple[tm] logo briefly appears as you turn off the iPhone[tm], then the screen fades to black."
+            }
         },
         "traits": { "moveable" }
     },
-    "tv": {
+    Noun.TV: {
         "name": "a television",
         "description": {
             "off": "a modern-looking Samsung smart TV. It's turned off.",
@@ -152,11 +194,11 @@ item_data = {
             "off", "on"
         ],
         "verbs": { 
-            "turn on": "on", 
-            "turn off": "off"
+            Verb.TURN_ON: "on", 
+            Verb.TURN_OFF: "off"
         }
     },
-    "pennyfarthing": {
+    Noun.PENNY_FARTHING: {
         "name": "a penny-farthing bicycle",
         "description": "a beautifully-restored Victorian penny-farthing with a leather saddle.",
         "traits": { "moveable" }
@@ -166,7 +208,7 @@ item_data = {
 room_data = {
     "livingroom": {
         "name": "The Living Room",
-        "inventory": { "iphone", "tv", "pennyfarthing" },
+        "inventory": { Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING },
         "description": {
             "basic":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
@@ -175,28 +217,28 @@ room_data = {
             "extras": [
                 {
                     "type": "if_in_room",
-                    "object": "pennyfarthing",
+                    "object": Noun.PENNY_FARTHING,
                     "text": "By the front door rests a penny-farthing bicycle."
                 }
             ]
         },
         "exits": {
-            "north": {
+            NORTH: {
                 "destination": "hall",
                 "rules": [
                     {
                         "type": "not_if_carrying",
-                        "item": "pennyfarthing",
+                        "item": Noun.PENNY_FARTHING,
                         "objection": "The penny-farthing won't fit through there."
                     }
                 ]
             },
-            "south": { "destination": "street" }
+            SOUTH: { "destination": "street" }
         }
     },
     "bedroom": {
         "name": "The bedroom",
-        "inventory": { "wardrobe", "trunk" },
+        "inventory": { Noun.WARDROBE, Noun.TRUNK },
         "description": {
             "basic": "You are in a cool bedroom. The single bed hangs like a child's swing from "
                     "ropes that drop from the ceiling. One wall has a cuboid bookcase with no books, "
@@ -215,7 +257,7 @@ room_data = {
             ]
         },
         "exits": {
-            "north": {"destination": "landing"} 
+            NORTH: {"destination": "landing"} 
         }
     },
     "landing": {
@@ -224,9 +266,9 @@ room_data = {
             "basic": "You are in a tiny landing at the top of a narrow flight of stairs."
         },
         "exits": {
-            "north": {"destination": "bathroom"} ,
-            "south": {"destination": "bedroom"},
-            "down": {
+            NORTH: {"destination": "bathroom"} ,
+            SOUTH: {"destination": "bedroom"},
+            DOWN: {
                 "destination": "hall",
                 "transition": "You tread carefully up a vertiginous flight of stairs. You would "
                               "be gripping a handrail, but your architect told you they were passé."
@@ -239,9 +281,9 @@ room_data = {
             "basic": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
         },
         "exits": {
-            "north": {"destination": "kitchen"} ,
-            "south": {"destination": "livingroom"},
-            "up": {
+            Noun.NORTH: {"destination": "kitchen"} ,
+            Noun.SOUTH: {"destination": "livingroom"},
+            Noun.UP: {
                 "destination": "landing",
                 "transition": "You tread carefully down a vertiginous flight of stairs. You would "
                               "be gripping a handrail, but your architect told you they were passé."
@@ -250,14 +292,14 @@ room_data = {
     },
     "kitchen": {
         "name": "The kitchen",
-        "inventory": { "fridge", "espressomachine", "menus" },
+        "inventory": { Noun.FRIDGE, Noun.ESPRESSO_MACHINE, Noun.MENUS },
         "description": {
             "basic": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
                         "and a complicated-looking espresso machine. There is no actual food to be seen, though there is "
                         " a lingering hint of avocado toast in the air."
         },
         "exits": {
-            "south": {"destination": "hall"}
+            SOUTH: {"destination": "hall"}
         }
     },
     "street": {
@@ -267,19 +309,19 @@ room_data = {
                      "you hear a distant bass throb from the vinyl stall at the Tobacco Factory market."
         },
         "exits": {
-            "north": {"destination": "livingroom"}
+            NORTH: {"destination": "livingroom"}
         }
     },
     "bathroom": {
         "name": "The bathroom",
-        "inventory": { "bath", "sink", "bathroomcabinet" },
+        "inventory": { Noun.BATH, Noun.SINK, Noun.BATHROOM_CABINET },
         "description": {
             "basic": "You are in a bathroom only just large enough for you, the dominating freestanding bath "
                        "with gargoyle feet and a small white basin which seems to have beer pumps instead of taps. "
                        "Above the basin is a distressed oak bathroom cabinet."
         },
         "exits": {
-            "south": {"destination": "landing"}
+            SOUTH: {"destination": "landing"}
         }
     }
 }

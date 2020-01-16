@@ -2,11 +2,12 @@ import textwrap
 import random
 from item import ItemFactory
 from traits import Container
+from words import DIRECTIONS
 
 
 class Room(Container):
     def __init__(self, id, item_factory: ItemFactory, data):
-        super().__init__(item_factory.create_from_id_list(data.get("inventory") or set()))
+        super().__init__(item_factory.create_dictionary_from_nouns(data.get("inventory") or set()))
         self.id = id
         self.name = data["name"]
         self.description = data["description"]
@@ -30,7 +31,7 @@ class Room(Container):
                 full_desc += "There is " + item.name + " here.\n"
 
         if self.exits:
-            full_desc += "Exits are " + ", ".join(self.exits.keys())
+            full_desc += "Exits are " + ", ".join(DIRECTIONS[exit] for exit in self.exits.keys()) + "."
         return full_desc
 
     def __repr__(self):

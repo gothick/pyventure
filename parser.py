@@ -1,136 +1,66 @@
-normalised_verbs = {
-    "ride": "ride",
-    "get on": "ride",
-    "mount": "ride",
-    "turn on": "turn on",
-    "activate": "turn on",
-    "turn off": "turn off",
-    "deactivate": "turn off",
-    "go": "go",
-    "examine": "examine",
-    "look": "examine",
-    "look at": "examine",
-    "l": "examine",
-    "describe": "examine",
-    "take": "take",
-    "get": "take",
-    "score": "score",
-    "inventory": "inventory",
-    "i": "inventory",
-    "drop": "drop",
-    "quit": "quit",
-    "health": "health",
-    "xyzzy": "xyzzy",
-    "wear": "wear",
-    "put on": "wear",
-    "take off": "unwear",
-    "remove": "unwear",
-    "open": "open",
-    "close": "close"
-}
-
-# Special case abbreviations. We'll turn these into GO commands
-directions = {
-    "n":     "north",
-    "north": "north",
-    "s":     "south",
-    "south": "south",
-    "e":     "east",
-    "east":  "east",
-    "w":     "west",
-    "west":  "west",
-    "u":     "up",
-    "up":    "up",
-    "d":     "down",
-    "down":  "down"
-}
-
-normalised_nouns = {
-    "iphone": "iphone",
-    "torch": "torch",
-    "iphone se": "iphone",
-    "phone": "iphone",
-    "tv": "tv",
-    "television": "tv",
-    "pennyfarthing": "pennyfarthing",
-    "penny farthing": "pennyfarthing",
-    "penny-farthing": "pennyfarthing",
-    "bicycle": "pennyfarthing",
-    "bike": "pennyfarthing",
-    "shirt": "shirt",
-    "natty shirt": "shirt",
-    "paisley shirt": "shirt",
-    "plus fours": "plusfours",
-    "plus-fours": "plusfours",
-    "tweed plus fours": "plusfours",
-    "fridge": "fridge",
-    "smeg": "fridge",
-    "smeg fridge": "fridge",
-    "menus": "menus",
-    "takeaway menus": "menus",
-    "espresso machine": "espressomachine",
-    "machine": "espressomachine",
-    "espresso": "espressomachine",
-    "coffee machine": "espressomachine",
-    "coffee maker": "espressomachine",
-    "bathroom cabinet": "bathroomcabinet",
-    "cabinet": "bathroomcabinet",
-    "sink": "sink",
-    "bath": "bath",
-    "gargoyle clawfoot bath": "bath",
-    "clawfoot bath": "bath",
-    "beard oil": "beardoil",
-    "oil": "beardoil",
-    "can": "beardoil",
-    "bag": "bag",
-    "bag of holding": "bag",
-    "boxer shorts": "boxershorts",
-    "boxers": "boxershorts",
-    "shorts": "boxershorts",
-    "wardrobe": "wardrobe",
-    # TODO: The doodah is just used for testing. Take it out sometime.
-    "doodah": "doodah",
-    "trunk": "trunk",
-    "wooden trunk": "trunk"
-}
-
 class Parser:
+    def __init__(
+            self, 
+            vocab_nouns, 
+            unknown_noun, 
+            vocab_verbs, 
+            go_verb,
+            vocab_directions, 
+            normalised_nouns, 
+            normalised_verbs
+    ):
+        self.vocab_nouns = vocab_nouns
+        self.vocab_verbs = vocab_verbs
+        self.vocab_directions = vocab_directions
+        self.normalised_nouns = normalised_nouns
+        self.normalised_verbs = normalised_verbs
+        self.UNKNOWN_NOUN = unknown_noun
+        self.GO_VERB = go_verb
+
+    def noun_string_to_token(self, noun_string):
+        noun = self.normalised_nouns.get(noun_string)
+        if not noun:
+            noun = self.UNKNOWN_NOUN
+        return noun
+    
+    def verb_string_to_token(self, verb_string):
+        # It a parsing error if we don't find a verb at the 
+        # moment, so I'm just going to return None if we didn't
+        # find anything.
+        return self.normalised_verbs.get(verb_string)
+
+    # Returns (Verb, Noun)
     def tokenise(self, command):
         words = command.lower().split(None, 2)
         if len(words) == 1:
             # If it's a direction instruction abbreviate we'll turn it
             # into a full-on go command
-            if words[0] in directions:
-                return ("go", directions[words[0]])
+            noun = self.noun_string_to_token(words[0])
+            if noun in self.vocab_directions: # North, East, etc.
+                return (self.GO_VERB, noun)
 
-            # Looking for a verb only.
-            return (normalised_verbs.get(words[0]), None)
+            # Our single word wasn't one of our expected nouns, so let's hope
+            # it's a sensible standalone verb, like "LOOK"
+            return (self.verb_string_to_token(words[0]), None)
         elif len(words) == 2:
             # Simple split verb-noun:
-            return (normalised_verbs.get(words[0]), normalised_nouns.get(words[1]))
+            return (self.verb_string_to_token(words[0]), self.noun_string_to_token(words[1]))
         else:
             # We must have 3, as we passed maxsplit to split() above
-            tryverb = words[0] + " " + words[1]
-            trynoun = words[2]
-            if tryverb in normalised_verbs:
-                tryverb = normalised_verbs[tryverb]
-                if trynoun in normalised_nouns:
-                    trynoun = normalised_nouns[trynoun]
+            tryverb = self.verb_string_to_token(words[0] + " " + words[1])
+            trynoun = self.noun_string_to_token(words[2])
+            if tryverb:
                 return (tryverb, trynoun)
             else:
-                tryverb = words[0]
-                trynoun = words[1] + " " + words[2]
-                if tryverb in normalised_verbs:
-                    tryverb = normalised_verbs[tryverb]
-                    # We try to normalise the noun if we can, but if we can't we
-                    # leave it raw.
-                    if trynoun in normalised_nouns:
-                        trynoun = normalised_nouns[trynoun]
+                tryverb = self.verb_string_to_token(words[0])
+                trynoun = self.noun_string_to_token(words[1] + " " + words[2])
+                if tryverb:
                     return (tryverb, trynoun)
         # Fallthrough
         return (None, None)
 
-    def __init__(self, command):
+    def parse(self, command):
+        # Reset state; we may be reused.
         self.valid = False
 
         (verb, noun) = self.tokenise(command)

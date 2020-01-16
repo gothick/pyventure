@@ -85,25 +85,25 @@ class TestItemMethods(unittest.TestCase):
         self.factory = ItemFactory(item_data)
 
     def test_traitless_item(self):
-        item = self.factory.create_from_id("basic")
+        item = self.factory.create_from_noun("basic")
         self.assertEqual(item.name, "a very basic item")
         self.assertIsInstance(item, Item)
 
     def test_basic_item(self):
-        item = self.factory.create_from_id("shirt")
+        item = self.factory.create_from_noun("shirt")
         self.assertEqual(item.name, "a natty Paisley print shirt")
         self.assertEqual(item.description, "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.")
         self.assertTrue(item.has_trait("moveable"))
         self.assertTrue(item.has_trait("wearable"))
 
     def test_basic_stateful_item(self):
-        item = self.factory.create_from_id("torch")
+        item = self.factory.create_from_noun("torch")
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
         self.assertFalse(item.has_trait("wearable"))
         
     def test_stateful_item_states(self):
-        item = self.factory.create_from_id("torch")
+        item = self.factory.create_from_noun("torch")
         self.assertTrue(item.can_verb("turn on"))
         self.assertFalse(item.can_verb("whistle"))
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
@@ -115,12 +115,12 @@ class TestItemMethods(unittest.TestCase):
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
 
     def test_container_item(self):
-        item = self.factory.create_from_id("bag")
+        item = self.factory.create_from_noun("bag")
         self.assertTrue(item.has("shirt"))
         self.assertTrue(item.has("torch"))
 
     def test_stateful_container_item(self):
-        item = self.factory.create_from_id("cupboard")
+        item = self.factory.create_from_noun("cupboard")
         self.assertFalse(item.has("shirt"))
         self.assertFalse(item.has("torch"))
         item.do_verb("open")
@@ -128,7 +128,7 @@ class TestItemMethods(unittest.TestCase):
         self.assertTrue(item.has("torch"))
 
     def test_recursive_take(self):
-        container = self.factory.create_from_id("outercontainer")
+        container = self.factory.create_from_noun("outercontainer")
         self.assertTrue(container.has("bag"))
         self.assertTrue(container.has("shirt"))
         self.assertTrue(container.has("torch"))
@@ -138,7 +138,7 @@ class TestItemMethods(unittest.TestCase):
         self.assertIsNotNone(container.take("bag"))
 
     def test_recursive_get_item_reference(self):
-        container = self.factory.create_from_id("outercontainer")
+        container = self.factory.create_from_noun("outercontainer")
 
         bag = container.get_item_reference("bag")
         self.assertIsNotNone(bag, "Could not get bag from inside container")
@@ -153,11 +153,11 @@ class TestItemMethods(unittest.TestCase):
         self.assertEqual(torch.id, "torch")
 
     def test_recursive_stateful_container(self):
-        anotherbag = self.factory.create_from_id("anotherbag")
+        anotherbag = self.factory.create_from_noun("anotherbag")
         self.assertTrue(anotherbag.has("shirt"))
 
     def test_factory(self):
-        item = self.factory.create_from_id("torch")
+        item = self.factory.create_from_noun("torch")
         self.assertIsInstance(item, StatefulItem)
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
