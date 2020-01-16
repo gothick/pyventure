@@ -79,7 +79,6 @@ class TestParserMethods(unittest.TestCase):
             normalised_verbs
         )
 
-
     def test_directions(self):
         self.parser.parse("n")
         self.assertEqual(self.parser.verb, Verb.GO)
@@ -88,6 +87,16 @@ class TestParserMethods(unittest.TestCase):
         self.parser.parse("south")
         self.assertEqual(self.parser.verb, Verb.GO)
         self.assertEqual(self.parser.noun, Noun.SOUTH)
+
+    def test_article_stripping(self):
+        self.parser.parse("turn on the iphone")
+        self.assertEqual(self.parser.verb, Verb.TURN_ON)
+        self.assertEqual(self.parser.noun, Noun.PHONE)
+        
+        self.parser.parse("examine a penny farthing")
+        self.assertEqual(self.parser.verb, Verb.EXAMINE)
+        self.assertEqual(self.parser.noun, Noun.PENNY_FARTHING)
+        
 
     def test_two_word_verbs(self):
         self.parser.parse("turn on iphone")

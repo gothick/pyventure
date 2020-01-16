@@ -31,7 +31,11 @@ class Parser:
 
     # Returns (Verb, Noun)
     def tokenise(self, command):
-        words = command.lower().split(None, 2)
+        words = command.lower().split(None)
+
+        # Srip out articles
+        words = list(filter(lambda word: word not in [ "the", "a", "an" ] , words))
+
         if len(words) == 1:
             # If it's a direction instruction abbreviate we'll turn it
             # into a full-on go command
@@ -46,7 +50,7 @@ class Parser:
             # Simple split verb-noun:
             return (self.verb_string_to_token(words[0]), self.noun_string_to_token(words[1]))
         else:
-            # We must have 3, as we passed maxsplit to split() above
+            # We're only going to solve for three words here
             tryverb = self.verb_string_to_token(words[0] + " " + words[1])
             trynoun = self.noun_string_to_token(words[2])
             if tryverb:
