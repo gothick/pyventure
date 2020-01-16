@@ -13,7 +13,8 @@ class Room(Container):
         self.description = data["description"]
         self.exits = data["exits"]
 
-    def full_description(self, wrap_width):
+    @property
+    def full_description(self):
         full_desc = self.name + "\n\n"
 
         d = self.description["basic"]
@@ -25,7 +26,7 @@ class Room(Container):
             if extra["type"] == "random":
                 d = d + " " + random.choice(extra["texts"])
 
-        full_desc += textwrap.fill(d, wrap_width) + "\n\n"
+        full_desc += d + "\n\n"
 
         for item in self.inventory.values():
                 full_desc += "There is " + item.name + " here.\n"
