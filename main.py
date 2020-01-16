@@ -95,7 +95,7 @@ while True:
         else:
             suppress_room_description = True
             item = current_room.get_item_reference(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
-            if o:
+            if item:
                 o.print("It is " + item.description)
             else:
                 o.print("You don't see that here")
