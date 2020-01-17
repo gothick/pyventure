@@ -119,10 +119,11 @@ class ClothesHorse(Container):
             return (False, "You're already wearing that.")
         if item_id in self.inventory:
             if self.inventory[item_id].has_trait("wearable"):
+                trait = self.inventory[item_id].get_trait("wearable")
                 (item, message) = self.take(item_id)
                 if item:
                     self.wearing[item_id] = item
-                    return (True, f"You are now wearing {item.name}.")
+                    return (True, trait.get("wear_description") or f"You are now wearing {item.name}.")
                 else:
                     return (False, message)
             else:
@@ -134,11 +135,16 @@ class ClothesHorse(Container):
         if not item_id in self.wearing:
             return (False, "You're not wearing that.")
         else:
-            if self.wearing[item_id].has_trait("moveable"):
-                item = self.wearing.pop(item_id)
-                # It goes back into our general inventory
-                self.give(item)
-                return (True, "You take off " + item.name + ".")
+            if self.wearing[item_id].has_trait("wearable"):
+                trait = self.wearing[item_id].get_trait("wearable")
+                if not trait.get("unremoveable") or False:
+                    item = self.wearing.pop(item_id)
+                    # It goes back into our general inventory
+                    self.give(item)
+                    return (True, "You take off " + item.name + ".")
+                else:
+                    message = trait.get("unwear_description") or "You can't take that off."
+                    return (False, message)
             else:
                 return(False, "That doesn't seem appropriate.")
 

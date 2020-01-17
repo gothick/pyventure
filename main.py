@@ -219,6 +219,6 @@ while True:
         o.print()
         suppress_room_description = True
     else:
-        suppress_room_description
+        suppress_room_description = True
         o.print("Sorry, I don't understand.")
 

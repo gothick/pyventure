@@ -13,22 +13,27 @@ item_data = {
     Noun.BOXER_SHORTS: {
         "name": "a pair of silk polka-dot boxer shorts",
         "description": "a fetching pair of green silk boxer shorts with red polka-dots",
-        "traits": { "wearable" }
+        "traits": { 
+            "wearable": {
+                "unremoveable": True,
+                "unwear_description": "Nobody wants that to happen, trust me."
+            }, 
+        }
     },
     Noun.DOODAH: {
         "name": "a doodah",
         "description": "a doodah. You know, a bit like a thingummy, only heavier.",
-        "traits": { "moveable" }
+        "traits": { "moveable": {} }
     },
     Noun.SHIRT: {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
-        "traits": { "moveable", "wearable" } 
+        "traits": { "moveable": {}, "wearable": {} } 
     },
     Noun.PLUS_FOURS: {
         "name": "a pair of tweed plus fours",
         "description": "a pair of tweed plus fours that you claim to have bought from Camden Market, but actually bought on Amazon.",
-        "traits": { "moveable", "wearable" }
+        "traits": { "moveable": {}, "wearable": {} }
     },
     Noun.BATH: {
         "name": "a gargoyle clawfoot bath",
@@ -42,12 +47,19 @@ item_data = {
     Noun.BEARD_OIL: {
         "name": "a can of beard oil",
         "description": "a can of patchouli and ylang-ylang beard oil.",
-        "traits": [ "moveable", "wearable" ]
+        "traits": { 
+            "moveable": {}, 
+            "wearable": {
+                "unremoveable": True,
+                "wear_description": "You apply the beard oil to your wild facial hair, bringing it under some kind of control.",
+                "unwear_description": "You can't put the genie back in the bottle. Or the beard oil, for that matter."
+            }
+        }
     },    
     Noun.COMB: {
         "name": "a beard comb",
         "description": "a tortoiseshell beard comb. You might need some oil with that.",
-        "traits": "moveable"
+        "traits": { "moveable": {} }
     },    
     Noun.BATHROOM_CABINET: {
         "type": "StatefulContainerItem",
@@ -165,7 +177,7 @@ item_data = {
         "name": "some takeaway menus",
         "description": "a collection of menus from, variously, a vegan slaw shack, a cronut salon and a "
                         "rainbow grilled cheese caravan.",
-        "traits": "moveable"
+        "traits": { "moveable": {} }
     },
     Noun.PHONE: {
         "type": "StatefulItem",
@@ -190,7 +202,7 @@ item_data = {
                 "message": "The Apple[tm] logo briefly appears as you turn off the iPhone[tm], then the screen fades to black."
             }
         },
-        "traits": { "moveable" }
+        "traits": { "moveable": {} }
     },
     Noun.TV: {
         "name": "a television",
@@ -209,7 +221,7 @@ item_data = {
     Noun.PENNY_FARTHING: {
         "name": "a penny-farthing bicycle",
         "description": "a beautifully-restored Victorian penny-farthing with a leather saddle.",
-        "traits": { "moveable" }
+        "traits": { "moveable": {} }
     }
 }
 

@@ -36,6 +36,9 @@ class Item:
     
     def has_trait(self, trait):
         return trait in self.traits
+    
+    def get_trait(self, trait):
+        return self.traits.get(trait)
 
 
 def __repr__(self):
