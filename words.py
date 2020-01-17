@@ -32,6 +32,7 @@ class Noun(Enum):
     WARDROBE = auto()
     TRUNK = auto()
     BEARD = auto()
+    COMB = auto()
 
 # Useful collection of for our special directional nouns
 DIRECTIONS = {
@@ -102,7 +103,8 @@ normalised_nouns = {
     "doodah": Noun.DOODAH,
     "trunk": Noun.TRUNK,
     "wooden trunk": Noun.TRUNK,
-    "beard": Noun.BEARD
+    "beard": Noun.BEARD,
+    "comb": Noun.COMB
 }
 
 class Verb(Enum):

@@ -1,6 +1,7 @@
 from traits import ClothesHorse, IVerbable
 from room import Room
 from enum import Enum, auto
+from words import Verb, Noun
 
 class BeardHealth(Enum):
     STRAGGLY_MESS = auto()
@@ -20,10 +21,34 @@ class Player(ClothesHorse, IVerbable):
         self.score += points
 
     def can_verb(self, verb):
-        pass
+        if verb == Verb.COMB:
+            if self.has(Noun.COMB):
+                return (True, None)
+            else:
+                return (False, "You'll need to find a comb first.")
+        return(False, "You just can't do that to yourself.")
 
     def do_verb(self, verb):
-        pass
+        if verb == Verb.COMB:
+            if self.has(Noun.COMB):
+                if self.beard_status == BeardHealth.PERFECTION:
+                    return (True, "You're beautiful enough already.")
+                elif self.beard_status == BeardHealth.QUITE_TIDY:
+                    if self.is_wearing(Noun.BEARD_OIL):
+                        self.beard_status = BeardHealth.PERFECTION
+                        return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You look like your normal self again.")
+                    else:
+                        return (False, "You probably need to find some beard oil before you can make yourself look human again.")
+                elif self.beard_status == BeardHealth.STRAGGLY_MESS:
+                    if self.is_wearing(Noun.BEARD_OIL):
+                        self.beard_status = BeardHealth.PERFECTION
+                        return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You look like your normal self again.")
+                    else:
+                        self.beard_status = BeardHealth.QUITE_TIDY
+                        return (True, "Your beard isn't quite such a shocking mess now, but you clearly need to find some beard oil to restore it to its full glory.")                    
+            else:
+                return (False, "You need to find a comb before you do that, and maybe some beard oil for good measure.")
+        return (False, "You just can't do that to yourself.")
 
     def __repr__(self):
         message = f"A Player object with health {self.health}, caffeine_level {self.caffeine_level} and score {self.score}\n"
