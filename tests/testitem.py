@@ -21,7 +21,16 @@ item_data = {
             "on": "a plastic 1970s Ever Ready torch. It's switched on, and emits a surprising amount of light."
         },
         "states": [ "off", "on" ],
-        "verbs": { "turn on": "on", "turn off": "off" },
+        "verbs": {
+            "turn on": {
+                "new_state": "on",
+                "message": "You turn on the torch."
+            },
+            "turn off": {
+                "new_state": "off",
+                "message": "You turn off the torch."
+            }
+        },
         "traits": { "moveable" }
     },
     "bag": {
@@ -38,9 +47,15 @@ item_data = {
             "open": "a rustic oak cabinet. It is open."
         },
         "states": ["open", "closed"],
-        "verbs": { 
-            "open": "open",
-            "close": "closed"
+        "verbs": {
+            "open": {
+                "new_state": "open",
+                "message": "You open the stateful container."
+            },
+            "close": {
+                "new_state": "closed",
+                "message": "You close the stateful container."
+            }
         },
         "traits": { "moveable" },
         "inventory": {
@@ -58,13 +73,19 @@ item_data = {
         "type": "StatefulContainerItem",
         "name": "a rustic oak cabinet",
         "description": {
-            "closed": "a rustic oak cabinet. It is closed.",
-            "open": "a rustic oak cabinet. It is open."
+            "closed": "a cupboard. It is closed.",
+            "open": "a cupboard. It is open."
         },
         "states": ["closed", "open"],
-        "verbs": { 
-            "open": "open",
-            "close": "closed"
+        "verbs": {
+            "open": {
+                "new_state": "open",
+                "message": "You open the cubpard."
+            },
+            "close": {
+                "new_state": "closed",
+                "message": "You close the cupboard."
+            }
         },
         "traits": { "moveable" },
         "inventory": {
