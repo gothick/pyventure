@@ -42,6 +42,11 @@ item_data = {
     Noun.BEARD_OIL: {
         "name": "a can of beard oil",
         "description": "a can of patchouli and ylang-ylang beard oil.",
+        "traits": [ "moveable", "wearable" ]
+    },    
+    Noun.COMB: {
+        "name": "a beard comb",
+        "description": "a tortoiseshell beard comb. You might need some oil with that.",
         "traits": "moveable"
     },    
     Noun.BATHROOM_CABINET: {
