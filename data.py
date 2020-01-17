@@ -96,6 +96,9 @@ item_data = {
             Verb.CLOSE: {
                 "new_state": "closed",
                 "message": "You close the wardrobe door and scare yourself a bit when your distorted reflection reappears."
+            },
+            Verb.ENTER: {
+                "message": "What do you think this is, magical realism?"
             }
         },
         "inventory": {

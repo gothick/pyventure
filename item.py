@@ -54,20 +54,28 @@ class StatefulItem(Item, IVerbable):
     def description(self):
         return self._description[self.state]
 
-    def can_verb(self, verb):
-        if verb in self.verbs:
-            return (True, None)
+    def can_verb(self, possible_verb):
+        verb = self.verbs.get(possible_verb)
+        if verb:
+            if "new_state" in verb:
+                return (True, None)
+            else:
+                return (False, verb["message"])
         else:
             return (False, f"You can't do that to {self.name}.")
 
-    def do_verb(self, verb):
+    def do_verb(self, verb_id):
         result = (False, "You can't do that.")
-        if verb in self.verbs:
-            if self.state != self.verbs[verb]["new_state"]:
-                self.state = self.verbs[verb]["new_state"]
-                result = (True, self.verbs[verb]["message"])
+        verb = self.verbs.get(verb_id)
+        if verb:
+            if "new_state" in verb:
+                if self.state != verb["new_state"]:
+                    self.state = verb["new_state"]
+                    result = (True, verb["message"])
+                else:
+                    result = (False, "Nothing happens.")
             else:
-                result = (False, "Nothing happens.")
+                result = (False, verb["message"])
         return result
 
 class ContainerItem(Container, Item):

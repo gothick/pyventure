@@ -163,7 +163,7 @@ while True:
         suppress_room_description = True
         (result, message) = player.unwear(parser.noun)
         o.print(message)
-    elif parser.verb in [ Verb.OPEN, Verb.CLOSE ]:
+    elif parser.verb in [ Verb.OPEN, Verb.CLOSE, Verb.ENTER ]:
         suppress_room_description = True
         item = current_room.get_item_reference(parser.noun) or player.get_item_reference(parser.noun) 
         if item:
@@ -219,5 +219,6 @@ while True:
         o.print()
         suppress_room_description = True
     else:
+        suppress_room_description
         o.print("Sorry, I don't understand.")
 

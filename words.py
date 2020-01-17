@@ -126,6 +126,7 @@ class Verb(Enum):
     OPEN = auto()
     CLOSE = auto()
     COMB = auto()
+    ENTER = auto()
 
 normalised_verbs = {
     "ride": Verb.RIDE,
@@ -158,5 +159,6 @@ normalised_verbs = {
     "close": Verb.CLOSE,
     "comb": Verb.COMB,
     "tidy": Verb.COMB,
-    "groom": Verb.COMB
+    "groom": Verb.COMB,
+    "enter": Verb.ENTER
 }
