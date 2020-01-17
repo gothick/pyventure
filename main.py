@@ -218,4 +218,6 @@ while True:
         o.print("#####  Magical Debugging End  #####")
         o.print()
         suppress_room_description = True
+    else:
+        o.print("Sorry, I don't understand.")
 
