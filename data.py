@@ -215,7 +215,7 @@ room_data = {
         "name": "The Living Room",
         "inventory": [ Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING ],
         "description": {
-            "basic":  "You are in the living room of a well-kept semi-detached house. Adorning the walls are "
+            "basic":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
                         "pallets sits surrounded by red milk crates on the stripped pine floorboards. Light "
                         "streams in through the picture window from the tidy Southville street outside.",
