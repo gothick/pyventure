@@ -1,4 +1,4 @@
-from traits import Container, IContainer
+from traits import Container, IContainer, IVerbable
 
 # Very simple Item factory.
 class ItemFactory:
@@ -41,7 +41,7 @@ class Item:
 def __repr__(self):
     return f"{self.name}: {self.description}"
 
-class StatefulItem(Item):
+class StatefulItem(Item, IVerbable):
     def __init__(self, id, data, item_factory):
         super().__init__(id, data, item_factory)
         assert(data["states"])
@@ -55,7 +55,10 @@ class StatefulItem(Item):
         return self._description[self.state]
 
     def can_verb(self, verb):
-        return verb in self.verbs 
+        if verb in self.verbs:
+            return (True, None)
+        else:
+            return (False, f"You can't do that to {self.name}.")
 
     def do_verb(self, verb):
         result = (False, "You can't do that.")

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+from typing import Hashable, Optional
 # I know interfaces aren't terribly Pythony, but I'm experimenting with
 # having containers (as in things in the game that can hold stuff, not
 # the Container pattern!) implemented by a mixin here and also by 
@@ -24,6 +24,14 @@ class IContainer(ABC):
 
     @abstractmethod
     def get_item_reference(self, item_id):
+        pass
+
+class IVerbable(ABC):
+    @abstractmethod
+    def can_verb(self, verb: Hashable) -> (bool, Optional[str]):
+        pass
+    
+    def do_verb(self, verb: Hashable) -> (bool, Optional[str]):
         pass
 
 class Container(IContainer):

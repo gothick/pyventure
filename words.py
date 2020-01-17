@@ -31,6 +31,7 @@ class Noun(Enum):
     BOXER_SHORTS = auto()
     WARDROBE = auto()
     TRUNK = auto()
+    BEARD = auto()
 
 # Useful collection of for our special directional nouns
 DIRECTIONS = {
@@ -100,7 +101,8 @@ normalised_nouns = {
     "wardrobe": Noun.WARDROBE,
     "doodah": Noun.DOODAH,
     "trunk": Noun.TRUNK,
-    "wooden trunk": Noun.TRUNK
+    "wooden trunk": Noun.TRUNK,
+    "beard": Noun.BEARD
 }
 
 class Verb(Enum):
@@ -121,6 +123,7 @@ class Verb(Enum):
     TAKE_OFF = auto()
     OPEN = auto()
     CLOSE = auto()
+    COMB = auto()
 
 normalised_verbs = {
     "ride": Verb.RIDE,
@@ -150,5 +153,8 @@ normalised_verbs = {
     "take off": Verb.TAKE_OFF,
     "remove": Verb.TAKE_OFF,
     "open": Verb.OPEN,
-    "close": Verb.CLOSE
+    "close": Verb.CLOSE,
+    "comb": Verb.COMB,
+    "tidy": Verb.COMB,
+    "groom": Verb.COMB
 }

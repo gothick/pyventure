@@ -136,8 +136,13 @@ class TestItemMethods(unittest.TestCase):
         
     def test_stateful_item_states(self):
         item = self.factory.create_from_noun("torch")
-        self.assertTrue(item.can_verb("turn on"))
-        self.assertFalse(item.can_verb("whistle"))
+        
+        (result, message) = item.can_verb("turn on")
+        self.assertTrue(result, "You should be able to turn on a torch.")
+        (result, message) = item.can_verb("throw")
+        self.assertFalse(result, "A torch shouln't be able to throw the torch.")
+        self.assertEqual(message, "You can't do that to an Ever Ready torch.", "Wrong failure message when throwing torch.")
+        
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
         item.do_verb("turn on")
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It's switched on, and emits a surprising amount of light.")

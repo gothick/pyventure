@@ -1,16 +1,29 @@
-from traits import ClothesHorse
+from traits import ClothesHorse, IVerbable
 from room import Room
+from enum import Enum, auto
+
+class BeardHealth(Enum):
+    STRAGGLY_MESS = auto()
+    QUITE_TIDY = auto()
+    PERFECTION = auto()
 
 
-class Player(ClothesHorse):
+class Player(ClothesHorse, IVerbable):
     def __init__(self, inventory, wearing, score, health, caffeine_level):
         super().__init__(inventory, wearing)
         self.score = score
         self.health = health
+        self.beard_status = BeardHealth.STRAGGLY_MESS
         self.caffeine_level = caffeine_level # milligrams
     
     def award_points(self, points):
         self.score += points
+
+    def can_verb(self, verb):
+        pass
+
+    def do_verb(self, verb):
+        pass
 
     def __repr__(self):
         message = f"A Player object with health {self.health}, caffeine_level {self.caffeine_level} and score {self.score}\n"
@@ -33,6 +46,11 @@ class Player(ClothesHorse):
         if self.health <= 0:
             return True
         return False
+
+    @property
+    def description(self):
+        pass
+
 
     def tick(self):
         messages = []
