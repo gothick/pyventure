@@ -122,6 +122,17 @@ class TestItemMethods(unittest.TestCase):
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
         self.assertFalse(item.has_trait("wearable"))
+
+    def test_state_change_returns(self):
+        item = self.factory.create_from_noun("torch")
+        (result, message) = item.do_verb("turn off")
+        self.assertFalse(result, "Turning off a turned off item unexpectedly did something.")
+        (result, message) = item.do_verb("turn on")
+        self.assertTrue(result, "Could not turn on a turned off item.")
+        self.assertEqual(message, "You turn on the torch.", "Wrong message when turning on item.")
+        (result, message) = item.do_verb("turn off")
+        self.assertTrue(result, "Could not turn off a turned on item.")
+        self.assertEqual(message, "You turn off the torch.", "Wrong message when turning off item.")
         
     def test_stateful_item_states(self):
         item = self.factory.create_from_noun("torch")
