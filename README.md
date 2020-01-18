@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/gothick/pyventure.svg?branch=master)](https://travis-ci.org/gothick/pyventure)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gothick/pyventure/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gothick/pyventure/?branch=master)
+
 This is purely a personal experiment in learning Python! It's a
 text-based adventure game, and has been written from the ground up by
 me, a complete Python novice, with more interest in learning the
