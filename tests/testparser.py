@@ -18,6 +18,7 @@ class Noun(Enum):
     PHONE = auto()
     TV = auto()
     PENNY_FARTHING = auto()
+    PLUS_FOURS = auto()
 
 DIRECTIONS = [ Noun.NORTH, Noun.EAST, Noun.SOUTH, Noun.WEST, Noun.UP, Noun.DOWN ]
 
@@ -41,6 +42,9 @@ normalised_nouns = {
     "pennyfarthing": Noun.PENNY_FARTHING,
     "penny farthing": Noun.PENNY_FARTHING,
     "penny-farthing": Noun.PENNY_FARTHING,
+
+    "plus fours": Noun.PLUS_FOURS,
+    "plus-fours": Noun.PLUS_FOURS
 }
 
 
@@ -51,7 +55,8 @@ class Verb(Enum):
     GO = auto()
     EXAMINE = auto()
     TAKE = auto(),
-    INVENTORY = auto()
+    INVENTORY = auto(),
+    WEAR = auto()
 
 normalised_verbs = {
     "ride": Verb.RIDE,
@@ -63,7 +68,9 @@ normalised_verbs = {
     "inventory": Verb.INVENTORY,
     "i": Verb.INVENTORY,
     "look": Verb.EXAMINE,
-    "examine": Verb.EXAMINE
+    "examine": Verb.EXAMINE,
+    "wear": Verb.WEAR,
+    "put on": Verb.WEAR
 }
 
 
@@ -110,6 +117,11 @@ class TestParserMethods(unittest.TestCase):
         self.parser.parse("ride penny farthing")
         self.assertEqual(self.parser.verb, Verb.RIDE)
         self.assertEqual(self.parser.noun, Noun.PENNY_FARTHING)
+
+    def test_two_word_verbs_with_two_word_nouns(self):
+        self.parser.parse("put on plus fours")
+        self.assertEqual(self.parser.verb, Verb.WEAR, "Expected 'put on plus fours' to yield Verb.WEAR")
+        self.assertEqual(self.parser.noun, Noun.PLUS_FOURS, "Expected 'put on plus fours to yield Noun.PLUS_FOURS")
 
     def test_simple_verbs(self):
         self.parser.parse("i")
