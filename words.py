@@ -153,6 +153,7 @@ normalised_verbs = {
     "xyzzy": Verb.XYZZY,
     "wear": Verb.PUT_ON,
     "put on": Verb.PUT_ON,
+    "apply": Verb.PUT_ON, # For beard oil
     "take off": Verb.TAKE_OFF,
     "remove": Verb.TAKE_OFF,
     "open": Verb.OPEN,
