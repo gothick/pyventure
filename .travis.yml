@@ -4,4 +4,7 @@ python:
 
 script:
   - python3 -m unittest discover tests
-  
+
+notifications:
+  email:
+    on_success: always
