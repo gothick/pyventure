@@ -49,8 +49,8 @@ class Parser:
         elif len(words) == 2:
             # Simple split verb-noun:
             return (self.verb_string_to_token(words[0]), self.noun_string_to_token(words[1]))
-        else:
-            # We're only going to solve for three words here
+        elif len(words) == 3:
+            # For three words we may have a two-word noun or a two-word verb
             tryverb = self.verb_string_to_token(words[0] + " " + words[1])
             trynoun = self.noun_string_to_token(words[2])
             if tryverb:
@@ -60,6 +60,13 @@ class Parser:
                 trynoun = self.noun_string_to_token(words[1] + " " + words[2])
                 if tryverb:
                     return (tryverb, trynoun)
+        else:
+            # Going to try a two-word verb and a two-word noun, then we're out
+            # of ideas.
+            tryverb = self.verb_string_to_token(words[0] + " " + words[1])
+            trynoun = self.noun_string_to_token(words[2] + " " + words[3])
+            if tryverb:
+                return(tryverb, trynoun)
         # Fallthrough
         return (None, None)
 
