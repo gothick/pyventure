@@ -221,7 +221,7 @@ item_data = {
     Noun.PENNY_FARTHING: {
         "name": "a penny-farthing bicycle",
         "description": "a beautifully-restored Victorian penny-farthing with a leather saddle.",
-        "traits": { "moveable": {} }
+        "traits": { "moveable": {}, "rideable": {} }
     }
 }
 

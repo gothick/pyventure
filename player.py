@@ -8,7 +8,6 @@ class BeardHealth(Enum):
     QUITE_TIDY = auto()
     PERFECTION = auto()
 
-
 class Player(ClothesHorse, IVerbable):
     def __init__(self, inventory, wearing, score, health, caffeine_level):
         super().__init__(inventory, wearing)
@@ -20,7 +19,7 @@ class Player(ClothesHorse, IVerbable):
     def award_points(self, points):
         self.score += points
 
-    def can_verb(self, verb):
+    def can_verb(self, verb, noun):
         if verb == Verb.COMB:
             if self.has(Noun.COMB):
                 return (True, None)
@@ -28,7 +27,7 @@ class Player(ClothesHorse, IVerbable):
                 return (False, "You'll need to find a comb first.")
         return(False, "You just can't do that to yourself.")
 
-    def do_verb(self, verb):
+    def do_verb(self, verb, noun):
         if verb == Verb.COMB:
             if self.has(Noun.COMB):
                 if self.beard_status == BeardHealth.PERFECTION:

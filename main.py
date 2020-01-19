@@ -194,6 +194,8 @@ while True:
                     o.print("I don't know how to do that.")
             else:
                 o.print("You don't see that here.")
+    elif parser.verb == Verb.RIDE:
+        pass
     elif parser.verb == Verb.SCORE:
         suppress_room_description = True
         o.print(f"You have scored {player.score} points.")

@@ -34,6 +34,14 @@ class IVerbable(ABC):
     def do_verb(self, verb: Hashable) -> (bool, Optional[str]):
         pass
 
+class IVerbNounable(IVerbable):
+    def can_verb(self, verb: Hashable, noun: Hashable = None) -> (bool, Optional[str]):
+        pass
+    
+    def do_verb(self, verb: Hashable, noun: Hashable = None) -> (bool, Optional[str]):
+        pass
+
+
 class Container(IContainer):
     def __init__(self, inventory, *args, **kwargs):
         super().__init__(*args, **kwargs)
