@@ -229,6 +229,9 @@ room_data = {
     "livingroom": {
         "name": "The Living Room",
         "inventory": [ Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING ],
+        "environment_rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
         "description": {
             "basic":  "You are in the living room of a well-kept terraced house. Adorning the walls are "
                         "some post-ironic art prints and a 56\" plasma television. A table made from old "
@@ -259,6 +262,9 @@ room_data = {
     "bedroom": {
         "name": "The bedroom",
         "inventory": [ Noun.WARDROBE, Noun.TRUNK ],
+        "environment_rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
         "description": {
             "basic": "You are in a cool bedroom. The single bed hangs like a child's swing from "
                     "ropes that drop from the ceiling. One wall has a cuboid bookcase with no books, "
@@ -282,6 +288,9 @@ room_data = {
     },
     "landing": {
         "name": "The upstairs landing",
+        "environment_rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
         "description": {
             "basic": "You are in a tiny landing at the top of a narrow flight of stairs."
         },
@@ -297,6 +306,9 @@ room_data = {
     },
     "hall": {
         "name": "The hall",
+        "environment_rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
         "description": {
             "basic": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
         },
@@ -313,6 +325,9 @@ room_data = {
     "kitchen": {
         "name": "The kitchen",
         "inventory": [ Noun.FRIDGE, Noun.ESPRESSO_MACHINE, Noun.MENUS ],
+        "environment_rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
         "description": {
             "basic": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
                         "and a complicated-looking espresso machine. There is no actual food to be seen, though there is "
@@ -335,6 +350,9 @@ room_data = {
     "bathroom": {
         "name": "The bathroom",
         "inventory": [ Noun.BATH, Noun.SINK, Noun.BATHROOM_CABINET ],
+        "environment_rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
         "description": {
             "basic": "You are in a bathroom only just large enough for you, the dominating freestanding bath "
                        "with gargoyle feet and a small white basin which seems to have beer pumps instead of taps. "
