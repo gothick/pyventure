@@ -9,17 +9,17 @@ class Room(Container):
         super().__init__(item_factory.create_dictionary_from_nouns(data.get("inventory") or set()))
         self.id = id
         self.name = data["name"]
-        self.description = data["description"]
+        self._description = data["description"]
         self.exits = data["exits"]
         self.rules = data.get("rules") or {}
 
     @property
-    def full_description(self):
+    def description(self):
         full_desc = self.name + "\n\n"
 
-        d = self.description["basic"]
+        d = self._description["basic"]
 
-        for extra in self.description.get("extras") or {}:
+        for extra in self._description.get("extras") or {}:
             if extra["type"] == "if_in_room":
                 if self.has(extra["object"]):
                     d = d + " " + extra["text"]
@@ -51,15 +51,12 @@ class Room(Container):
                     if rule["type"] == "not_if_carrying":
                         if player.has(rule["item"]):
                             return (False, rule["objection"])
-                        else:
-                            return (True, None)
                     elif rule["type"] == "not_if_riding":
                         if player.is_riding(rule["item"]):
                             return (False, rule["objection"])
-                        else:
-                            return (True, None)
                     else:
                         raise Exception(f"Unknown rule type {rule['type']}")
+                return (True, None)
             else:
                 return (True, None)
 
