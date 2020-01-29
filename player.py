@@ -67,8 +67,9 @@ class Player(ClothesHorse, IVerbable):
 
     def do_ride(self, verb, noun = None, environment_rules = {}):
         if not self.riding:
-            if noun == Noun.PENNY_FARTHING:
-                if self.has(Noun.PENNY_FARTHING):
+            item = self.get_item_reference(noun)
+            if item:
+                if item.has_trait("rideable"):
                     rule = environment_rules.get("can_ride")
                     if rule:
                         return rule
@@ -76,14 +77,11 @@ class Player(ClothesHorse, IVerbable):
                         self.riding = self.get_item_reference(Noun.PENNY_FARTHING)
                         return (True, f"You're now proudly riding {self.riding.name}.")
                 else:
-                    return (False, "You'll have to be holding that first.")    
+                    return (False, "You can't ride that.")
+            else:
+                return (False, "You'll have to get that to try riding it.")    
         else:
             return (False, f"You're already riding {self.riding.name}")
-
-        if noun is None:    
-            return (False, "Ride what?")
-        else:
-            return (False, "You can't ride that.")
 
     def do_dismount(self, verb, noun = None, environment_rules = {}):
         if self.riding:
