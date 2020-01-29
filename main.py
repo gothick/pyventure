@@ -63,7 +63,7 @@ while True:
 
     if not suppress_room_description:
         o.print()
-        o.print(current_room.full_description)
+        o.print(current_room.description)
 
     # Pre-round player events:
     player_messages = player.tick()
