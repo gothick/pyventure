@@ -48,16 +48,16 @@ class Player(ClothesHorse, IVerbable):
             return (False, "You can't comb that.")
         if not self.has(Noun.COMB):
             return (False, "You need to find a comb before you do that, and maybe some beard oil for good measure.")
-        
         if self.beard_status == BeardHealth.PERFECTION:
             return (True, "You're beautiful enough already.")
-        elif self.beard_status == BeardHealth.QUITE_TIDY:
+
+        if self.beard_status == BeardHealth.QUITE_TIDY:
             if self.is_wearing(Noun.BEARD_OIL):
                 self.beard_status = BeardHealth.PERFECTION
                 return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You look like your normal self again.")
             else:
                 return (False, "You probably need to find some beard oil before you can make yourself look human again.")
-        elif self.beard_status == BeardHealth.STRAGGLY_MESS:
+        else: # Must be STRAGGLY_MESS
             if self.is_wearing(Noun.BEARD_OIL):
                 self.beard_status = BeardHealth.PERFECTION
                 return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You look like your normal self again.")
