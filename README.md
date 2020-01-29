@@ -10,6 +10,6 @@ best practice in writing textual adventure games. (Translation:
 "Please don't laugh at my code.")
 
 It's also not in anyway near finished, you can barely do anything, and
-there's a good chance the current master version will be broken. This
-repo is only really public because I don't mind thinking out loud in
-public! 😀
+there's a good chance the current master version will be broken, at 
+least in small ways. This repo is only really public because I don't
+mind thinking out loud in public! 😀
