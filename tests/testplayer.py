@@ -88,3 +88,11 @@ class TestPlayerMethods(unittest.TestCase):
         (result, message) = self.player.do_verb(Verb.RIDE, Noun.PENNY_FARTHING)
         self.assertFalse(result, "Shouldn't be able to ride more than one thing at once.")
 
+        self.player.do_verb(Verb.DISMOUNT, Noun.PENNY_FARTHING)
+        rules = {
+            "can_ride": (False, "You can't ride that in here!")
+        }
+        (result, message) = self.player.do_verb(Verb.RIDE, Noun.PENNY_FARTHING, rules)
+        self.assertFalse(result, "Shouldn't be able to ride if prohibited by rules.")
+        self.assertEqual(message, "You can't ride that in here!")
+

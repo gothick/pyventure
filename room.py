@@ -12,6 +12,7 @@ class Room(Container):
         self.name = data["name"]
         self.description = data["description"]
         self.exits = data["exits"]
+        self.rules = data.get("rules") or {}
 
     @property
     def full_description(self):
@@ -50,6 +51,11 @@ class Room(Container):
                 for rule in rules:
                     if rule["type"] == "not_if_carrying":
                         if player.has(rule["item"]):
+                            return (False, rule["objection"])
+                        else:
+                            return (True, None)
+                    elif rule["type"] == "not_if_riding":
+                        if player.is_riding(rule["item"]):
                             return (False, rule["objection"])
                         else:
                             return (True, None)

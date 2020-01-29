@@ -229,7 +229,7 @@ room_data = {
     "livingroom": {
         "name": "The Living Room",
         "inventory": [ Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING ],
-        "environment_rules": {
+        "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {
@@ -250,6 +250,8 @@ room_data = {
                 "destination": "hall",
                 "rules": [
                     {
+                        # We don't want to let the player carry the penny-farthing into
+                        # the house. 
                         "type": "not_if_carrying",
                         "item": Noun.PENNY_FARTHING,
                         "objection": "The penny-farthing won't fit through there."
@@ -262,7 +264,7 @@ room_data = {
     "bedroom": {
         "name": "The bedroom",
         "inventory": [ Noun.WARDROBE, Noun.TRUNK ],
-        "environment_rules": {
+        "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {
@@ -288,7 +290,7 @@ room_data = {
     },
     "landing": {
         "name": "The upstairs landing",
-        "environment_rules": {
+        "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {
@@ -306,7 +308,7 @@ room_data = {
     },
     "hall": {
         "name": "The hall",
-        "environment_rules": {
+        "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {
@@ -325,7 +327,7 @@ room_data = {
     "kitchen": {
         "name": "The kitchen",
         "inventory": [ Noun.FRIDGE, Noun.ESPRESSO_MACHINE, Noun.MENUS ],
-        "environment_rules": {
+        "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {
@@ -344,13 +346,22 @@ room_data = {
                      "you hear a distant bass throb from the vinyl stall at the Tobacco Factory market."
         },
         "exits": {
-            NORTH: {"destination": "livingroom"}
+            NORTH: {
+                "destination": "livingroom",
+                "rules": [
+                    {
+                        "type": "not_if_riding",
+                        "item": Noun.PENNY_FARTHING,
+                        "objection": "You can't ride into the house on a penny-farthing!"
+                    }
+                ]
+            }
         }
     },
     "bathroom": {
         "name": "The bathroom",
         "inventory": [ Noun.BATH, Noun.SINK, Noun.BATHROOM_CABINET ],
-        "environment_rules": {
+        "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {

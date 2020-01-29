@@ -199,7 +199,7 @@ while True:
                 o.print("You don't see that here.")
     elif parser.verb in (Verb.RIDE, Verb.DISMOUNT):
         suppress_room_description = True
-        (result, message) = player.do_verb(parser.verb, parser.noun)
+        (result, message) = player.do_verb(parser.verb, parser.noun, current_room.rules)
         o.print(message)
     elif parser.verb == Verb.SCORE:
         suppress_room_description = True
