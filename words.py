@@ -135,6 +135,7 @@ normalised_verbs = {
     "mount": Verb.RIDE,
     "get off": Verb.DISMOUNT,
     "dismount": Verb.DISMOUNT,
+    "stop riding": Verb.DISMOUNT,
     "turn on": Verb.TURN_ON,
     "activate": Verb.TURN_ON,
     "turn off": Verb.TURN_OFF,

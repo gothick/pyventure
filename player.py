@@ -29,7 +29,7 @@ class Player(ClothesHorse, IVerbable):
     
     def take(self, item_id):
         if self.riding and self.riding.id == item_id:
-            return (None, "You'll need to stop riding that first.")
+            return (None, "You'll need to dismount that first.")
         return super().take(item_id)
 
     def do_verb(self, verb, noun = None, environment_rules = {}):
