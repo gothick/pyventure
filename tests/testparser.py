@@ -50,6 +50,7 @@ normalised_nouns = {
 
 class Verb(Enum):
     RIDE = auto()
+    DISMOUNT = auto()
     TURN_ON = auto()
     TURN_OFF = auto()
     GO = auto()
@@ -61,6 +62,8 @@ class Verb(Enum):
 normalised_verbs = {
     "ride": Verb.RIDE,
     "get on": Verb.RIDE,
+    "get off": Verb.DISMOUNT,
+    "dismount": Verb.DISMOUNT,
     "turn on": Verb.TURN_ON,
     "activate": Verb.TURN_ON,
     "turn off": Verb.TURN_OFF,
@@ -122,6 +125,10 @@ class TestParserMethods(unittest.TestCase):
         self.parser.parse("put on plus fours")
         self.assertEqual(self.parser.verb, Verb.WEAR, "Expected 'put on plus fours' to yield Verb.WEAR")
         self.assertEqual(self.parser.noun, Noun.PLUS_FOURS, "Expected 'put on plus fours to yield Noun.PLUS_FOURS")
+
+        self.parser.parse("get off penny farthing")
+        self.assertEqual(self.parser.verb, Verb.DISMOUNT, "Expected 'get off penny farthing' to yield Verb.DISMOUNT")
+        self.assertEqual(self.parser.noun, Noun.PENNY_FARTHING, "Expected 'get off penny farthing to yield Noun.PENNY_FARTHING")
 
     def test_simple_verbs(self):
         self.parser.parse("i")

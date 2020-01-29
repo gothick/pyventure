@@ -109,6 +109,7 @@ normalised_nouns = {
 
 class Verb(Enum):
     RIDE = auto()
+    DISMOUNT = auto()
     TURN_ON = auto()
     TURN_OFF = auto()
     GO = auto()
@@ -132,6 +133,8 @@ normalised_verbs = {
     "ride": Verb.RIDE,
     "get on": Verb.RIDE,
     "mount": Verb.RIDE,
+    "get off": Verb.DISMOUNT,
+    "dismount": Verb.DISMOUNT,
     "turn on": Verb.TURN_ON,
     "activate": Verb.TURN_ON,
     "turn off": Verb.TURN_OFF,

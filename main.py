@@ -119,7 +119,10 @@ while True:
             o.print("You are carrying: ")
             if player.inventory:
                 for object in player.inventory.values():
-                    o.print(f"  {object.name}")
+                    if player.is_riding(object):
+                        o.print(f"  {object.name} (ridden)")
+                    else:
+                        o.print(f"  {object.name}")
             if len(player.wearing) > 0:
                 for object in player.wearing.values():
                     o.print(f"  {object.name} (worn)")
@@ -194,6 +197,10 @@ while True:
                     o.print("I don't know how to do that.")
             else:
                 o.print("You don't see that here.")
+    elif parser.verb in (Verb.RIDE, Verb.DISMOUNT):
+        suppress_room_description = True
+        (result, message) = player.do_verb(parser.verb, parser.noun)
+        o.print(message)
     elif parser.verb == Verb.SCORE:
         suppress_room_description = True
         o.print(f"You have scored {player.score} points.")
