@@ -57,6 +57,11 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertEqual(self.player.beard_status, BeardHealth.PERFECTION, "Combing a QUITE TIDY beard while wearing the beard oil should result in PERFECTION")
 
     def test_riding(self):
+        # Something you can't ride
+        (result, message) = self.player.do_verb(Verb.RIDE, Noun.BOXER_SHORTS)
+        self.assertFalse(result, "Shouldn't be able to ride boxer shorts!")
+
+        # Something you can ride
         bike = self.item_factory.create_from_noun(Noun.PENNY_FARTHING)
 
         self.assertFalse(self.player.is_riding_anything)
@@ -95,4 +100,6 @@ class TestPlayerMethods(unittest.TestCase):
         (result, message) = self.player.do_verb(Verb.RIDE, Noun.PENNY_FARTHING, rules)
         self.assertFalse(result, "Shouldn't be able to ride if prohibited by rules.")
         self.assertEqual(message, "You can't ride that in here!")
+
+
 
