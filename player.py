@@ -111,6 +111,9 @@ class Player(ClothesHorse, IVerbable):
             message += "Riding nothing\n"
         return message
     
+    # TODO Should this be a Room, or just a Container interface I pass as 
+    # something like container_environment? Might make things more loosely
+    # coupled if I don't refer to rooms in here.
     @property 
     def can_touch(self, item_id, current_room: Room):
         if current_room.has(item_id) or self.has(item_id):
