@@ -263,7 +263,15 @@ room_data = {
                     }
                 ]
             },
-            SOUTH: { "destination": "street" }
+            SOUTH: { 
+                "destination": "street",
+                "rules": [
+                    {
+                        "type": "only_if_dressed",
+                        "objection": "You can't go outside dressed like that!"
+                    }
+                ]
+            }
         }
     },
     "bedroom": {

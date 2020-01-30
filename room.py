@@ -55,6 +55,9 @@ class Room(Container):
                     elif rule["type"] == "not_if_riding":
                         if player.is_riding(rule["item"]):
                             return (False, rule["objection"])
+                    elif rule["type"] == "only_if_dressed":
+                        if not player.is_fully_clothed:
+                            return (False, rule["objection"])
                     else:
                         raise Exception(f"Unknown rule type {rule['type']}")
                 return (True, None)
