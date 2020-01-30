@@ -1,4 +1,5 @@
-from traits import Container, IContainer, IVerbable
+from container import Container, IContainer
+from verbable import IVerbable
 from utility import commalist
 
 # Very simple Item factory.

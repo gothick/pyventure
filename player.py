@@ -1,4 +1,5 @@
-from traits import ClothesHorse, IVerbable
+from verbable import IVerbable
+from clotheshorse import ClothesHorse
 from room import Room
 from enum import Enum, auto
 from words import Verb, Noun

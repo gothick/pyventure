@@ -1,7 +1,7 @@
 import textwrap
 import random
 from item import ItemFactory
-from traits import Container
+from container import Container
 from words import DIRECTIONS
 from utility import commalist
 
@@ -49,6 +49,7 @@ class Room(Container):
             rules = self.exits[exit].get("rules")
             if rules:
                 for rule in rules:
+                    # Dynamcially call rule_<name of rule> method.
                     rule_method = getattr(self, f"rule_{rule['type']}")
                     (result, message) = rule_method(rule, player)
                     if result == False:
