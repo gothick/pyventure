@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, PropertyMock
 # TODO Mock items and factory?
 from item import Item, ItemFactory
 from room import Room
@@ -63,6 +63,16 @@ room_data = {
                         "objection": "You can't carry that through there."
                     }
                 ]
+            },
+            Noun.WEST: {
+                "destination": "simpleroom", # All roads lead to simpleroom
+                "transition": "Westerly transition",
+                "rules": [
+                    {
+                        "type": "only_if_dressed",
+                        "objection": "You can't go out like *that*!"
+                    }
+                ]
             }
         }
     },
@@ -119,6 +129,17 @@ class TestRoomMethods(unittest.TestCase):
         player = Mock(**attrs)
         (result, message) = room.can_go(Noun.NORTH, player)
         self.assertFalse(result, "Player carrying something be impeded by rule")
+
+        player = Mock()
+        type(player).is_fully_clothed = PropertyMock(return_value = False)
+
+        (result, message) = room.can_go(Noun.WEST, player)
+        self.assertFalse(result, "Player who's not dressed broke the only_if_dressed rule")
+
+        type(player).is_fully_clothed = PropertyMock(return_value = True)
+        (result, message) = room.can_go(Noun.WEST, player)
+        self.assertTrue(result, "Player who's fully clothed couldn't pass the only_if_dressed rule")
+
     
     def test_description(self):
         room = self.rooms["simpleroom"]
