@@ -129,22 +129,23 @@ class Player(ClothesHorse, IVerbable):
 
 
     def tick(self):
+
+        withdrawal_messages = [
+            { "min": 49, "max": 49, "message": "You feel tired and hung-over, and lacking in coffee."},
+            { "min": 39, "max": 39, "message": "You could really do with a cup of coffee."},
+            { "min": 29, "max": 29, "message": "Seriously, dude. This headache might just kill you if you don't get a coffee soon."},
+            { "min": 19, "max": 19, "message": "You let out an involuntary moan and clutch your forehead. Going cold turkey on cortados is really harshing your mellow."},
+            { "min": 1,  "max": 18, "message": "Your coffee levels are critical. You must find a café immediately."},
+            { "min": 0,  "max": 0, "new_health": 0, "message": "Your caffeine levels have fallen below a critical threshold. The world spins as you crumple to the floor."}
+        ]
+
         messages = []
         self.caffeine_level -= 1 
-        if self.caffeine_level >= 50:
-            # We're fine and dandy.
-            pass
-        elif self.caffeine_level == 49:
-            messages.append("You feel tired and hung-over, and lacking in coffee.")
-        elif self.caffeine_level == 39:
-            messages.append("You could really do with a cup of coffee.")
-        elif self.caffeine_level == 29:
-            messages.append("Seriously, dude. This headache might just kill you if you don't get a coffee soon.")
-        elif self.caffeine_level == 19:
-            messages.append("You let out an involuntary moan and clutch your forehead. Going cold turkey on cortados is really harshing your mellow.")
-        elif self.caffeine_level < 19 and self.caffeine_level > 0:
-            messages.append("Your coffee levels are critical. You must find a café immediately.")
-        elif self.caffeine_level <= 0:
-            self.health = 0
-            messages.append("You caffeine levels have fallen below a critical threshold. The world spins as you crumple to the floor.")
+        for withdrawal_message in withdrawal_messages:
+            if self.caffeine_level >= withdrawal_message["min"] and self.caffeine_level <= withdrawal_message["max"]:
+                messages.append(withdrawal_message["message"])
+                new_health = withdrawal_message.get("new_health")
+                if not new_health is None:
+                    self.health = new_health
+
         return messages
