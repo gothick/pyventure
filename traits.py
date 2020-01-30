@@ -120,9 +120,8 @@ class ClothesHorse(Container):
             # than getting the trait and checking it (as an empty dictionary evaluates to False)
             if item_to_wear.has_trait("wearable"):
                 wearable_trait = item_to_wear.get_trait("wearable")
-
-                if ((item_to_wear.has_trait("top") and self.has_top_on) or 
-                   (item_to_wear.has_trait("bottom") and self.has_bottom_on)):
+                slot_name = wearable_trait.get("slot")
+                if slot_name and self.wearing_in_slot(slot_name):
                    return (False, "You'll need to take something off first.")
                 (item, message) = self.take(item_id)
                 self.wearing[item_id] = item
@@ -132,30 +131,17 @@ class ClothesHorse(Container):
         else:
             return (False, "You're not carrying that.")
 
-    @property 
-    def current_top(self):
+    def wearing_in_slot(self, slot_name):
+        # Simple code for now as we never allow the player to wear 
+        # more than one item per slot.
         for item in self.wearing.values():
-            if item.has_trait("top"):
+            if item.get_trait("wearable").get("slot") == slot_name:
                 return item
         return None
 
     @property
-    def current_bottom(self):
-        for item in self.wearing.values():
-            if item.has_trait("bottom"):
-                return item
-
-    @property
-    def has_top_on(self):
-        return not self.current_top is None
-    
-    @property
-    def has_bottom_on(self):
-        return not self.current_bottom is None
-    
-    @property
     def is_fully_clothed(self):
-        return self.has_top_on and self.has_bottom_on
+        return self.wearing_in_slot("top") is not None and self.wearing_in_slot("bottom") is not None
         
     def unwear(self, item_id):
         if not item_id in self.wearing:

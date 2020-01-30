@@ -28,12 +28,12 @@ item_data = {
     Noun.SHIRT: {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
-        "traits": { "moveable": {}, "wearable": {}, "clothes_top": {} } 
+        "traits": { "moveable": {}, "wearable": { "slot": "top"} } 
     },
     Noun.PLUS_FOURS: {
         "name": "a pair of tweed plus fours",
         "description": "a pair of tweed plus fours that you claim to have bought from Camden Market, but actually bought on Amazon.",
-        "traits": { "moveable": {}, "wearable": {}, "clothes_bottom": {} }
+        "traits": { "moveable": {}, "wearable": { "slot": "bottom" } }
     },
     Noun.BATH: {
         "name": "a gargoyle clawfoot bath",

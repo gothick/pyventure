@@ -104,9 +104,7 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertEqual(message, "You can't ride that in here!")
 
     def test_basic_wearing(self):
-        self.assertFalse(self.player.has_top_on)
-        self.assertFalse(self.player.has_bottom_on)
-        
+        self.assertFalse(self.player.is_fully_clothed, "Player wearing just boxers shouldn't read as fully clothed.")        
         # These trousers aren't wearable:
         attrs = {
             'has_trait.return_value': False,
@@ -138,9 +136,11 @@ class TestPlayerMethods(unittest.TestCase):
     def test_wearing_tops(self):
         # Two wearable, moveable tops:
         def has_trait(trait):
-            return trait in ("wearable", "moveable", "top")
+            return trait in ("wearable", "moveable")
         def get_trait(trait):
-            return {} if trait in ("wearable", "moveable", "top") else None
+            if trait in ("wearable"): return { "slot": "top" }
+            if trait in ("moveable"): return {}
+            return None
 
         attrs = {
             'has_trait.side_effect': has_trait,
@@ -163,9 +163,11 @@ class TestPlayerMethods(unittest.TestCase):
     def test_wearing_bottoms(self):
         # Two wearable, moveable bottoms:
         def has_trait(trait):
-            return trait in ("wearable", "moveable", "bottom")
+            return trait in ("wearable", "moveable")
         def get_trait(trait):
-            return {} if trait in ("wearable", "moveable", "bottom") else None
+            if trait in ("wearable"): return { "slot": "bottom" }
+            if trait in ("moveable"): return {}
+            return None
 
         attrs = {
             'has_trait.side_effect': has_trait,
@@ -191,9 +193,11 @@ class TestPlayerMethods(unittest.TestCase):
     def test_wearing_status(self):
         # Top
         def has_trait_top(trait):
-            return trait in ("wearable", "moveable", "top")
+            return trait in ("wearable", "moveable" )
         def get_trait_top(trait):
-            return {} if trait in ("wearable", "moveable", "top") else None
+            if trait in ("moveable"): return {}
+            if trait in ("wearable"): return { "slot": "top" }
+            return None
 
         attrs = {
             'has_trait.side_effect': has_trait_top,
@@ -205,9 +209,11 @@ class TestPlayerMethods(unittest.TestCase):
 
         # Bottoms
         def has_trait_bottom(trait):
-            return trait in ("wearable", "moveable", "bottom")
+            return trait in ("wearable", "moveable")
         def get_trait_bottom(trait):
-            return {} if trait in ("wearable", "moveable", "bottom") else None
+            if trait in ("wearable"): return { "slot": "bottom" }
+            if trait in ("moveable"): return {}
+            return None
 
         attrs = {
             'has_trait.side_effect': has_trait_bottom,
@@ -224,27 +230,22 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertTrue(self.player.is_wearing(Noun.BOXER_SHORTS), "Test player should start with boxers on")
         self.assertFalse(self.player.is_wearing("didgeridoo"), "is_wearing should not be true for an arbitrary didgeridoo")
 
-        self.assertFalse(self.player.has_bottom_on)
-        self.assertFalse(self.player.has_top_on)
         self.assertFalse(self.player.is_fully_clothed)
         
         # Add a top and re-test
         self.player.wear("shirt")
-        self.assertTrue(self.player.has_top_on)
-        self.assertFalse(self.player.has_bottom_on)
-        self.assertEqual(self.player.current_top, shirt)
-        self.assertIsNone(self.player.current_bottom)
+        self.assertEqual(self.player.wearing_in_slot('top'), shirt)
+        self.assertIsNone(self.player.wearing_in_slot('bottom'))
         self.assertFalse(self.player.is_fully_clothed)
 
         # Add trousers
         self.player.wear("trousers")
-        self.assertTrue(self.player.has_top_on)
-        self.assertTrue(self.player.has_bottom_on)
-        self.assertEqual(self.player.current_top, shirt)
-        self.assertEqual(self.player.current_bottom, trousers)
+        self.assertEqual(self.player.wearing_in_slot('top'), shirt)
+        self.assertEqual(self.player.wearing_in_slot('bottom'), trousers)
         self.assertTrue(self.player.is_fully_clothed)
 
         self.player.unwear("trousers")
-        self.assertFalse(self.player.has_bottom_on)
+        self.assertFalse(self.player.is_fully_clothed)
+
         self.player.unwear("shirt")
-        self.assertFalse(self.player.has_top_on)
+        self.assertFalse(self.player.is_fully_clothed)
