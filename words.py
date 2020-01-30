@@ -33,6 +33,7 @@ class Noun(Enum):
     TRUNK = auto()
     BEARD = auto()
     COMB = auto()
+    HAREM_PANTS = auto()
 
 # Useful collection of for our special directional nouns
 DIRECTIONS = {
@@ -75,6 +76,9 @@ normalised_nouns = {
     "plus fours": Noun.PLUS_FOURS,
     "plus-fours": Noun.PLUS_FOURS,
     "tweed plus fours": Noun.PLUS_FOURS,
+    "harem pants": Noun.HAREM_PANTS,
+    "harem": Noun.HAREM_PANTS,
+    "pants": Noun.HAREM_PANTS,
     "fridge": Noun.FRIDGE,
     "smeg": Noun.FRIDGE,
     "smeg fridge": Noun.FRIDGE,

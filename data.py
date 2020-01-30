@@ -35,6 +35,11 @@ item_data = {
         "description": "a pair of tweed plus fours that you claim to have bought from Camden Market, but actually bought on Amazon.",
         "traits": { "moveable": {}, "wearable": { "slot": "bottom" } }
     },
+    Noun.HAREM_PANTS: {
+        "name": "a pair of fetching purple harem pants",
+        "description": "a pair of generously-cut harem pants. They look like they'll be just the job if you get a sudden urge to do the splits.",
+        "traits": { "moveable": {}, "wearable": { "slot": "bottom" } }
+    },
     Noun.BATH: {
         "name": "a gargoyle clawfoot bath",
         "description": "a bath that's far too big for the room, in terms of both size and personality."
@@ -114,7 +119,7 @@ item_data = {
             }
         },
         "inventory": {
-            "open": [ Noun.PLUS_FOURS ],
+            "open": [ Noun.PLUS_FOURS, Noun.HAREM_PANTS ],
             "closed": []
         }
     },
