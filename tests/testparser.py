@@ -89,6 +89,12 @@ class TestParserMethods(unittest.TestCase):
             normalised_verbs
         )
 
+    def test_nop(self):
+        self.parser.parse("")
+        self.assertFalse(parser.valid)
+        self.assertIsNone(self.parser.verb)
+        self.assertIsNone(self.parser.noun)
+
     def test_directions(self):
         self.parser.parse("n")
         self.assertEqual(self.parser.verb, Verb.GO)
