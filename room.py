@@ -49,23 +49,32 @@ class Room(Container):
             rules = self.exits[exit].get("rules")
             if rules:
                 for rule in rules:
-                    if rule["type"] == "not_if_carrying":
-                        if player.has(rule["item"]):
-                            return (False, rule["objection"])
-                    elif rule["type"] == "not_if_riding":
-                        if player.is_riding(rule["item"]):
-                            return (False, rule["objection"])
-                    elif rule["type"] == "only_if_dressed":
-                        if not player.is_fully_clothed:
-                            return (False, rule["objection"])
-                    else:
-                        raise Exception(f"Unknown rule type {rule['type']}")
+                    rule_method = getattr(self, f"rule_{rule['type']}")
+                    (result, message) = rule_method(rule, player)
+                    if result == False:
+                        return (result, message)
                 return (True, None)
             else:
                 return (True, None)
 
         # Default
         return (False, "You can't go that way.")
+
+    def rule_not_if_carrying(self, rule, player):
+        if player.has(rule["item"]):
+            return (False, rule["objection"])
+        return (True, None)
+    
+    def rule_not_if_riding(self, rule, player):
+        if player.is_riding(rule["item"]):
+            return (False, rule["objection"])
+        return (True, None)
+    
+    def rule_only_if_dressed(self, rule, player):
+        if not player.is_fully_clothed:
+            return (False, rule["objection"])
+        return (True, None)
+
 
     def room_id_from_exit(self, exit):
         if exit in self.exits:
