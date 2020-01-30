@@ -91,9 +91,7 @@ class TestParserMethods(unittest.TestCase):
 
     def test_nop(self):
         self.parser.parse("")
-        self.assertFalse(parser.valid)
-        self.assertIsNone(self.parser.verb)
-        self.assertIsNone(self.parser.noun)
+        self.assertFalse(self.parser.valid)
 
     def test_directions(self):
         self.parser.parse("n")
