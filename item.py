@@ -1,4 +1,5 @@
 from traits import Container, IContainer, IVerbable
+from utility import commalist
 
 # Very simple Item factory.
 class ItemFactory:
@@ -90,7 +91,7 @@ class ContainerItem(Container, Item):
     def description(self):
         desc = super().description
         if self.inventory:
-            desc += " It currently holds " + ", ".join(item.name for item in self.inventory.values()) + "."
+            desc += " It currently holds " + commalist(list(item.name for item in self.inventory.values())) + "."
         return desc
 
 class StatefulContainerItem(StatefulItem, IContainer):
@@ -127,5 +128,5 @@ class StatefulContainerItem(StatefulItem, IContainer):
         desc = super().description
         if self.inventories[self.state].is_carrying_anything():
             container = self.inventories[self.state]
-            desc += " It currently holds " + ", ".join(item.name for item in container.inventory.values()) + "."
+            desc += " It currently holds " + commalist(list(item.name for item in container.inventory.values())) + "."
         return desc

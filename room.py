@@ -3,6 +3,7 @@ import random
 from item import ItemFactory
 from traits import Container
 from words import DIRECTIONS
+from utility import commalist
 
 class Room(Container):
     def __init__(self, id, item_factory: ItemFactory, data):
@@ -32,7 +33,7 @@ class Room(Container):
                 full_desc += "There is " + item.name + " here.\n"
 
         if self.exits:
-            full_desc += "Exits are " + ", ".join(DIRECTIONS[exit] for exit in self.exits.keys()) + "."
+            full_desc += "Exits are " + commalist(list(DIRECTIONS[exit] for exit in self.exits.keys())) + "."
         return full_desc
 
     def __repr__(self):
