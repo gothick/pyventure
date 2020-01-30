@@ -114,19 +114,48 @@ class ClothesHorse(Container):
     def wear(self, item_id):
         if self.is_wearing(item_id):
             return (False, "You're already wearing that.")
-        if item_id in self.inventory:
-            if self.inventory[item_id].has_trait("wearable"):
-                trait = self.inventory[item_id].get_trait("wearable")
+        item_to_wear = self.inventory.get(item_id)
+        if item_to_wear:
+            # Note that a trait can be an empty dictionary, so has_trait is a better check for existence
+            # than getting the trait and checking it (as an empty dictionary evaluates to False)
+            if item_to_wear.has_trait("wearable"):
+                wearable_trait = item_to_wear.get_trait("wearable")
+
+                if ((item_to_wear.has_trait("top") and self.has_top_on) or 
+                   (item_to_wear.has_trait("bottom") and self.has_bottom_on)):
+                   return (False, "You'll need to take something off first.")
                 (item, message) = self.take(item_id)
-                if item:
-                    self.wearing[item_id] = item
-                    return (True, trait.get("wear_description") or f"You are now wearing {item.name}.")
-                else:
-                    return (False, message)
+                self.wearing[item_id] = item
+                return (True, wearable_trait.get("wear_description") or f"You are now wearing {item.name}.")
             else:
                 return (False, "You can't wear that.")
         else:
             return (False, "You're not carrying that.")
+
+    @property 
+    def current_top(self):
+        for item in self.wearing.values():
+            if item.has_trait("top"):
+                return item
+        return None
+
+    @property
+    def current_bottom(self):
+        for item in self.wearing.values():
+            if item.has_trait("bottom"):
+                return item
+
+    @property
+    def has_top_on(self):
+        return not self.current_top is None
+    
+    @property
+    def has_bottom_on(self):
+        return not self.current_bottom is None
+    
+    @property
+    def is_fully_clothed(self):
+        return self.has_top_on and self.has_bottom_on
         
     def unwear(self, item_id):
         if not item_id in self.wearing:

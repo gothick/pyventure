@@ -28,12 +28,12 @@ item_data = {
     Noun.SHIRT: {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
-        "traits": { "moveable": {}, "wearable": {} } 
+        "traits": { "moveable": {}, "wearable": {}, "clothes_top": {} } 
     },
     Noun.PLUS_FOURS: {
         "name": "a pair of tweed plus fours",
         "description": "a pair of tweed plus fours that you claim to have bought from Camden Market, but actually bought on Amazon.",
-        "traits": { "moveable": {}, "wearable": {} }
+        "traits": { "moveable": {}, "wearable": {}, "clothes_bottom": {} }
     },
     Noun.BATH: {
         "name": "a gargoyle clawfoot bath",
@@ -344,6 +344,9 @@ room_data = {
         "description": {
             "basic": "You are in a Victorian terrace in Southville. To the north lies a furniture reclamation yard. From the south "
                      "you hear a distant bass throb from the vinyl stall at the Tobacco Factory market."
+        },
+        "rules": {
+            "nudity": (False, "In public!? You're a hipster, not a flasher.")
         },
         "exits": {
             NORTH: {
