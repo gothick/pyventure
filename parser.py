@@ -36,6 +36,8 @@ class Parser:
         # Srip out articles
         words = list(filter(lambda word: word not in [ "the", "a", "an" ] , words))
 
+        if len(words) == 0:
+            return(None, None)
         if len(words) == 1:
             # If it's a direction instruction abbreviate we'll turn it
             # into a full-on go command
