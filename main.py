@@ -37,6 +37,7 @@ o.print("\nWelcome to the Bristol Hipster Adventure.\n")
 current_room = rooms["livingroom"]
 visited_rooms = set()
 suppress_room_description = False
+no_tick = False
 
 player = Player(
     inventory = {},
@@ -49,6 +50,7 @@ player = Player(
 debugging = False 
 
 parser = Parser(Noun, Noun.UNKNOWN, Verb, Verb.GO, DIRECTIONS, normalised_nouns, normalised_verbs)
+
 
 while True:
 
@@ -64,11 +66,14 @@ while True:
     if not suppress_room_description:
         o.print()
         o.print(current_room.description)
+    suppress_room_description = False
 
     # Pre-round player events:
-    player_messages = player.tick()
-    for message in player_messages:
-        o.print(message)
+    if not no_tick:
+        player_messages = player.tick()
+        for message in player_messages:
+            o.print(message)
+    no_tick = False
 
     # print(player)
 
@@ -76,8 +81,7 @@ while True:
         o.print(f"You have died. Your final score was {player.score} points.")
         break
 
-    suppress_room_description = False
-
+    
     command = input("Command: ")
     parser.parse(command)
 
@@ -87,6 +91,7 @@ while True:
     if not parser.valid:
         suppress_room_description = True
         o.print("Sorry, I don't understand '" + command + "'")
+        no_tick = True # Give the player a break.
         continue
 
     if parser.verb == Verb.EXAMINE:
@@ -227,5 +232,6 @@ while True:
         suppress_room_description = True
     else:
         suppress_room_description = True
-        o.print("Sorry, I don't understand.")
+        no_tick = True # Give the player a break.
+        o.print("Sorry, I don't understand.") 
 
