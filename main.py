@@ -183,7 +183,7 @@ while True:
         else:
             o.print("You don't see that here")
 
-    elif parser.verb in [ Verb.TURN_ON, Verb.TURN_OFF ]:
+    elif parser.verb in [ Verb.TURN_ON, Verb.TURN_OFF, Verb.PLAY ]:
         suppress_room_description = True
 
         if player.has(parser.noun):
@@ -199,6 +199,7 @@ while True:
                     item = None
             else:
                 print("You don't see that here.")
+                item = None
 
         if item:
             if isinstance(item, IVerbable):

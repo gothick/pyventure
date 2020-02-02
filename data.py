@@ -236,8 +236,19 @@ item_data = {
         "traits": { "moveable": {}, "rideable": {} }
     },
     Noun.RECORDS: {
+        "type": "SimpleVerbableItem",
         "name": "a small stack of vinyl records",
-        "description": "a stack of vinyl records from your favourite bands that nobody else has heard of, like Plugh, Y2, and the Xyzzy Plovers."
+        "description": "a stack of vinyl records from your favourite bands that nobody else has heard of, like Plugh, Y2, and the Xyzzy Plovers.",
+        "verbs": {
+            Verb.PLAY: {
+                "type": "random",
+                "messages": [
+                    "You pluck out the Y2 album at random and put it on the turntable. You very quickly take it back off, reminded that there's a reason not many people have heard of them.",
+                    "You pluck out the Plugh album at random and put it on the turntable. You very quickly take it back off, reminded that there's a reason not many people have heard of them.",
+                    "You pluck out the Xyzzy Plovers album at random and put it on the turntable. It's actually surprisingly good."
+                ]
+            }
+        }
     },
     Noun.TURNTABLE: {
         "name": "a record player",
@@ -287,6 +298,33 @@ room_data = {
                     }
                 ]
             }
+        }
+    },
+    "diningroom": {
+        "name": "The dining room",
+        "inventory": [ Noun.TURNTABLE, Noun.RECORDS ],
+        "rules": {
+            "can_ride": (False, "You can't ride that in here!")
+        },
+        "description": {
+            "basic": "You find yourself in a small dining room, though the varied amateur taxidermy "
+                    "in strategically-placed glass cases would probably be enough to put most "
+                    "people off their dinner. On the far side of the empty dining table is a teak " 
+                    "cabinet with a vintage turntable and some vinyl records.",
+            "extras": [
+                {
+                    "type": "random",
+                    "texts": [
+                        "A stuffed squirrel gives you a particularly beady look.",
+                        "A stuffed badger seems to gnash at the air, as if in pain.",
+                        "A stuffed owl's glassy eyes regard you with contempt."
+                    ]
+                }
+            ]
+        },
+        "exits": {
+            NORTH: { "destination": "kitchen" },
+            SOUTH: { "destination": "hall" }
         }
     },
     "bedroom": {
@@ -340,10 +378,10 @@ room_data = {
             "can_ride": (False, "You can't ride that in here!")
         },
         "description": {
-            "basic": "You are in a tiny hallway between the living room and the kitchen, at the bottom of a flight of stairs."
+            "basic": "You are in a tiny hallway between the living room and the dining room, at the bottom of a flight of stairs."
         },
         "exits": {
-            Noun.NORTH: {"destination": "kitchen"} ,
+            Noun.NORTH: {"destination": "diningroom"} ,
             Noun.SOUTH: {"destination": "livingroom"},
             Noun.UP: {
                 "destination": "landing",
@@ -364,7 +402,7 @@ room_data = {
                         " a lingering hint of avocado toast in the air."
         },
         "exits": {
-            SOUTH: {"destination": "hall"}
+            SOUTH: {"destination": "diningroom"}
         }
     },
     "street": {

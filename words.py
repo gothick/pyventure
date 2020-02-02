@@ -183,5 +183,5 @@ normalised_verbs = {
     "tidy": Verb.COMB,
     "groom": Verb.COMB,
     "enter": Verb.ENTER,
-    "play": Verb.PUT_ON
+    "play": Verb.PLAY
 }

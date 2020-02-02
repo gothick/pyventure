@@ -1,5 +1,7 @@
 import unittest
+from unittest.mock import patch
 from item import Item, StatefulItem, ItemFactory
+from random import Random
 
 item_data = {
     "shirt": {
@@ -98,6 +100,32 @@ item_data = {
         "name": "a container",
         "description": "a container with a bag inside",
         "inventory": { "basic", "bag" } 
+    },
+    "simpleverbable": {
+        "type": "SimpleVerbableItem",
+        "name": "a simple verbable item.",
+        "description": "a simple verbable item with a single, non-random verb result.",
+        "verbs": {
+            "command": {
+                "type": "simple",
+                "message": "simple verb message result"
+            }
+        }
+    },
+    "simpleverbablerandom": {
+        "type": "SimpleVerbableItem",
+        "name": "a simple verbable item.",
+        "description": "a simple verbable item with a single, non-random verb result.",
+        "verbs": {
+            "command": {
+                "type": "random",
+                "messages": [
+                    "message0",
+                    "message1",
+                    "message2"
+                ]
+            }
+        }
     }
 }
 
@@ -137,11 +165,14 @@ class TestItemMethods(unittest.TestCase):
     def test_stateful_item_states(self):
         item = self.factory.create_from_noun("torch")
         
-        (result, message) = item.can_verb("turn on")
+        (result, message) = item.do_verb("turn on")
         self.assertTrue(result, "You should be able to turn on a torch.")
-        (result, message) = item.can_verb("throw")
-        self.assertFalse(result, "A torch shouln't be able to throw the torch.")
-        self.assertEqual(message, "You can't do that to an Ever Ready torch.", "Wrong failure message when throwing torch.")
+        (result, message) = item.do_verb("turn off")
+        self.assertTrue(result, "You should be able to turn off a torch.")
+
+        (result, message) = item.do_verb("throw")
+        self.assertFalse(result, "Shouln't be able to throw the torch.")
+        self.assertEqual(message, "You can't do that.", "Wrong failure message when throwing torch.")
         
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
         item.do_verb("turn on")
@@ -150,6 +181,49 @@ class TestItemMethods(unittest.TestCase):
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
         item.do_verb("turn off")
         self.assertEqual(item.description, "a plastic 1970s Ever Ready torch. It is switched off.")
+
+    def test_simple_verbable_item(self):
+        item = self.factory.create_from_noun("simpleverbable")
+        (result, message) = item.do_verb("flobble")
+        self.assertFalse(result, "Shouldn't be able to flobble a SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertTrue(result, "Should be able to command a SimpleVerbableItem.")
+        self.assertEqual(message, "simple verb message result", "Wrong command result from SimpleVerbableItem")
+
+    @patch('item.random')
+    def test_simple_verbable_item_with_random_result(self, random):
+        # https://stackoverflow.com/questions/26091330/how-to-validate-a-unit-test-with-random-values
+        # Seed a patched random number generator
+        my_random = Random(123)
+        random.choice._mock_side_effect = my_random.choice
+
+        item = self.factory.create_from_noun("simpleverbablerandom")
+        (result, message) = item.do_verb("flobble")
+        self.assertFalse(result, "Shouldn't be able to flobble a SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertTrue(result, "Should be able to command a SimpleVerbableItem.")
+
+        # This is the order our seed guarantees:
+        self.assertEqual(message, "message0", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message1", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message0", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message1", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message1", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message0", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message0", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message1", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message2", "Wrong command result from SimpleVerbableItem")
+        (result, message) = item.do_verb("command")
+        self.assertEqual(message, "message2", "Wrong command result from SimpleVerbableItem")
+        
 
     def test_container_item(self):
         item = self.factory.create_from_noun("bag")

@@ -1,6 +1,7 @@
 from container import Container, IContainer
 from verbable import IVerbable
 from utility import commalist
+import random
 
 # Very simple Item factory.
 class ItemFactory:
@@ -42,9 +43,24 @@ class Item:
     def get_trait(self, trait):
         return self.traits.get(trait)
 
-
 def __repr__(self):
     return f"{self.name}: {self.description}"
+
+class SimpleVerbableItem(Item, IVerbable):
+    def __init__(self, id, data, item_factory, *args, **kwargs):
+        super().__init__(id, data, item_factory, *args, **kwargs)
+        self.verbs = data.get("verbs") or set()
+
+    def do_verb(self, verb_id):
+        result = (False, "You can't do that.")
+        verb = self.verbs.get(verb_id)
+        if verb:
+            if verb["type"] == "random":
+                message = random.choice(verb["messages"])
+            else:
+                message = verb["message"]
+            result = (True, message)
+        return result
 
 class StatefulItem(Item, IVerbable):
     def __init__(self, id, data, item_factory):
@@ -58,16 +74,6 @@ class StatefulItem(Item, IVerbable):
     @property
     def description(self):
         return self._description[self.state]
-
-    def can_verb(self, possible_verb):
-        verb = self.verbs.get(possible_verb)
-        if verb:
-            if "new_state" in verb:
-                return (True, None)
-            else:
-                return (False, verb["message"])
-        else:
-            return (False, f"You can't do that to {self.name}.")
 
     def do_verb(self, verb_id):
         result = (False, "You can't do that.")
