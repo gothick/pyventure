@@ -6,6 +6,7 @@ from player import Player
 from item import ItemFactory
 from words import Noun, Verb, DIRECTIONS, normalised_nouns, normalised_verbs
 from textwrap import TextWrapper
+from verbable import IVerbable
 
 # All our printed output goes through here.
 class Outputter:
@@ -184,24 +185,30 @@ while True:
 
     elif parser.verb in [ Verb.TURN_ON, Verb.TURN_OFF ]:
         suppress_room_description = True
+
         if player.has(parser.noun):
             item = player.get_item_reference(parser.noun)
-            (result, message) = item.do_verb(parser.verb)
-            # For now it doesn't matter if it was successful or not; do_verb will
-            # hand us an appropriate message.
-            o.print(message)
         else:
             # The thing we're turning on or off wasn't in the inventory, but
             # if it's an immovable object that's in the room with us, we still
-            # want to respond.
+            # want to verb it.
             if current_room.has(parser.noun):
                 item = current_room.get_item_reference(parser.noun)
                 if item.has_trait("moveable"):
                     o.print("You'll need to pick that up first")
-                else:
-                    o.print("I don't know how to do that.")
+                    item = None
             else:
-                o.print("You don't see that here.")
+                print("You don't see that here.")
+
+        if item:
+            if isinstance(item, IVerbable):
+                (result, message) = item.do_verb(parser.verb)
+                # For now it doesn't matter if it was successful or not; do_verb will
+                # hand us an appropriate message.
+                o.print(message)
+            else:
+                print("You can't do that.")
+
     elif parser.verb in (Verb.RIDE, Verb.DISMOUNT):
         suppress_room_description = True
         (result, message) = player.do_verb(parser.verb, parser.noun, current_room.rules)

@@ -210,6 +210,7 @@ item_data = {
         "traits": { "moveable": {} }
     },
     Noun.TV: {
+        "type": "StatefulItem",
         "name": "a television",
         "description": {
             "off": "a modern-looking Samsung smart TV. It's turned off.",
@@ -219,14 +220,28 @@ item_data = {
             "off", "on"
         ],
         "verbs": { 
-            Verb.TURN_ON: "on", 
-            Verb.TURN_OFF: "off"
+            Verb.TURN_ON: {
+                "new_state": "on",
+                "message": "You turn on the TV. I think you're halfway thorugh an episode of Portlandia."
+            },
+            Verb.TURN_OFF: {
+                "new_state": "off",
+                "message": "You turn off the TV."
+            }
         }
     },
     Noun.PENNY_FARTHING: {
         "name": "a penny-farthing bicycle",
         "description": "a beautifully-restored Victorian penny-farthing with a leather saddle.",
         "traits": { "moveable": {}, "rideable": {} }
+    },
+    Noun.RECORDS: {
+        "name": "a small stack of vinyl records",
+        "description": "a stack of vinyl records from your favourite bands that nobody else has heard of, like Plugh, Y2, and the Xyzzy Plovers."
+    },
+    Noun.TURNTABLE: {
+        "name": "a record player",
+        "description": "a vintage Dynatron record player in a teak cabinet."
     }
 }
 

@@ -34,6 +34,8 @@ class Noun(Enum):
     BEARD = auto()
     COMB = auto()
     HAREM_PANTS = auto()
+    RECORDS = auto()
+    TURNTABLE = auto()
 
 # Useful collection of for our special directional nouns
 DIRECTIONS = {
@@ -108,7 +110,16 @@ normalised_nouns = {
     "trunk": Noun.TRUNK,
     "wooden trunk": Noun.TRUNK,
     "beard": Noun.BEARD,
-    "comb": Noun.COMB
+    "comb": Noun.COMB,
+    "records": Noun.RECORDS,
+    "record": Noun.RECORDS,
+    "lps": Noun.RECORDS,
+    "vinyl": Noun.RECORDS,
+    "vinyl records": Noun.RECORDS,
+    "turntable": Noun.TURNTABLE,
+    "vintage turntable": Noun.TURNTABLE,
+    "record deck": Noun.TURNTABLE,
+    "record player": Noun.TURNTABLE,
 }
 
 class Verb(Enum):
@@ -132,6 +143,7 @@ class Verb(Enum):
     CLOSE = auto()
     COMB = auto()
     ENTER = auto()
+    PLAY = auto()
 
 normalised_verbs = {
     "ride": Verb.RIDE,
@@ -152,6 +164,7 @@ normalised_verbs = {
     "describe": Verb.EXAMINE,
     "take": Verb.TAKE,
     "get": Verb.TAKE,
+    "pick up": Verb.TAKE,
     "score": Verb.SCORE,
     "inventory": Verb.INVENTORY,
     "i": Verb.INVENTORY,
@@ -169,5 +182,6 @@ normalised_verbs = {
     "comb": Verb.COMB,
     "tidy": Verb.COMB,
     "groom": Verb.COMB,
-    "enter": Verb.ENTER
+    "enter": Verb.ENTER,
+    "play": Verb.PUT_ON
 }
