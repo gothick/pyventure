@@ -75,18 +75,38 @@ class StatefulItem(Item, IVerbable):
     def description(self):
         return self._description[self.state]
 
-    def do_verb(self, verb_id):
+    def apply_rules(self, verb_rules, environment_rules = {}, player = None):
+        for rule in verb_rules:
+            if rule["type"] == "current_state":
+                if self.state not in rule["states"]:
+                    return (False, rule["message"])
+            elif rule["type"] == "not_below_appearance_level":
+                if player is None:
+                    raise Exception("Appearance rule running but no player object specified.")
+                if player.appearance_level < rule["level"]:
+                    return (False, rule["message"])
+        return (True, None)
+
+
+    def do_verb(self, verb_id, environment_rules = {}, player = None):
         result = (False, "You can't do that.")
         verb = self.verbs.get(verb_id)
         if verb:
-            if "new_state" in verb:
-                if self.state != verb["new_state"]:
-                    self.state = verb["new_state"]
-                    result = (True, verb["message"])
+            verb_rules = verb.get("rules")
+            (rules_result, message) = self.apply_rules(verb_rules, player = player)
+
+            if rules_result == True: 
+                if "new_state" in verb:
+                    if self.state != verb["new_state"]:
+                        self.state = verb["new_state"]
+                        result = (True, verb["message"])
+                    else:
+                        result = (False, "Nothing happens.")
                 else:
-                    result = (False, "Nothing happens.")
+                    # Sometimes we just have specific failure messages for comic effect.
+                    result = (False, verb["message"])
             else:
-                result = (False, verb["message"])
+                result = (rules_result, message)
         return result
 
 class ContainerItem(Container, Item):

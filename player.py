@@ -25,6 +25,10 @@ class Player(ClothesHorse, IVerbable):
     def is_riding_anything(self):
         return not self.riding is None
 
+    @property
+    def appearance_level(self):
+        return 100 if self.beard_status == BeardHealth.PERFECTION else 0
+
     def is_riding(self, noun):
         return not self.riding is None and self.riding.id == noun
     

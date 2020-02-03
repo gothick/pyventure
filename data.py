@@ -188,23 +188,66 @@ item_data = {
         "type": "StatefulItem",
         "name": "the latest iPhone",
         "description": {
-            "on": "the latest iPhone. It is approximately size of a tea tray, and seems to be connected to the house WiFi.",
+            "locked": "the latest iPhone. It is approximately size of a tea tray, and seems to be connected to the house WiFi. It is locked.",
+            "unlocked": "the latest iPhone. It's unlocked. There seem to be applications for Whuzz SKoota, TODO...",
             "off": "the latest iPhone. The screen is dark. I think it's turned off."
         },
         "states": [
             "off", 
-            "on" 
+            "locked",
+            "unlocked"
         ],
         "verbs": {
             Verb.TURN_ON: {
-                "new_state": "on",
+                "new_state": "locked",
                 "message": "After half a minute, the Apple logo is replaced with a lock screen. It shows a picture of "
                             "you and your loved one, which is to say, a cortado served at exactly 54°C in a small "
-                            "laboratory beaker."
+                            "laboratory beaker.",
+                "rules": [
+                    {
+                        "type": "current_state",
+                        "states": ["off"],
+                        "message": "It's already on."
+                    }
+                ]
             },
             Verb.TURN_OFF: {
                 "new_state": "off",
-                "message": "The Apple[tm] logo briefly appears as you turn off the iPhone[tm], then the screen fades to black."
+                "message": "The Apple[tm] logo briefly appears as you turn off the iPhone[tm], then the screen fades to black.",
+                "rules": [
+                    {
+                        "type": "current_state",
+                        "states": ["locked", "unlocked"],
+                        "message": "It's already off."
+                    }
+                ]
+            },
+            Verb.UNLOCK: {
+                "new_state": "unlocked",
+                "message": "The phone recognises your handsome, well-groomed beard and tasteful zero-prescription glasses and unlocks at a glance.",
+                "rules": [
+                    {
+                        "type": "current_state",
+                        "states": ["locked"],
+                        "message": "It would have to be locked for you to do that."
+                    },
+                    {
+                       "type": "not_below_appearance_level",
+                       "level": 100,
+                       "message": "The phone doesn't seem to recognise you. You're not sure if it's the wild beard, the bloodshot eyes or the lack of your usual man-bun and tortoiseshell spectacles that is causing it a problem."
+                    }
+                ]
+            },
+            Verb.LOCK: {
+                "new_state": "locked",
+                "message": "You lock the phone.",
+                "rules": [
+                    {
+                        "type": "current_state",
+                        "states": ["unlocked"],
+                        "message": "It would have to be unlocked for you to do that."
+                    }
+                ]
             }
         },
         "traits": { "moveable": {} }
