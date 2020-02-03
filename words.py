@@ -144,6 +144,8 @@ class Verb(Enum):
     COMB = auto()
     ENTER = auto()
     PLAY = auto()
+    LOCK = auto()
+    UNLOCK = auto()
 
 normalised_verbs = {
     "ride": Verb.RIDE,
@@ -183,5 +185,7 @@ normalised_verbs = {
     "tidy": Verb.COMB,
     "groom": Verb.COMB,
     "enter": Verb.ENTER,
-    "play": Verb.PLAY
+    "play": Verb.PLAY,
+    "lock": Verb.LOCK,
+    "unlock": Verb.UNLOCK
 }

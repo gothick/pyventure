@@ -183,7 +183,7 @@ while True:
         else:
             o.print("You don't see that here")
 
-    elif parser.verb in [ Verb.TURN_ON, Verb.TURN_OFF, Verb.PLAY ]:
+    elif parser.verb in [ Verb.TURN_ON, Verb.TURN_OFF, Verb.LOCK, Verb.UNLOCK, Verb.PLAY ]:
         suppress_room_description = True
 
         if player.has(parser.noun):
@@ -203,7 +203,7 @@ while True:
 
         if item:
             if isinstance(item, IVerbable):
-                (result, message) = item.do_verb(parser.verb)
+                (result, message) = item.do_verb(parser.verb, extras = {"player_appearance_level": player.appearance_level})
                 # For now it doesn't matter if it was successful or not; do_verb will
                 # hand us an appropriate message.
                 o.print(message)

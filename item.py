@@ -51,7 +51,7 @@ class SimpleVerbableItem(Item, IVerbable):
         super().__init__(id, data, item_factory, *args, **kwargs)
         self.verbs = data.get("verbs") or set()
 
-    def do_verb(self, verb_id):
+    def do_verb(self, verb_id, environment_rules = {}, extras = {}):
         result = (False, "You can't do that.")
         verb = self.verbs.get(verb_id)
         if verb:
@@ -75,18 +75,43 @@ class StatefulItem(Item, IVerbable):
     def description(self):
         return self._description[self.state]
 
-    def do_verb(self, verb_id):
+    def apply_rules(self, verb_rules, environment_rules = {}, extras = {}):
+        for rule in verb_rules:
+            if rule["type"] == "current_state":
+                if self.state not in rule["states"]:
+                    return (False, rule["message"])
+            elif rule["type"] == "not_below_appearance_level":
+                if "player_appearance_level" not in extras:
+                    raise Exception("Appearance rule running but no appearance extra passed in.")
+                if extras["player_appearance_level"] < rule["level"]:
+                    return (False, rule["message"])
+        return (True, None)
+
+
+    def do_verb(self, verb_id, environment_rules = {}, extras = {}):
         result = (False, "You can't do that.")
         verb = self.verbs.get(verb_id)
         if verb:
-            if "new_state" in verb:
-                if self.state != verb["new_state"]:
-                    self.state = verb["new_state"]
-                    result = (True, verb["message"])
+            # Sanity check
+            requires_extras = verb.get("requires_extras") or set()
+            if not all(extra in extras.keys() for extra in requires_extras):
+                raise Exception(f"Item '{self.id}' doing verb '{verb_id}' requires missing extra. Found extras {extras.keys()}; requires extras {requires_extras}")
+
+            verb_rules = verb.get("rules") or []
+            (rules_result, message) = self.apply_rules(verb_rules, environment_rules, extras)
+
+            if rules_result == True: 
+                if "new_state" in verb:
+                    if self.state != verb["new_state"]:
+                        self.state = verb["new_state"]
+                        result = (True, verb["message"])
+                    else:
+                        result = (False, "Nothing happens.")
                 else:
-                    result = (False, "Nothing happens.")
+                    # Sometimes we just have specific failure messages for comic effect.
+                    result = (False, verb["message"])
             else:
-                result = (False, verb["message"])
+                result = (rules_result, message)
         return result
 
 class ContainerItem(Container, Item):

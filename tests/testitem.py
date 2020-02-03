@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock, PropertyMock
 from item import Item, StatefulItem, ItemFactory
 from random import Random
 
@@ -124,6 +124,38 @@ item_data = {
                     "message1",
                     "message2"
                 ]
+            }
+        }
+    },
+    "statefulitemwithrules": {
+        "type": "StatefulItem",
+        "name": "a stateful item with rules.",
+        "description": {
+            "on": "a description when the item is on",
+            "off": "a description when the item is off"
+        },
+        "states": ["off", "on"],
+        "verbs": {
+            "turn on": {
+                "requires_extras": { "player_appearance_level" },
+                "new_state": "on",
+                "message": "Turning on.",
+                "rules": [
+                    {
+                        "type": "current_state",
+                        "states": ["off"],
+                        "message": "It's already on."
+                    },
+                    {
+                        "type": "not_below_appearance_level",
+                        "level": 100,
+                        "message": "Appearance rule condition not met."
+                    }
+                ]
+            },
+            "turn off": {
+                "new_state": "off",
+                "message": "Turning off."
             }
         }
     }
@@ -273,6 +305,27 @@ class TestItemMethods(unittest.TestCase):
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
         self.assertFalse(item.has_trait("wearable"))
+
+    def test_stateful_item_rules(self):
+        item = self.factory.create_from_noun("statefulitemwithrules")
+        (result, message) = item.do_verb("turn off")
+        self.assertFalse(result, "Turning off an item that's turned off shouldn't work.")
+
+        (result, message) = item.do_verb("turn on", extras = { "player_appearance_level": 99 })
+        self.assertFalse(result, "Should not be able to turn item on with player appearance below 100")
+        self.assertEqual(message, "Appearance rule condition not met.")
+
+        (result, message) = item.do_verb("turn on", extras = { "player_appearance_level": 100 })
+        self.assertTrue(result, "Should be able to turn item on with player appearance of 100")
+        self.assertEqual(message, "Turning on.")
+
+        # As you were
+        item.do_verb("turn off") 
+
+        # Should get an exception if we don't pass in the required extra.
+        with self.assertRaisesRegex(Exception, "Item.*requires missing extra.*") as context:
+            item.do_verb("turn on", extras = { "nottherightextra": 123})
+
 
 
 if __name__ == "__main__":
