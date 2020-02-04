@@ -92,7 +92,7 @@ class StatefulItem(Item, IVerbable):
         result = (False, "You can't do that.")
         verb = self.verbs.get(verb_id)
         if verb:
-            verb_rules = verb.get("rules")
+            verb_rules = verb.get("rules") or []
             (rules_result, message) = self.apply_rules(verb_rules, player = player)
 
             if rules_result == True: 
