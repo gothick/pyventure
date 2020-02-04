@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock, PropertyMock
 from item import Item, StatefulItem, ItemFactory
 from random import Random
 
@@ -124,6 +124,37 @@ item_data = {
                     "message1",
                     "message2"
                 ]
+            }
+        }
+    },
+    "statefulitemwithrules": {
+        "type": "StatefulItem",
+        "name": "a stateful item with rules.",
+        "description": {
+            "on": "a description when the item is on",
+            "off": "a description when the item is off"
+        },
+        "states": ["off", "on"],
+        "verbs": {
+            "turn on": {
+                "new_state": "on",
+                "message": "Turning on.",
+                "rules": [
+                    {
+                        "type": "current_state",
+                        "states": ["off"],
+                        "message": "It's already on."
+                    },
+                    {
+                        "type": "not_below_appearance_level",
+                        "level": 100,
+                        "message": "Appearance rule condition not met."
+                    }
+                ]
+            },
+            "turn off": {
+                "new_state": "off",
+                "message": "Turning off."
             }
         }
     }
@@ -273,6 +304,21 @@ class TestItemMethods(unittest.TestCase):
         self.assertEqual(item.name, "an Ever Ready torch")
         self.assertTrue(item.has_trait("moveable"))
         self.assertFalse(item.has_trait("wearable"))
+
+    def test_stateful_item_rules(self):
+        item = self.factory.create_from_noun("statefulitemwithrules")
+        (result, message) = item.do_verb("turn off")
+        self.assertFalse(result, "Turning off an item that's turned off shouldn't work.")
+        player = Mock()
+        type(player).appearance_level = PropertyMock(return_value = 50)
+        (result, message) = item.do_verb("turn on", player = player)
+        self.assertFalse(result, "Should not be able to turn item on with player appearance below 100")
+        self.assertEqual(message, "Appearance rule condition not met.")
+
+        type(player).appearance_level = PropertyMock(return_value = 100)
+        (result, message) = item.do_verb("turn on", player = player)
+        self.assertTrue(result, "Should be able to turn item on with player appearance of 100")
+        self.assertEqual(message, "Turning on.")
 
 
 if __name__ == "__main__":
