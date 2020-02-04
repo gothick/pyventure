@@ -225,6 +225,7 @@ item_data = {
             Verb.UNLOCK: {
                 "new_state": "unlocked",
                 "message": "The phone recognises your handsome, well-groomed beard and tasteful zero-prescription glasses and unlocks at a glance.",
+                "requires_extras": { "player_appearance_level" },
                 "rules": [
                     {
                         "type": "current_state",

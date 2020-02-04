@@ -203,7 +203,7 @@ while True:
 
         if item:
             if isinstance(item, IVerbable):
-                (result, message) = item.do_verb(parser.verb, player = player)
+                (result, message) = item.do_verb(parser.verb, extras = {"player_appearance_level": player.appearance_level})
                 # For now it doesn't matter if it was successful or not; do_verb will
                 # hand us an appropriate message.
                 o.print(message)

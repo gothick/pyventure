@@ -37,7 +37,7 @@ class Player(ClothesHorse, IVerbable):
             return (None, "You'll need to dismount that first.")
         return super().take(item_id)
 
-    def do_verb(self, verb, noun = None, environment_rules = {}):
+    def do_verb(self, verb, noun = None, environment_rules = {}, extras = {}):
         if verb == Verb.COMB:
             return self.do_comb(verb, noun)
         elif verb == Verb.RIDE:

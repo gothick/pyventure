@@ -137,6 +137,7 @@ item_data = {
         "states": ["off", "on"],
         "verbs": {
             "turn on": {
+                "requires_extras": { "player_appearance_level" },
                 "new_state": "on",
                 "message": "Turning on.",
                 "rules": [
@@ -309,16 +310,22 @@ class TestItemMethods(unittest.TestCase):
         item = self.factory.create_from_noun("statefulitemwithrules")
         (result, message) = item.do_verb("turn off")
         self.assertFalse(result, "Turning off an item that's turned off shouldn't work.")
-        player = Mock()
-        type(player).appearance_level = PropertyMock(return_value = 50)
-        (result, message) = item.do_verb("turn on", player = player)
+
+        (result, message) = item.do_verb("turn on", extras = { "player_appearance_level": 99 })
         self.assertFalse(result, "Should not be able to turn item on with player appearance below 100")
         self.assertEqual(message, "Appearance rule condition not met.")
 
-        type(player).appearance_level = PropertyMock(return_value = 100)
-        (result, message) = item.do_verb("turn on", player = player)
+        (result, message) = item.do_verb("turn on", extras = { "player_appearance_level": 100 })
         self.assertTrue(result, "Should be able to turn item on with player appearance of 100")
         self.assertEqual(message, "Turning on.")
+
+        # As you were
+        item.do_verb("turn off") 
+
+        # Should get an exception if we don't pass in the required extra.
+        with self.assertRaisesRegex(Exception, "Item.*requires missing extra.*") as context:
+            item.do_verb("turn on", extras = { "nottherightextra": 123})
+
 
 
 if __name__ == "__main__":
