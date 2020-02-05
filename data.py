@@ -468,7 +468,193 @@ room_data = {
                         "objection": "You can't ride into the house on a penny-farthing!"
                     }
                 ]
+            },
+            EAST: {
+                "destination": "streetmaze_d"
+            },
+            WEST: {
+                "destination": "streetmaze_c"
             }
+        }
+    },
+    "streetmaze_a": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a maze of twisty Victorian streets, all looking alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_g"
+            },
+            SOUTH: {
+                "destination": "streetmaze_d"
+            },
+            EAST: {
+                "destination": "streetmaze_b"
+            },
+            WEST: {
+                "destination": "streetmaze_c"
+            },
+        }
+    },
+    "streetmaze_b": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a twisty maze of Victorian streets, all looking alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_h"
+            },
+            SOUTH: {
+                "destination": "streetmaze_e"
+            },
+            EAST: {
+                "destination": "streetmaze_c"
+            },
+            WEST: {
+                "destination": "streetmaze_a"
+            },
+        }
+    },
+    "streetmaze_c": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a maze of twisty Victorian streets, looking all alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_i"
+            },
+            SOUTH: {
+                "destination": "streetmaze_f"
+            },
+            EAST: {
+                "destination": "street"
+            },
+            WEST: {
+                "destination": "streetmaze_b"
+            },
+        }
+    },
+    "streetmaze_d": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a twisty maze of Victorian streets, looking all alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_a"
+            },
+            SOUTH: {
+                "destination": "streetmaze_g"
+            },
+            EAST: {
+                "destination": "streetmaze_e"
+            },
+            WEST: {
+                "destination": "street"
+            },
+        }
+    },
+    "streetmaze_e": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a twisted maze of Victorian streets, all looking alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_b"
+            },
+            SOUTH: {
+                "destination": "streetmaze_h"
+            },
+            EAST: {
+                "destination": "streetmaze_f"
+            },
+            WEST: {
+                "destination": "streetmaze_d"
+            },
+        }
+    },
+    "streetmaze_f": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a twisted maze of Victorian streets, looking all alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_c"
+            },
+            SOUTH: {
+                "destination": "streetmaze_i"
+            },
+            EAST: {
+                "destination": "streetmaze_d"
+            },
+            WEST: {
+                "destination": "streetmaze_e"
+            },
+        }
+    },
+    "streetmaze_g": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a twisting maze of Victorian streets, all looking alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_d"
+            },
+            SOUTH: {
+                "destination": "streetmaze_a"
+            },
+            EAST: {
+                "destination": "streetmaze_h"
+            },
+            WEST: {
+                "destination": "streetmaze_i"
+            },
+        }
+    },
+    "streetmaze_h": {
+        "name": "The street",
+        "description": {
+            "basic": "You are in a maze of twisting Victorian streets, looking all alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_e"
+            },
+            SOUTH: {
+                "destination": "streetmaze_b"
+            },
+            EAST: {
+                "destination": "streetmaze_i"
+            },
+            WEST: {
+                "destination": "streetmaze_g"
+            },
+        }
+    },
+    "streetmaze_i": {
+        "name": "The street",
+        "description": {
+            "basic": "You are lost in a maze of twisty Victorian streets, all looking alike."
+        },
+        "exits": {
+            NORTH: {
+                "destination": "streetmaze_f"
+            },
+            SOUTH: {
+                "destination": "streetmaze_c"
+            },
+            EAST: {
+                "destination": "streetmaze_g"
+            },
+            WEST: {
+                "destination": "streetmaze_h"
+            },
         }
     },
     "bathroom": {
