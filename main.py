@@ -147,7 +147,7 @@ while True:
                 (taken, message) = current_room.take(parser.noun)
                 if taken:
                     player.give(taken)
-                    o.print("You have taken " + taken.name)
+                    o.print(f"You have taken {taken.name}.")
                 else:
                     o.print(message)
             else:
