@@ -72,7 +72,7 @@ item_data = {
             "moveable": {}, 
             "wearable": {
                 "unremoveable": True,
-                "wear_description": "You apply the beard oil to your wild facial hair, bringing it under some kind of control.",
+                "wear_description": "You apply the beard oil to your wild facial hair.",
                 "unwear_description": "You can't put the genie back in the bottle. Or the beard oil, for that matter."
             }
         }
@@ -89,6 +89,9 @@ item_data = {
             "closed": "a distressed oak bathroom cabinet. Let's face it, you'd be distressed if you had to stare "
                       "at that bath all day long. The cabinet is closed.",
             "open": "a distressed oak bathroom cabinet, standing open."
+        },
+        "reflective": {
+            "reflective_item_description": "Peeking into the cabinet mirror"
         },
         "states": [
             "closed",
@@ -114,8 +117,11 @@ item_data = {
         "name": "a wardobe",
         "description": {
             "closed": "a vintage wardrobe with a distorting fairground mirror fixed to the front. "
-                        "It makes your hangover look worse. The door is closed.",
+                        "The door is closed.",
             "open": "a vintage wardrobe. The door stands open."
+        },
+        "reflective": {
+            "reflective_item_description": "Staring into the wardrobe's distorting mirror"
         },
         "states": [
             "closed",

@@ -32,6 +32,12 @@ class Item:
         self._description = data["description"]
         # Simple attributes like "is moveable?" etc.
         self.traits = data.get("traits") or set()
+        reflective = data.get("reflective")
+        if reflective:
+            self.is_reflective = True
+            self.reflective_item_description = reflective["reflective_item_description"]
+        else:
+            self.is_reflective = False
 
     @property
     def description(self):

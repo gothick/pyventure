@@ -127,6 +127,7 @@ normalised_nouns = {
     "wooden trunk": Noun.TRUNK,
     "beard": Noun.BEARD,
     "comb": Noun.COMB,
+    "beard comb": Noun.COMB,
     "records": Noun.RECORDS,
     "record": Noun.RECORDS,
     "lps": Noun.RECORDS,

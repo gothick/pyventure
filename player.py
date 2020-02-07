@@ -18,6 +18,23 @@ class Player(ClothesHorse, IVerbable):
         self.beard_status = BeardHealth.STRAGGLY_MESS
         self.caffeine_level = caffeine_level # milligrams
     
+    def mirror_description(self, reflective_item_description):
+        description = f"{reflective_item_description}, you "
+        if self.beard_status == BeardHealth.STRAGGLY_MESS:
+            description += "look like a wildman, with an unkempt beard. "
+            if self.is_wearing(Noun.BEARD_OIL):
+                description += "The beard is covered in oil, but you need to use a comb. "
+        elif self.beard_status == BeardHealth.QUITE_TIDY:
+            description += "look vaguely human, though your beard could use a bit more maintenance. "
+        else:
+            description += "admire your perfectly-combed beard and glossy moustache. "
+        
+        if self.caffeine_level < 50:
+            description += "You look like you could use a coffee."
+        elif self.caffeine_level < 20:
+            desciption += "You look pale and drawn, though, and desperately in need of a cortado."
+        return description
+
     def award_points(self, points):
         self.score += points
 
@@ -52,7 +69,10 @@ class Player(ClothesHorse, IVerbable):
         if noun != Noun.BEARD:
             return (False, "You can't comb that.")
         if not self.has(Noun.COMB):
-            return (False, "You need to find a comb before you do that, and maybe some beard oil for good measure.")
+            if not self.has(Noun.BEARD_OIL):
+                return (False, "You need to find a comb before you do that, and maybe some beard oil for good measure.")
+            else:
+                return (False, "You need to find a comb before you do that.")
         if self.beard_status == BeardHealth.PERFECTION:
             return (True, "You're beautiful enough already.")
 
@@ -61,11 +81,15 @@ class Player(ClothesHorse, IVerbable):
                 self.beard_status = BeardHealth.PERFECTION
                 return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You look like your normal self again.")
             else:
-                return (False, "You probably need to find some beard oil before you can make yourself look human again.")
+                if self.has(Noun.BEARD_OIL):
+                    return (False, "You probably want to apply the beard oil first.")
+                else:
+                    return (False, "You probably need to find some beard oil before you can make yourself look human again.")
+
         else: # Must be STRAGGLY_MESS
             if self.is_wearing(Noun.BEARD_OIL):
                 self.beard_status = BeardHealth.PERFECTION
-                return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You look like your normal self again.")
+                return (True, "You shape your beard to perfection, and carefully curl the ends of your moustache. You start to feel like your normal self again.")
             else:
                 self.beard_status = BeardHealth.QUITE_TIDY
                 return (True, "Your beard isn't quite such a shocking mess now, but you clearly need to find some beard oil to restore it to its full glory.")                    
@@ -130,7 +154,6 @@ class Player(ClothesHorse, IVerbable):
     @property
     def description(self):
         pass
-
 
     def tick(self):
 

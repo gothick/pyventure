@@ -102,7 +102,10 @@ while True:
             suppress_room_description = True
             item = current_room.get_item_reference(parser.noun) or player.inventory.get(parser.noun) or player.wearing.get(parser.noun)
             if item:
-                o.print("It is " + item.description)
+                if item.is_reflective:
+                    o.print("It is " + item.description + " " + player.mirror_description(item.reflective_item_description))
+                else:
+                    o.print("It is " + item.description)
             else:
                 o.print("You don't see that here")
 
@@ -210,7 +213,7 @@ while True:
             else:
                 print("You can't do that.")
 
-    elif parser.verb in (Verb.RIDE, Verb.DISMOUNT):
+    elif parser.verb in (Verb.RIDE, Verb.DISMOUNT, Verb.COMB):
         suppress_room_description = True
         (result, message) = player.do_verb(parser.verb, parser.noun, current_room.rules)
         o.print(message)
