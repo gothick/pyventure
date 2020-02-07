@@ -32,7 +32,7 @@ class Player(ClothesHorse, IVerbable):
         if self.caffeine_level < 50:
             description += "You look like you could use a coffee."
         elif self.caffeine_level < 20:
-            desciption += "You look pale and drawn, though, and desperately in need of a cortado."
+            description += "You look pale and drawn, though, and desperately in need of a cortado."
         return description
 
     def award_points(self, points):
