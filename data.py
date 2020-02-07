@@ -237,7 +237,7 @@ item_data = {
         "name": "the latest iPhone",
         "description": {
             "locked": "the latest iPhone. It is approximately size of a tea tray, and seems to be connected to the house WiFi. It is locked.",
-            "unlocked": "the latest iPhone. It's unlocked. There seem to be applications for Whuzz SKoota, TODO...",
+            "unlocked": "the latest iPhone. It's unlocked. There seem to be applications for Whuzz Skootaz, TODO...",
             "off": "the latest iPhone. The screen is dark. I think it's turned off."
         },
         "states": [
