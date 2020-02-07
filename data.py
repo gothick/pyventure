@@ -338,7 +338,7 @@ room_data = {
                 "rules": [
                     {
                         "type": "only_if_dressed",
-                        "objection": "You can't go outside dressed like that!"
+                        "objection": "You can't go outside dressed like that! (Hint: type 'inventory', or just 'i' to list your posessions and clothing.)"
                     }
                 ]
             }
