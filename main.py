@@ -30,8 +30,8 @@ item_factory = ItemFactory(data.item_data)
 rooms = {}
 
 # Build the universe.
-for id, data in data.room_data.items():
-    rooms[id] = Room(id, item_factory, data)
+for id, room_data in data.room_data.items():
+    rooms[id] = Room(id, item_factory, room_data)
 
 o.print("\nWelcome to the Bristol Hipster Adventure.\n")
 
@@ -41,8 +41,8 @@ suppress_room_description = False
 no_tick = False
 
 player = Player(
-    inventory = {},
-    wearing = item_factory.create_dictionary_from_nouns([Noun.SHIRT, Noun.BOXER_SHORTS]),
+    inventory = item_factory.create_dictionary_from_nouns(data.player_data["start_inventory"]),
+    wearing = item_factory.create_dictionary_from_nouns(data.player_data["start_wearing"]),
     score = 0,
     health = 100, # percent
     caffeine_level = 50 # milligrams

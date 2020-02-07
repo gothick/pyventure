@@ -8,6 +8,12 @@ WEST  = Noun.WEST
 UP    = Noun.UP
 DOWN  = Noun.DOWN
 
+# Player details
+player_data = {
+    "start_inventory": {},
+    "start_wearing": [Noun.BOXER_SHORTS]
+}
+
 # New-style item data
 item_data = {
     Noun.BOXER_SHORTS: {
@@ -20,15 +26,15 @@ item_data = {
             }, 
         }
     },
-    Noun.DOODAH: {
-        "name": "a doodah",
-        "description": "a doodah. You know, a bit like a thingummy, only heavier.",
-        "traits": { "moveable": {} }
-    },
-    Noun.SHIRT: {
+    Noun.PAISLEY_SHIRT: {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
         "traits": { "moveable": {}, "wearable": { "slot": "top"} } 
+    },
+    Noun.Y2_SHIRT: {
+        "name": "a Y2 t-shirt.",
+        "description": "a faded t-shirt bearing the legend of your favourite band that nobody else has heard of, Y2",
+        "traits": { "moveable": {}, "wearable": { "slot": "top" } }
     },
     Noun.PLUS_FOURS: {
         "name": "a pair of tweed plus fours",
@@ -39,6 +45,16 @@ item_data = {
         "name": "a pair of fetching purple harem pants",
         "description": "a pair of generously-cut harem pants. They look like they'll be just the job if you get a sudden urge to do the splits.",
         "traits": { "moveable": {}, "wearable": { "slot": "bottom" } }
+    },
+    Noun.CROCS: {
+        "name": "a pair of yellow Crocs",
+        "description": "a pair of yellow Crocs, somewhat beaten up from being worn around the house.",
+        "traits": { "moveable": {}, "wearable": { "slot": "feet" } }
+    },
+    Noun.DOC_MARTENS: {
+        "name": "a pair of Doc Marten boots",
+        "description": "a gorgeous pair of opalescent Doc Martens, recently polished and clearly loved.",
+        "traits": { "moveable": {}, "wearable": { "slot": "feet" } }
     },
     Noun.BATH: {
         "name": "a gargoyle clawfoot bath",
@@ -123,6 +139,32 @@ item_data = {
             "closed": []
         }
     },
+    Noun.DRESSING_TABLE: {
+        "type": "StatefulContainerItem",
+        "name": "a dressing table",
+        "description": {
+            "closed": "an upcycled Formica dressing table with a single drawer. The drawer is closed.",
+            "open": "an upcycled Formica dressing table with a single drawer. The drawer is open."
+        },
+        "states": [
+            "closed",
+            "open" 
+        ],
+        "verbs": {
+            Verb.OPEN: {
+                "new_state": "open",
+                "message": "You open the Formica dressing table drawer."
+            },
+            Verb.CLOSE: {
+                "new_state": "closed",
+                "message": "You close the Formica dressing table drawer."
+            }
+        },
+        "inventory": {
+            "open": [ Noun.COMB ],
+            "closed": []
+        }
+    },    
     Noun.TRUNK: {
         "type": "StatefulContainerItem",
         "name": "a large wooden trunk",
@@ -147,7 +189,7 @@ item_data = {
             }
         },
         "inventory": {
-            "open": [Noun.DOODAH],
+            "open": [Noun.DOC_MARTENS, Noun.CROCS],
             "closed": []
         }
     },
@@ -287,9 +329,9 @@ item_data = {
             Verb.PLAY: {
                 "type": "random",
                 "messages": [
-                    "You pluck out the Y2 album at random and put it on the turntable. You very quickly take it back off, reminded that there's a reason not many people have heard of them.",
+                    "You pluck out the Y2 album at random and put it on the turntable. It's actually surprisingly good.",
                     "You pluck out the Plugh album at random and put it on the turntable. You very quickly take it back off, reminded that there's a reason not many people have heard of them.",
-                    "You pluck out the Xyzzy Plovers album at random and put it on the turntable. It's actually surprisingly good."
+                    "You pluck out the Xyzzy Plovers album at random and put it on the turntable. You very quickly take it back off, reminded that there's a reason not many people have heard of them."
                 ]
             }
         }
@@ -373,7 +415,7 @@ room_data = {
     },
     "bedroom": {
         "name": "The bedroom",
-        "inventory": [ Noun.WARDROBE, Noun.TRUNK ],
+        "inventory": [ Noun.WARDROBE, Noun.TRUNK, Noun.DRESSING_TABLE ],
         "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
@@ -381,7 +423,8 @@ room_data = {
             "basic": "You are in a cool bedroom. The single bed hangs like a child's swing from "
                     "ropes that drop from the ceiling. One wall has a cuboid bookcase with no books, "
                     "but instead a varied selection of terraria containing alien-looking succulents "
-                    "and cacti. On the far side of the room stand a wardrobe and a large wooden trunk.",
+                    "and cacti. On the far side of the room stand a wardrobe and a large wooden trunk. "
+                    "A Formica dressing table sits next to the bed, under the window.",
             "extras": [
                 {
                     "type": "random",

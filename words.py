@@ -18,7 +18,8 @@ class Noun(Enum):
     PHONE = auto()
     TV = auto()
     PENNY_FARTHING = auto()
-    SHIRT = auto()
+    Y2_SHIRT = auto()
+    PAISLEY_SHIRT = auto()
     PLUS_FOURS = auto()
     FRIDGE = auto()
     MENUS = auto()
@@ -36,6 +37,9 @@ class Noun(Enum):
     HAREM_PANTS = auto()
     RECORDS = auto()
     TURNTABLE = auto()
+    CROCS = auto()
+    DOC_MARTENS = auto()
+    DRESSING_TABLE = auto()
 
 # Useful collection of for our special directional nouns
 DIRECTIONS = {
@@ -61,6 +65,14 @@ normalised_nouns = {
     "down": Noun.DOWN,
     "d": Noun.DOWN,
 
+    "crocs": Noun.CROCS,
+    "dressing table": Noun.DRESSING_TABLE,
+    "dresser": Noun.DRESSING_TABLE,
+    # It's a dressing table drawer
+    "drawer": Noun.DRESSING_TABLE,
+    "yellow crocs": Noun.CROCS,
+    "doc martens": Noun.DOC_MARTENS,
+    "boots": Noun.DOC_MARTENS,
     "torch": Noun.TORCH,
     "iphone": Noun.PHONE,
     "iphone se": Noun.PHONE,
@@ -72,9 +84,13 @@ normalised_nouns = {
     "penny-farthing": Noun.PENNY_FARTHING,
     "bicycle": Noun.PENNY_FARTHING,
     "bike": Noun.PENNY_FARTHING,
-    "shirt": Noun.SHIRT,
-    "natty shirt": Noun.SHIRT,
-    "paisley shirt": Noun.SHIRT,
+    "paisley shirt": Noun.PAISLEY_SHIRT,
+    "natty shirt": Noun.PAISLEY_SHIRT,
+    "y2 shirt": Noun.Y2_SHIRT,
+    "y2 t-shirt": Noun.Y2_SHIRT,
+    "t-shirt": Noun.Y2_SHIRT,
+    "t shirt": Noun.Y2_SHIRT,
+    "tee shirt": Noun.Y2_SHIRT,
     "plus fours": Noun.PLUS_FOURS,
     "plus-fours": Noun.PLUS_FOURS,
     "tweed plus fours": Noun.PLUS_FOURS,
