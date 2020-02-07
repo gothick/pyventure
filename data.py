@@ -232,6 +232,12 @@ item_data = {
                         "rainbow grilled cheese caravan.",
         "traits": { "moveable": {} }
     },
+    Noun.MAGAZINES: {
+        "name": "some magazines",
+        "description": "some magazines including VICE, AnOther and Wallpaper*. Towards the bottom of the pile, as "
+            "if hidden in shame, are some copies Heat and a TV Times.",
+        "traits": { "moveable": {} }
+    },
     Noun.PHONE: {
         "type": "StatefulItem",
         "name": "the latest iPhone",
@@ -351,7 +357,7 @@ item_data = {
 room_data = {
     "livingroom": {
         "name": "The Living Room",
-        "inventory": [ Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING ],
+        "inventory": [ Noun.PHONE, Noun.TV, Noun.PENNY_FARTHING, Noun.MAGAZINES ],
         "rules": {
             "can_ride": (False, "You can't ride that in here!")
         },
@@ -361,6 +367,11 @@ room_data = {
                         "pallets sits surrounded by red milk crates on the stripped pine floorboards. Light "
                         "streams in through the picture window from the tidy Southville street outside.",
             "extras": [
+                {
+                    "type": "if_in_room",
+                    "object": Noun.MAGAZINES,
+                    "text": "Some magazines lie on the table."
+                },
                 {
                     "type": "if_in_room",
                     "object": Noun.PENNY_FARTHING,

@@ -40,6 +40,7 @@ class Noun(Enum):
     CROCS = auto()
     DOC_MARTENS = auto()
     DRESSING_TABLE = auto()
+    MAGAZINES = auto()
 
 # Useful collection of for our special directional nouns
 DIRECTIONS = {
@@ -137,6 +138,7 @@ normalised_nouns = {
     "vintage turntable": Noun.TURNTABLE,
     "record deck": Noun.TURNTABLE,
     "record player": Noun.TURNTABLE,
+    "magazines": Noun.MAGAZINES
 }
 
 class Verb(Enum):
