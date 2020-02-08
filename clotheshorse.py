@@ -58,6 +58,10 @@ class ClothesHorse(Container):
     @property
     def is_fully_clothed(self):
         return self.wearing_in_slot("top") is not None and self.wearing_in_slot("bottom") is not None
+
+    @property
+    def is_shod(self):
+        return self.wearing_in_slot("feet") is not None
         
     def unwear(self, item_id):
         if not item_id in self.wearing:

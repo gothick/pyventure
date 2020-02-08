@@ -76,6 +76,11 @@ class Room(Container):
             return (False, rule["objection"])
         return (True, None)
 
+    def rule_only_if_shod(self, rule, player):
+        if not player.is_shod:
+            return (False, rule["objection"])
+        return (True, None)
+
 
     def room_id_from_exit(self, exit):
         if exit in self.exits:

@@ -141,7 +141,7 @@ item_data = {
             }
         },
         "inventory": {
-            "open": [ Noun.PLUS_FOURS, Noun.HAREM_PANTS ],
+            "open": [ Noun.PLUS_FOURS, Noun.HAREM_PANTS, Noun.PAISLEY_SHIRT, Noun.Y2_SHIRT ],
             "closed": []
         }
     },
@@ -398,6 +398,10 @@ room_data = {
                     {
                         "type": "only_if_dressed",
                         "objection": "You can't go outside dressed like that! (Hint: type 'inventory', or just 'i' to list your posessions and clothing.)"
+                    },
+                    {
+                        "type": "only_if_shod",
+                        "objection": "You'll need to put something on your feet first. It's a rough old world out there."
                     }
                 ]
             }
