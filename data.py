@@ -242,7 +242,8 @@ item_data = {
         "type": "StatefulItem",
         "name": "the latest iPhone",
         "description": {
-            "locked": "the latest iPhone. It is approximately size of a tea tray, and seems to be connected to the house WiFi. It is locked.",
+            "locked": "the latest iPhone. It is approximately size of a tea tray. It is locked. Its lock screen shows a delicious "
+                "cortado, which makes you crave a coffee.",
             "unlocked": "the latest iPhone. It's unlocked. There seem to be applications for Whuzz Skootaz, TODO...",
             "off": "the latest iPhone. The screen is dark. I think it's turned off."
         },
