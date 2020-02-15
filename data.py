@@ -234,7 +234,7 @@ item_data = {
     },
     Noun.MAGAZINES: {
         "name": "some magazines",
-        "description": "some magazines including VICE, AnOther and Wallpaper*. Towards the bottom of the pile, as "
+        "description": "a stack of magazines including VICE, AnOther and Wallpaper*. Towards the bottom of the pile, as "
             "if hidden in shame, are some copies Heat and a TV Times.",
         "traits": { "moveable": {} }
     },
