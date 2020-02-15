@@ -508,7 +508,7 @@ room_data = {
         "description": {
             "basic": "You are in a bijou kitchen that boasts a SMEG fridge, a pile of menus with the Deliveroo logo "
                         "and a complicated-looking espresso machine. There is no actual food to be seen, though there is "
-                        " a lingering hint of avocado toast in the air."
+                        "a lingering hint of avocado toast in the air."
         },
         "exits": {
             SOUTH: {"destination": "diningroom"}
