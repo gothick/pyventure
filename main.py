@@ -1,6 +1,6 @@
 import textwrap
 import data
-from parser import Parser
+from pyv_parser import PyvParser as Parser
 from room import Room
 from player import Player
 from item import ItemFactory

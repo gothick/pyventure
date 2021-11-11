@@ -1,4 +1,4 @@
-class Parser:
+class PyvParser:
     def __init__(
             self, 
             vocab_nouns, 
