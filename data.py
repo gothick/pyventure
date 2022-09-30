@@ -19,17 +19,17 @@ item_data = {
     Noun.BOXER_SHORTS: {
         "name": "a pair of silk polka-dot boxer shorts",
         "description": "a fetching pair of green silk boxer shorts with red polka-dots",
-        "traits": { 
+        "traits": {
             "wearable": {
                 "unremoveable": True,
                 "unwear_description": "Nobody wants that to happen, trust me."
-            }, 
+            },
         }
     },
     Noun.PAISLEY_SHIRT: {
         "name": "a natty Paisley print shirt",
         "description": "a delightful fitted shirt with a strong Paisley pattern. As you look closely at it your eyes water slightly.",
-        "traits": { "moveable": {}, "wearable": { "slot": "top"} } 
+        "traits": { "moveable": {}, "wearable": { "slot": "top"} }
     },
     Noun.Y2_SHIRT: {
         "name": "a Y2 t-shirt.",
@@ -68,20 +68,20 @@ item_data = {
     Noun.BEARD_OIL: {
         "name": "a can of beard oil",
         "description": "a can of patchouli and ylang-ylang beard oil.",
-        "traits": { 
-            "moveable": {}, 
+        "traits": {
+            "moveable": {},
             "wearable": {
                 "unremoveable": True,
                 "wear_description": "You apply the beard oil to your wild facial hair.",
                 "unwear_description": "You can't put the genie back in the bottle. Or the beard oil, for that matter."
             }
         }
-    },    
+    },
     Noun.COMB: {
         "name": "a beard comb",
         "description": "a tortoiseshell beard comb. You might need some oil with that.",
         "traits": { "moveable": {} }
-    },    
+    },
     Noun.BATHROOM_CABINET: {
         "type": "StatefulContainerItem",
         "name": "a bathroom cabinet",
@@ -95,7 +95,7 @@ item_data = {
         },
         "states": [
             "closed",
-            "open" 
+            "open"
         ],
         "verbs": {
             Verb.OPEN: {
@@ -125,7 +125,7 @@ item_data = {
         },
         "states": [
             "closed",
-            "open" 
+            "open"
         ],
         "verbs": {
             Verb.OPEN: {
@@ -154,7 +154,7 @@ item_data = {
         },
         "states": [
             "closed",
-            "open" 
+            "open"
         ],
         "verbs": {
             Verb.OPEN: {
@@ -170,7 +170,7 @@ item_data = {
             "open": [ Noun.COMB ],
             "closed": []
         }
-    },    
+    },
     Noun.TRUNK: {
         "type": "StatefulContainerItem",
         "name": "a large wooden trunk",
@@ -182,7 +182,7 @@ item_data = {
         },
         "states": [
             "closed",
-            "open" 
+            "open"
         ],
         "verbs": {
             Verb.OPEN: {
@@ -235,7 +235,7 @@ item_data = {
     Noun.MAGAZINES: {
         "name": "some magazines",
         "description": "a stack of magazines including VICE, AnOther and Wallpaper*. Towards the bottom of the pile, as "
-            "if hidden in shame, are some copies Heat and a TV Times.",
+            "if hidden in shame, are some copies of Heat and a TV Times.",
         "traits": { "moveable": {} }
     },
     Noun.PHONE: {
@@ -248,7 +248,7 @@ item_data = {
             "off": "the latest iPhone. The screen is dark. I think it's turned off."
         },
         "states": [
-            "off", 
+            "off",
             "locked",
             "unlocked"
         ],
@@ -318,7 +318,7 @@ item_data = {
         "states": [
             "off", "on"
         ],
-        "verbs": { 
+        "verbs": {
             Verb.TURN_ON: {
                 "new_state": "on",
                 "message": "You turn on the TV. I think you're halfway thorugh an episode of Portlandia."
@@ -386,14 +386,14 @@ room_data = {
                 "rules": [
                     {
                         # We don't want to let the player carry the penny-farthing into
-                        # the house. 
+                        # the house.
                         "type": "not_if_carrying",
                         "item": Noun.PENNY_FARTHING,
                         "objection": "The penny-farthing won't fit through there."
                     }
                 ]
             },
-            SOUTH: { 
+            SOUTH: {
                 "destination": "street",
                 "rules": [
                     {
@@ -417,7 +417,7 @@ room_data = {
         "description": {
             "basic": "You find yourself in a small dining room, though the varied amateur taxidermy "
                     "in strategically-placed glass cases would probably be enough to put most "
-                    "people off their dinner. On the far side of the empty dining table is a teak " 
+                    "people off their dinner. On the far side of the empty dining table is a teak "
                     "cabinet with a vintage turntable and some vinyl records.",
             "extras": [
                 {
@@ -450,7 +450,7 @@ room_data = {
             "extras": [
                 {
                     "type": "random",
-                    "texts": [ 
+                    "texts": [
                         "A framed picture on the wall depicts a bespectacled giraffe smoking a pipe.",
                         "A framed picture on the wall depicts a fox with a handlebar moustache.",
                         "A framed picture on the wall depicts a flamingo wearing a top hat."
@@ -460,7 +460,7 @@ room_data = {
             ]
         },
         "exits": {
-            NORTH: {"destination": "landing"} 
+            NORTH: {"destination": "landing"}
         }
     },
     "landing": {
