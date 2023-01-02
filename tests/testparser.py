@@ -1,5 +1,5 @@
 import unittest
-from parser import Parser
+from pyv_parser import PyvParser
 from enum import Enum, auto
 
 # test data
@@ -38,7 +38,7 @@ normalised_nouns = {
 
     "iphone": Noun.PHONE,
     "iphone se": Noun.PHONE,
-    "phone": Noun.PHONE,    
+    "phone": Noun.PHONE,
     "pennyfarthing": Noun.PENNY_FARTHING,
     "penny farthing": Noun.PENNY_FARTHING,
     "penny-farthing": Noun.PENNY_FARTHING,
@@ -79,9 +79,9 @@ normalised_verbs = {
 
 class TestParserMethods(unittest.TestCase):
     def setUp(self):
-        self.parser = Parser(
+        self.parser = PyvParser(
             Noun,
-            Noun.UNKNOWN, 
+            Noun.UNKNOWN,
             Verb,
             Verb.GO,
             DIRECTIONS,
@@ -106,21 +106,21 @@ class TestParserMethods(unittest.TestCase):
         self.parser.parse("turn on the iphone")
         self.assertEqual(self.parser.verb, Verb.TURN_ON)
         self.assertEqual(self.parser.noun, Noun.PHONE)
-        
+
         self.parser.parse("examine a penny farthing")
         self.assertEqual(self.parser.verb, Verb.EXAMINE)
         self.assertEqual(self.parser.noun, Noun.PENNY_FARTHING)
-        
+
 
     def test_two_word_verbs(self):
         self.parser.parse("turn on iphone")
         self.assertEqual(self.parser.verb, Verb.TURN_ON)
         self.assertEqual(self.parser.noun, Noun.PHONE)
-        
+
         self.parser.parse("examine iphone")
         self.assertEqual(self.parser.verb, Verb.EXAMINE)
         self.assertEqual(self.parser.noun, Noun.PHONE)
-        
+
         self.parser.parse("ride penny farthing")
         self.assertEqual(self.parser.verb, Verb.RIDE)
         self.assertEqual(self.parser.noun, Noun.PENNY_FARTHING)
